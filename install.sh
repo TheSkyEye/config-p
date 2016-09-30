@@ -40,8 +40,8 @@ cyanfonce='\e[0;36m'
 cyanclair='\e[1;36m'
 grisclair='\e[0;37m'
 blanc='\e[1;37m'
-webmin_version='1.791/webmin_1.791_all.deb'
-webmin_version2='webmin_1.791_all.deb'
+webmin_version='1.810/webmin_1.810_all.deb'
+webmin_version2='webmin_1.810_all.deb'
 
 if [ $? == 0 ]
 	then echo -e "$noir[$vertfonceOK$noir]"
@@ -330,9 +330,9 @@ cd desktop-integration/
 dpkg -i openoffice4.1-debian-menu*.deb
 
 #veracrypt
-wget https://sourceforge.net/projects/veracrypt/files/VeraCrypt%201.17/veracrypt-1.17-setup.tar.bz2
-tar xjf veracrypt-1.17-setup.tar.bz2
-./veracrypt-1.17-setup-gui-x64
+wget https://sourceforge.net/projects/veracrypt/files/VeraCrypt%201.18/veracrypt-1.18-setup.tar.bz2
+tar xjf veracrypt-1.18-setup.tar.bz2
+./veracrypt-1.18-setup-gui-x64
 
 #installer pip
 wget https://bootstrap.pypa.io/get-pip.py
