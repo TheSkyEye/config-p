@@ -1,10 +1,9 @@
+#!/bin/sh
 ##
 ## install.sh for Installation logiciel
 ##
 ## Made by TheSkyEye
 ##
-
-#!/bin/sh
 
 ##############################################################
 #application des mises à jour et modification du sources.list#
