@@ -58,21 +58,19 @@ AGI='apt-get install -y'
 # suppression du CDROM dans sources.list
 displayandexec "suppression du CDROM dans sources.list" "sed -i '/cdrom/d' /etc/apt/sources.list"
 
-echo "    ################################################################"
-echo "    #                      MISE A JOUR DU SYSTEM                   #"
-echo "    ################################################################"
+echo "       ################################################################"
+echo "       #                      MISE A JOUR DU SYSTEM                   #"
+echo "       ################################################################"
 
-displayandexec "" "apt-get update -y"
-displayandexec "" "apt-get update -y"
-#displayandexec "Mise à jour de la listes des paquets" "apt-get update -y"
-#displayandexec "Mise à jour des paquets" "apt-get update -y"
+displayandexec "Mise à jour de la liste des paquets" "apt-get update -y"
+displayandexec "Mise à jour des paquets            " "apt-get update -y"
 
 ############################
 #installation des logiciels#
 ############################
-echo "    ################################################################"
-echo "    #                   INSTALLATION DES LOGICIELS                 #"
-echo "    ################################################################"
+echo "       ################################################################"
+echo "       #                   INSTALLATION DES LOGICIELS                 #"
+echo "       ################################################################"
 
 displayandexec "Installation de ssh               " "$AGI ssh"
 displayandexec "Installation de emacs             " "$AGI emacs"
@@ -479,13 +477,14 @@ displayandexec "Installation de macchanger        " "$AGI macchanger"
 	#apachetop
 	#apt-get install apachetop -y
 
-apt-get install -f
-apt-get autoremove -y
+displayandexec "Installation des dépendances manquantes" "apt-get install -f"
+displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
 
 echo "instalation des logicies avec une instalation special"
 #atom
 wget -q https://atom.io/download/deb
-dpkg -i deb
+displayandexec "Installation de atom              " "dpkg -i deb"
+
 
 #metaspoilt
 curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
@@ -494,16 +493,16 @@ chmod 755 msfinstall
 
 #webmin
 wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/$webmin_version
-dpkg -i $webmin_version2
+displayandexec "Installation de webmin            " "dpkg -i $webmin_version2"
 
 #OpenOffice
-wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
-wget -q  https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86-64_install-deb_fr.tar.gz
-tar xzf Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
-cd fr/DEBS/
-dpkg -i *.deb
-cd desktop-integration/
-dpkg -i openoffice4.1-debian-menu*.deb
+#wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
+#wget -q  https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86-64_install-deb_fr.tar.gz
+#tar xzf Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
+#cd fr/DEBS/
+#dpkg -i *.deb
+#cd desktop-integration/
+#dpkg -i openoffice4.1-debian-menu*.deb
 
 #veracrypt
 wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2
@@ -522,10 +521,10 @@ apt-get remove Konqueror -y
 #iceweasel
 apt-get remove iceweasel -y
 
-apt-get install -f
-apt-get autoremove -y
-apt-get update
-apt-get upgrade -y
+displayandexec "Installation des dépendances manquantes" "apt-get install -f"
+displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
+displayandexec "Mise à jour de la liste des paquets" "apt-get update -y"
+displayandexec "Mise à jour des paquets            " "apt-get update -y"
 
 ##############################
 #stoper les services inutiles#
@@ -563,14 +562,15 @@ displayandexec "Réinitialisation du bashrc" "source ~/.bashrc"
 
 #openvas-setup
 displayandexec "Mise à jour de la base de donnée de rkhunter" "rkhunter --update"
-lynis --check-update
+#lynis --check-update
 	#lynis update check
-nikto -update
-freshclam
-chkrootkit
-clamscan
-tiger -q
-lynis -c -q
+displayandexec "Mise à jour de la base de donnée de nikto" "nikto -update"
+#nikto -update
+displayandexec "Mise à jour de la base de donnée de ClamAV" "freshclam"
+#chkrootkit
+#clamscan
+#tiger -q
+#lynis -c -q
 	#lynis audit system
 #pip install --upgrade pip
 
@@ -581,9 +581,9 @@ echo "#                           Fin du script                          #" >> $
 echo "####################################################################" >> $log_file
 
 echo ""
-echo "    ####################################################################"
-echo "    #                    L'installation est terminée                   #"
-echo "    ####################################################################"
+echo "       ####################################################################"
+echo "       #                    L'installation est terminée                   #"
+echo "       ####################################################################"
 echo ""
 
 
