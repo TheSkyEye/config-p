@@ -1,9 +1,10 @@
-#!/bin/sh
 ##
 ## install.sh for Installation logiciel
 ##
 ## Made by TheSkyEye
 ##
+
+#!/bin/sh
 
 ##############################################################
 #application des mises à jour et modification du sources.list#
@@ -39,8 +40,10 @@ cyanfonce='\e[0;36m'
 cyanclair='\e[1;36m'
 grisclair='\e[0;37m'
 blanc='\e[1;37m'
+
 webmin_version='1.810/webmin_1.810_all.deb'
 webmin_version2='webmin_1.810_all.deb'
+veracrypt_version='1.19'
 
 if [ $? == 0 ]
 	then echo -e "$noir[$vertfonceOK$noir]"
@@ -79,12 +82,20 @@ apt-get install clamav -y
 apt-get install clamtk -y
 #qemu
 apt-get install qemu -y
+#keepassx
+apt-get install keepassx -y
+#htop
+apt-get install htop -y
 #valgrind
 apt-get install valgrind -y
 #tor
 apt-get install tor -y
+#pip
+apt-get install python-pip -y
 #handbrake
 apt-get install handbrake -y
+#uget
+apt-get install uget -y
 #scribus
 apt-get install scribus -y
 #gitk
@@ -95,6 +106,10 @@ apt-get install fail2ban -y
 apt-get install filezilla -y
 #wine
 apt-get install wine -y
+#yasat
+apt-get install yasat -y
+#psutils
+apt-get install psutils -y
 #pdfmod
 apt-get install pdfmod -y
 #aircrack-ng
@@ -245,8 +260,6 @@ apt-get install dc3dd -y
 apt-get install dcfldd -y
 #irpas
 apt-get install irpas -y
-#phpmyadmin
-#apt-get install phpmyadmin -y
 #dff
 apt-get install dff -y
 #extundelete
@@ -301,6 +314,18 @@ apt-get install sslh -y
 apt-get install kismet -y
 #macchanger
 apt-get install macchanger -y
+#blender
+#apt-get install blender -y
+#sweethome3d
+#apt-get install sweethome3d -y
+#geogebra
+#apt-get install geogebra -y
+#phpmyadmin
+#apt-get install phpmyadmin -y
+#apache2
+#apt-get install apache2 -y
+	#apachetop
+	#apt-get install apachetop -y
 
 apt-get install -f
 apt-get autoremove -y
@@ -320,26 +345,22 @@ wget http://netcologne.dl.sourceforge.net/project/webadmin/webmin/$webmin_versio
 dpkg -i $webmin_version2
 
 #OpenOffice
-wget http://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
-wget https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86-64_install-deb_fr.tar.gz
-tar xzf Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
-cd fr/DEBS/
-dpkg -i *.deb
-cd desktop-integration/
-dpkg -i openoffice4.1-debian-menu*.deb
+#wget #http://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
+#wget https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86-64_install-deb_fr.tar.gz
+#tar xzf Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
+#cd fr/DEBS/
+#dpkg -i *.deb
+#cd desktop-integration/
+#dpkg -i openoffice4.1-debian-menu*.deb
 
 #veracrypt
-wget https://sourceforge.net/projects/veracrypt/files/VeraCrypt%201.18/veracrypt-1.18-setup.tar.bz2
-tar xjf veracrypt-1.18-setup.tar.bz2
-./veracrypt-1.18-setup-gui-x64
-
-#installer pip
-wget https://bootstrap.pypa.io/get-pip.py
-python3 get-pip.py
+wget https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2
+tar xjf veracrypt-$veracrypt_version-setup.tar.bz2
+./veracrypt-$veracrypt_version-setup-gui-x64
 
 echo "désinstalation des logicels de merde"
 #libreoffice
-apt-get remove libreoffice* -y
+#apt-get remove libreoffice* -y
 #Konqueror
 apt-get remove Konqueror -y
 #iceweasel
@@ -358,7 +379,7 @@ sed -i -e "s/Port\ 22/Port\ 7894/g" /etc/ssh/sshd_config
 /etc/init.d/nginx stop
 /etc/init.d/fail2ban stop
 /etc/init.d/clamav-freshclam stop
-#/etc/init.d/apache2 stop
+/etc/init.d/apache2 stop
 /etc/init.d/sshd restart
 
 #########################
@@ -380,17 +401,39 @@ echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
 echo "alias scan_network='nmap -v -sn 192.168.1.0/24 | grep -v down | grep -v "Host is up" | grep -v "Parallel DNS resolution" | grep -v "Raw packets sent" | grep -v "Initiating ARP Ping" | grep -v "Completed ARP Ping Scan" | grep -v "Read data files" | grep -v "Scanning 255 hosts" | grep -v "Nmap done" | grep -v "Starting Nmap"'" >> .bashrc
+echo 'HISTTIMEFORMAT="%Y/%m/%d %T "' >> .bashrc
+source ~/.bashrc
 
 openvas-setup
 rkhunter --update
 lynis --check-update
+	#lynis update check
 nikto -update
 freshclam
 chkrootkit
 clamscan
 tiger -q
 lynis -c -q
+	#lynis audit system
+#pip install --upgrade pip
 
 echo "##############################"
 echo "#L'installation est terminée.#"
 echo "##############################"
+
+
+
+## JEUX
+#apt-get install 0ad
+
+
+#echo "###############################"
+#echo "#   Chnger le thème du GRUB   #"
+#echo "###############################"
+
+#wget https://dl.opendesktop.org/api/files/download/id/1460735684/174670-breeze-grub.zip
+#unzip 174670-breeze-grub.zip
+#mkdir /boot/grub/themes
+#mv Breeze /boot/grub/themes/
+#echo 'GRUB_THEME="/boot/grub/themes/Breeze/theme.txt"' >> /etc/default/grub
+#grub-mkconfig -o /boot/grub/grub.cfg
