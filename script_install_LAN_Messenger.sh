@@ -1,6 +1,6 @@
 # install Lan Messenger:dernière version\Debian amd64:
 
-apt-get update && apt-get upgrade
+apt-get update && apt-get upgrade -y
 wget https://netcologne.dl.sourceforge.net/project/lanmsngr/1.2.32/lmc_1.2.32_i386.deb
 dpkg -add-architecture i386
 dpkg -i lmc_1.2.32_i386.deb
@@ -16,5 +16,5 @@ apt-get install libqtcore4:i386
 apt-get install libqt4-network:i386
 apt-get install libqtgui4:i386
 apt-get update
-apt-get -f install
-apt-get upgrade
+apt-get -f install -y
+apt-get upgrade -y
