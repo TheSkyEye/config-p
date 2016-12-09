@@ -55,26 +55,32 @@ veracrypt_version='1.19'
 AGI='apt-get install -y'
 
 clear
+echo ""
 echo "       ################################################################"
 echo "       #            LANCEMENT DU SCRIPT DEBIAN_POSTINSTALL            #"
 echo "       ################################################################"
+echo ""
 
 # suppression du CDROM dans sources.list
 displayandexec "suppression du CDROM dans sources.list              " "sed -i '/cdrom/d' /etc/apt/sources.list"
 
+echo ""
 echo "       ################################################################"
 echo "       #                      MISE A JOUR DU SYSTEM                   #"
 echo "       ################################################################"
+echo ""
 
-displayandexec "Mise à jour de la liste des paquets                 " "apt-get update -y"
-displayandexec "Mise à jour des paquets                             " "apt-get update -y"
+displayandexec "Mise à jour du system                               " "apt-get update -y && apt-get upgrade -y"
+#displayandexec "Mise à jour des paquets                             " "apt-get update -y"
 
 ############################
 #installation des logiciels#
 ############################
+echo ""
 echo "       ################################################################"
 echo "       #                   INSTALLATION DES LOGICIELS                 #"
 echo "       ################################################################"
+echo ""
 
 displayandexec "Installation de ssh                                 " "$AGI ssh"
 displayandexec "Installation de emacs                               " "$AGI emacs"
@@ -486,8 +492,8 @@ displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get
 
 echo "instalation des logicies avec une instalation special"
 #atom
-wget -q https://atom.io/download/deb
-displayandexec "Installation de atom                                " "dpkg -i deb"
+#wget -q https://atom.io/download/deb
+displayandexec "Installation de atom                                " "wget -q https://atom.io/download/deb && dpkg -i deb"
 
 
 #metaspoilt
@@ -511,7 +517,8 @@ displayandexec "Installation de webmin                              " "dpkg -i $
 #veracrypt
 wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2
 tar xjf veracrypt-$veracrypt_version-setup.tar.bz2
-./veracrypt-$veracrypt_version-setup-gui-x64
+displayandexec "Installation de veracrypt                           " "./veracrypt-$veracrypt_version-setup-gui-x64"
+#./veracrypt-$veracrypt_version-setup-gui-x64
 
 #golismero
 #pip install golismero
@@ -527,8 +534,7 @@ apt-get remove iceweasel -y
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
-displayandexec "Mise à jour de la liste des paquets                 " "apt-get update -y"
-displayandexec "Mise à jour des paquets                             " "apt-get update -y"
+displayandexec "Mise à jour des paquets                             " "apt-get update -y && apt-get upgrade -y"
 
 ##############################
 #stoper les services inutiles#
