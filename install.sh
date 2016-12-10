@@ -23,7 +23,7 @@ cd /home/install
 
 # création d'un fichier de log
 now=$(date +"%d-%m-%Y")
-log_file=/home/install/log_script_install-$now.log
+log_file=/home/log_script_install-$now.log
 touch $log_file
 echo "####################################################################" > $log_file
 echo "#                          Debut du script                         #" >> $log_file
@@ -120,7 +120,7 @@ displayandexec "Installation de nikto                               " "$AGI nikt
 displayandexec "Installation de hping3                              " "$AGI hping3"
 displayandexec "Installation de yersinia                            " "$AGI yersinia"
 displayandexec "Installation de sslstrip                            " "$AGI sslstrip"
-displayandexec "Installation de wifite                              " "$AGI wifite"
+#displayandexec "Installation de wifite                              " "$AGI wifite"
 displayandexec "Installation de arping                              " "$AGI arping"
 displayandexec "Installation de dnstracer                           " "$AGI dnstracer"
 displayandexec "Installation de ike-scan                            " "$AGI ike-scan"
@@ -204,7 +204,7 @@ displayandexec "Installation de python-elixir                       " "$AGI pyth
 displayandexec "Installation de apt-show-versions                   " "$AGI apt-show-versions"
 displayandexec "Installation de libio-pty-perl                      " "$AGI libio-pty-perl"
 displayandexec "Installation de wireshark                           " "$AGI wireshark"
-displayandexec "Installation de sslh                                " "$AGI sslh"
+#displayandexec "Installation de sslh                                " "$AGI sslh"
 displayandexec "Installation de kismet                              " "$AGI kismet"
 displayandexec "Installation de macchanger                          " "$AGI macchanger"
 # displayandexec "Installation de blender                           " "$AGI blender"
@@ -497,9 +497,10 @@ displayandexec "Installation de atom                                " "wget -q h
 
 
 #metaspoilt
-curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
-chmod 755 msfinstall
-./msfinstall
+displayandexec "Installation de webmin                              " "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
+#curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+#chmod 755 msfinstall
+#./msfinstall
 
 #webmin
 wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/$webmin_version
@@ -515,9 +516,9 @@ displayandexec "Installation de webmin                              " "dpkg -i $
 #dpkg -i openoffice4.1-debian-menu*.deb
 
 #veracrypt
-wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2
-tar xjf veracrypt-$veracrypt_version-setup.tar.bz2
-displayandexec "Installation de veracrypt                           " "./veracrypt-$veracrypt_version-setup-gui-x64"
+#wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2
+#tar xjf veracrypt-$veracrypt_version-setup.tar.bz2
+displayandexec "Installation de veracrypt                           " "wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
 #./veracrypt-$veracrypt_version-setup-gui-x64
 
 #golismero
@@ -526,7 +527,7 @@ displayandexec "Installation de veracrypt                           " "./veracry
 
 echo "désinstalation des logicels de merde"
 #libreoffice
-apt-get remove libreoffice* -y
+#apt-get remove libreoffice* -y
 #Konqueror
 apt-get remove Konqueror -y
 #iceweasel
@@ -551,6 +552,28 @@ sed -i -e "s/Port\ 22/Port\ 7894/g" /etc/ssh/sshd_config
 #configuration du bashrc#
 #########################
 cd
+
+if grep "^$utilisateur" /etc/passwd > /dev/null; then
+    echo "" >> /home/utilisateur/.bashrc
+	echo "alias ifconfig='/sbin/ifconfig'" >> /home/utilisateur/.bashrc
+	echo "alias ll='ls -l'" >> /home/utilisateur/.bashrc
+	echo "alias la='ls -A'" >> /home/utilisateur/.bashrc
+	echo "alias l='ls -CF'" >> /home/utilisateur/.bashrc
+	echo "alias h='history'" >> /home/utilisateur/.bashrc
+	echo "alias ne='emacs -nw'" >> /home/utilisateur/.bashrc
+	echo "alias cl='clear'" >> /home/utilisateur/.bashrc
+	echo "alias i='apt-get install'" >> /home/utilisateur/.bashrc
+	echo "alias u='apt-get update'" >> /home/utilisateur/.bashrc
+	echo "alias up='apt-get upgrade'" >> /home/utilisateur/.bashrc
+	echo "alias x='exit'" >> /home/utilisateur/.bashrc
+	echo "alias xx='sudo shutdown now'" >> /home/utilisateur/.bashrc
+	echo "alias xwx='sudo poweroff'" >> /home/utilisateur/.bashrc
+	echo "alias scan_network='nmap -v -sn 192.168.1.0/24 | grep -v down | grep -v "Host is up" | grep -v "Parallel DNS resolution" | grep -v "Raw packets sent" | grep -v "Initiating ARP Ping" | grep -v "Completed ARP Ping Scan" | grep -v "Read data files" | grep -v "Scanning 255 hosts" | grep -v "Nmap done" | grep -v "Starting Nmap"'" >> /home/utilisateur/.bashrc
+	echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> /home/utilisateur/.bashrc
+else
+    echo "ko"
+fi
+
 echo "" >> .bashrc
 echo "alias ifconfig='/sbin/ifconfig'" >> .bashrc
 echo "alias ll='ls -l'" >> .bashrc
@@ -574,7 +597,6 @@ displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunte
 #lynis --check-update
 	#lynis update check
 displayandexec "Mise à jour de la base de donnée de nikto           " "nikto -update"
-#nikto -update
 displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshclam"
 #chkrootkit
 #clamscan
