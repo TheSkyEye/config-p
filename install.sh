@@ -52,6 +52,8 @@ displayandexec() {
 webmin_version='1.810/webmin_1.810_all.deb'
 webmin_version2='webmin_1.810_all.deb'
 veracrypt_version='1.19'
+openoffice_version='4.1.3'
+openoffice_version_deb='Apache_OpenOffice_4.1.3_Linux_x86-64_install-deb_fr.tar.gz'
 AGI='apt-get install -y'
 
 clear
@@ -59,6 +61,14 @@ echo ""
 echo "       ################################################################"
 echo "       #            LANCEMENT DU SCRIPT DEBIAN_POSTINSTALL            #"
 echo "       ################################################################"
+echo ""
+
+echo ""
+echo "       ================================================================"
+echo ""
+echo "                    LANCEMENT DU SCRIPT DEBIAN_POSTINSTALL             "
+echo ""
+echo "       ================================================================"
 echo ""
 
 # suppression du CDROM dans sources.list
@@ -506,14 +516,6 @@ displayandexec "Installation de webmin                              " "curl http
 wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/$webmin_version
 displayandexec "Installation de webmin                              " "dpkg -i $webmin_version2"
 
-#OpenOffice
-#wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
-#wget -q  https://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86-64_install-deb_fr.tar.gz
-#tar xzf Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
-#cd fr/DEBS/
-#dpkg -i *.deb
-#cd desktop-integration/
-#dpkg -i openoffice4.1-debian-menu*.deb
 
 #veracrypt
 #wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2
@@ -526,12 +528,22 @@ displayandexec "Installation de veracrypt                           " "wget -q h
 #ln -s /opt/golismero/golismero.py /usr/bin/golismero
 
 echo "désinstalation des logicels de merde"
-#libreoffice
-#apt-get remove libreoffice* -y
+libreoffice
+apt-get remove libreoffice* -y
 #Konqueror
 apt-get remove Konqueror -y
 #iceweasel
 apt-get remove iceweasel -y
+
+#OpenOffice
+#wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
+wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/$openoffice_version_deb
+tar xzf $openoffice_version_deb
+cd fr/DEBS/
+dpkg -i *.deb
+cd desktop-integration/
+dpkg -i openoffice4.1-debian-menu*.deb
+
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
