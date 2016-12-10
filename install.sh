@@ -81,7 +81,6 @@ echo "       ################################################################"
 echo ""
 
 displayandexec "Mise à jour du system                               " "apt-get update -y && apt-get upgrade -y"
-#displayandexec "Mise à jour des paquets                             " "apt-get update -y"
 
 ############################
 #installation des logiciels#
@@ -130,7 +129,6 @@ displayandexec "Installation de nikto                               " "$AGI nikt
 displayandexec "Installation de hping3                              " "$AGI hping3"
 displayandexec "Installation de yersinia                            " "$AGI yersinia"
 displayandexec "Installation de sslstrip                            " "$AGI sslstrip"
-#displayandexec "Installation de wifite                              " "$AGI wifite"
 displayandexec "Installation de arping                              " "$AGI arping"
 displayandexec "Installation de dnstracer                           " "$AGI dnstracer"
 displayandexec "Installation de ike-scan                            " "$AGI ike-scan"
@@ -213,10 +211,12 @@ displayandexec "Installation de beef                                " "$AGI beef
 displayandexec "Installation de python-elixir                       " "$AGI python-elixir"
 displayandexec "Installation de apt-show-versions                   " "$AGI apt-show-versions"
 displayandexec "Installation de libio-pty-perl                      " "$AGI libio-pty-perl"
-displayandexec "Installation de wireshark                           " "$AGI wireshark"
+#displayandexec "Installation de wireshark                           " "$AGI wireshark"
 #displayandexec "Installation de sslh                                " "$AGI sslh"
-displayandexec "Installation de kismet                              " "$AGI kismet"
-displayandexec "Installation de macchanger                          " "$AGI macchanger"
+#displayandexec "Installation de wifite                              " "$AGI wifite"
+#displayandexec "Installation de kismet                              " "$AGI kismet"
+#displayandexec "Installation de macchanger                          " "$AGI macchanger"
+
 # displayandexec "Installation de blender                           " "$AGI blender"
 # displayandexec "Installation de sweethome3d                       " "$AGI sweethome3d"
 # displayandexec "Installation de geogebra                          " "$AGI geogebra"
@@ -224,308 +224,30 @@ displayandexec "Installation de macchanger                          " "$AGI macc
 # displayandexec "Installation de apache2                           " "$AGI apache2"
 # displayandexec "Installation de apachetop                         " "$AGI apachetop"
 
-# # #ssh
-# # apt-get install ssh -y
-# # #check_error
-# # #emacs
-# # apt-get install emacs -y
-# # #virtualbox
-# # apt-get install virtualbox -y
-# # #chromium
-# # apt-get install chromium-l10n -y
-# # #knockd
-# # apt-get install knockd -y
-# # #audacity
-# # apt-get install audacity -y
-# # #calibre
-# # apt-get install calibre -y
-# # #clamav
-# # apt-get install clamav -y
-# # #clamtk
-# # apt-get install clamtk -y
-# # #qemu
-# # apt-get install qemu -y
-# # #keepassx
-# # apt-get install keepassx -y
-# # #htop
-# # apt-get install htop -y
-# # #valgrind
-# # apt-get install valgrind -y
-# # #tor
-# # apt-get install tor -y
-# # #pip
-# # apt-get install python-pip -y
-# # #handbrake
-# # apt-get install handbrake -y
-# #uget
-# # apt-get install uget -y
-# # #scribus
-# # apt-get install scribus -y
-# # #gitk
-# # apt-get install gitk -y
-# # #fail2ban
-# # apt-get install fail2ban -y
-# # #filezilla
-# # apt-get install filezilla -y
-# # #wine
-# # apt-get install wine -y
-# # #yasat
-# # apt-get install yasat -y
-# # #psutils
-# # apt-get install psutils -y
-# # #pdfmod
-# # apt-get install pdfmod -y
-# #aircrack-ng
-# apt-get install aircrack-ng -y
-# #nginx
-# apt-get install nginx -y
-# #ettercap
-# apt-get install ettercap-graphical -y
-# #nodejs
-# apt-get install nodejs -y
-# #npm
-# apt-get install npm -y
-# #gparted
-# apt-get install gparted -y
-# #chkrootkit
-# apt-get install chkrootkit -y
-# #vlc
-# apt-get install vlc -y
-# #curl
-# apt-get install curl -y
-# #lynx
-# apt-get install lynx -y
-#nikto
-# apt-get install nikto -y
-# #hping3
-# apt-get install hping3 -y
-# #yersinia
-# apt-get install yersinia -y
-# #sslstrip
-# apt-get install sslstrip -y
-# #wifite
-# apt-get install wifite -y
-# #arping
-# apt-get install arping -y
-# #dnstracer
-# apt-get install dnstracer -y
-# #ike-scan
-# apt-get install ike-scan -y
-# #netdiscover
-# apt-get install netdiscover -y
-# #p0f
-# apt-get install p0f -y
-# #pscan
-# apt-get install pscan -y
-#arduino
-# apt-get install arduino -y
-# #arpwatch
-# apt-get install arpwatch -y
-# #masscan
-# apt-get install masscan -y
-# #sslscan
-# apt-get install sslscan -y
-# #lynis
-# apt-get install lynis -y
-# #siege
-# apt-get install siege -y
-# #httrack
-# apt-get install httrack -y
-# #cadaver
-# apt-get install cadaver -y
-# #tcpdump
-# apt-get install tcpdump -y
-# #icmpush
-# apt-get install icmpush -y
-# #tcptrack
-# apt-get install tcpreplay -y
-# #xprobe
-# apt-get install xprobe -y
-# #logcheck
-# apt-get install logcheck -y
-# #flawfinder
-# apt-get install flawfinder -y
-# #skipfish
-# apt-get install skipfish -y
-# #w3af
-# apt-get install w3af -y
-# #nbtscan
-# apt-get install nbtscan -y
-#knocker
-# apt-get install knocker -y
-# #wapiti
-# apt-get install wapiti -y
-# #logwatch
-# apt-get install logwatch -y
-# #rkhunter
-# apt-get install rkhunter -y
-# #whatweb
-# apt-get install whatweb -y
-# #crunch
-# apt-get install crunch -y
-# #splint
-# apt-get install splint -y
-# #fcrackzip
-# apt-get install fcrackzip -y
-# #cmospwd
-# apt-get install cmospwd -y
-# #john
-# apt-get install john -y
-# #medusa
-# apt-get install medusa -y
-# #ophcrack
-# apt-get install ophcrack -y
-# #samdump2
-# apt-get install samdump2 -y
-#sipcrack
-# apt-get install sipcrack -y
-# #sucrack
-# apt-get install sucrack -y
-# #btscanner
-# apt-get install btscanner -y
-# #clang
-# apt-get install clang -y
-# #flasm
-# apt-get install flasm -y
-# #radare2
-# apt-get install radare2 -y
-# #dsniff
-# apt-get install dsniff -y
-# #darkstat
-# apt-get install darkstat -y
-# #mitmproxy
-# apt-get install mitmproxy -y
-# #netsniff-ng
-# apt-get install netsniff-ng -y
-# #driftnet
-# apt-get install driftnet -y
-# #sslsniff
-# apt-get install sslsniff -y
-# #tcpflow
-# apt-get install tcpflow -y
-# #tcpreplay
-# apt-get install tcpreplay -y
-# #iodine
-# apt-get install iodine -y
-#miredo
-# apt-get install miredo -y
-# #proxychains
-# apt-get install proxychains -y
-# #proxytunnel
-# apt-get install proxytunnel -y
-# #ptunnel
-# apt-get install ptunnel -y
-# #stunnel4
-# apt-get install stunnel4 -y
-# #udptunnel
-# apt-get install udptunnel -y
-# #autopsy
-# apt-get install autopsy -y
-# #binwalk
-# apt-get install binwalk -y
-# #dc3dd
-# apt-get install dc3dd -y
-# #dcfldd
-# apt-get install dcfldd -y
-# #irpas
-# apt-get install irpas -y
-# #dff
-# apt-get install dff -y
-# #extundelete
-# apt-get install extundelete -y
-#foremost
-# apt-get install foremost -y
-# #galetta
-# apt-get install galetta -y
-# #guymager
-# apt-get install guymager -y
-# #magiccrescue
-# apt-get install magiccrescue -y
-# #pasco
-# apt-get install pasco -y
-# #pev
-# apt-get install pev -y
-# #readpst
-# apt-get install readpst -y
-# #recoverjpeg
-# apt-get install recoverjpeg -y
-# #rifiuti
-# apt-get install rifiuti -y
-# #rifiuti2
-# apt-get install rifiuti2 -y
-# #safecopy
-# apt-get install safecopy -y
-# #scalpel
-# apt-get install scalpel -y
-# #scrounge-ntfs
-# apt-get install scrounge-ntfs -y
-# #vinetto
-# apt-get install vinetto -y
-# #volatility
-# apt-get install volatility -y
-# #cutycapt
-# apt-get install cutycapt -y
-# #libauthen-pam-perl
-# apt-get install libauthen-pam-perl -y
-# #beef
-# apt-get install beef -y
-# #python-elixir
-# apt-get install python-elixir -y
-# #apt-show-versions
-# apt-get install apt-show-versions -y
-# #libio-pty-perl
-# apt-get install libio-pty-perl -y
-# #wireshark
-# apt-get install wireshark -y
-#sslh
-# apt-get install sslh -y
-# #kismet
-# apt-get install kismet -y
-# #macchanger
-# apt-get install macchanger -y
-
-#blender
-#apt-get install blender -y
-#sweethome3d
-#apt-get install sweethome3d -y
-#geogebra
-#apt-get install geogebra -y
-#phpmyadmin
-#apt-get install phpmyadmin -y
-#apache2
-#apt-get install apache2 -y
-	#apachetop
-	#apt-get install apachetop -y
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
 
 echo "instalation des logicies avec une instalation special"
 #atom
-#wget -q https://atom.io/download/deb
 displayandexec "Installation de atom                                " "wget -q https://atom.io/download/deb && dpkg -i deb"
 
-
 #metaspoilt
-displayandexec "Installation de webmin                              " "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
-#curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
-#chmod 755 msfinstall
-#./msfinstall
+displayandexec "Installation de metaspoilt                          " "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
 #webmin
-wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/$webmin_version
-displayandexec "Installation de webmin                              " "dpkg -i $webmin_version2"
-
+displayandexec "Installation de webmin                              " "wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/$webmin_version && dpkg -i $webmin_version2"
 
 #veracrypt
-#wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2
-#tar xjf veracrypt-$veracrypt_version-setup.tar.bz2
 displayandexec "Installation de veracrypt                           " "wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
-#./veracrypt-$veracrypt_version-setup-gui-x64
 
 #golismero
-#pip install golismero
-#ln -s /opt/golismero/golismero.py /usr/bin/golismero
+displayandexec "Installation de golismero                           " "pip install golismero && ln -s /opt/golismero/golismero.py /usr/bin/golismero"
+
+#set
+git clone https://github.com/trustedsec/social-engineer-toolkit/ set/
+cd set
+python setup.py install
 
 echo "désinstalation des logicels de merde"
 libreoffice
@@ -536,7 +258,6 @@ apt-get remove Konqueror -y
 apt-get remove iceweasel -y
 
 #OpenOffice
-#wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/4.1.2/binaries/fr/Apache_OpenOffice_4.1.2_Linux_x86_install-deb_fr.tar.gz
 wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/$openoffice_version_deb
 tar xzf $openoffice_version_deb
 cd fr/DEBS/
@@ -547,7 +268,7 @@ dpkg -i openoffice4.1-debian-menu*.deb
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
-displayandexec "Mise à jour des paquets                             " "apt-get update -y && apt-get upgrade -y"
+displayandexec "Mise à jour des paquets                             " "apt-get update && apt-get upgrade -y"
 
 ##############################
 #stoper les services inutiles#
@@ -580,7 +301,6 @@ if grep "^$utilisateur" /etc/passwd > /dev/null; then
 	echo "alias x='exit'" >> /home/utilisateur/.bashrc
 	echo "alias xx='sudo shutdown now'" >> /home/utilisateur/.bashrc
 	echo "alias xwx='sudo poweroff'" >> /home/utilisateur/.bashrc
-	echo "alias scan_network='nmap -v -sn 192.168.1.0/24 | grep -v down | grep -v "Host is up" | grep -v "Parallel DNS resolution" | grep -v "Raw packets sent" | grep -v "Initiating ARP Ping" | grep -v "Completed ARP Ping Scan" | grep -v "Read data files" | grep -v "Scanning 255 hosts" | grep -v "Nmap done" | grep -v "Starting Nmap"'" >> /home/utilisateur/.bashrc
 	echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> /home/utilisateur/.bashrc
 else
     echo "ko"
@@ -601,8 +321,8 @@ echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> .bashrc"
-displayandexec "Réinitialisation du bashrc                          " "source ~/.bashrc"
-#source ~/.bashrc
+displayandexec "Réinitialisation du bashrc                          " "source ~/root/.bashrc"
+#source ~/root/.bashrc
 
 #openvas-setup
 displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update"
@@ -616,6 +336,10 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 #lynis -c -q
 	#lynis audit system
 #pip install --upgrade pip
+#msfupdate
+
+
+rm -rf /home/install
 
 echo "--------------------------------------------------------------------" >> $log_file
 echo "" >> $log_file
