@@ -49,11 +49,9 @@ displayandexec() {
 }
 
 # variable globale
-webmin_version='1.810/webmin_1.810_all.deb'
-webmin_version2='webmin_1.810_all.deb'
+webmin_version='1.810'
 veracrypt_version='1.19'
 openoffice_version='4.1.3'
-openoffice_version_deb='Apache_OpenOffice_4.1.3_Linux_x86-64_install-deb_fr.tar.gz'
 AGI='apt-get install -y'
 
 clear
@@ -66,7 +64,10 @@ echo ""
 echo ""
 echo "       ================================================================"
 echo ""
-echo "                    LANCEMENT DU SCRIPT DEBIAN_POSTINSTALL             "
+echo "                   nom du script       : DEBIAN_POSTINSTALL            "
+echo "                   auteur              : TheSkyEye                     "
+echo "                   version             : 1.0"
+echo "                   lancement du script : bash install.sh               "
 echo ""
 echo "       ================================================================"
 echo ""
@@ -80,7 +81,7 @@ echo "       #                      MISE A JOUR DU SYSTEM                   #"
 echo "       ################################################################"
 echo ""
 
-displayandexec "Mise à jour du system                               " "apt-get update -y && apt-get upgrade -y"
+displayandexec "Mise à jour du system                               " "apt-get update && apt-get upgrade -y"
 
 ############################
 #installation des logiciels#
@@ -211,24 +212,24 @@ displayandexec "Installation de beef                                " "$AGI beef
 displayandexec "Installation de python-elixir                       " "$AGI python-elixir"
 displayandexec "Installation de apt-show-versions                   " "$AGI apt-show-versions"
 displayandexec "Installation de libio-pty-perl                      " "$AGI libio-pty-perl"
+displayandexec "Installation de apache2                             " "$AGI apache2"
+displayandexec "Installation de apachetop                           " "$AGI apachetop"
+displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
 #displayandexec "Installation de wireshark                           " "$AGI wireshark"
 #displayandexec "Installation de sslh                                " "$AGI sslh"
 #displayandexec "Installation de wifite                              " "$AGI wifite"
 #displayandexec "Installation de kismet                              " "$AGI kismet"
 #displayandexec "Installation de macchanger                          " "$AGI macchanger"
 
-# displayandexec "Installation de blender                           " "$AGI blender"
-# displayandexec "Installation de sweethome3d                       " "$AGI sweethome3d"
-# displayandexec "Installation de geogebra                          " "$AGI geogebra"
-# displayandexec "Installation de phpmyadmin                        " "$AGI phpmyadmin"
-# displayandexec "Installation de apache2                           " "$AGI apache2"
-# displayandexec "Installation de apachetop                         " "$AGI apachetop"
+# displayandexec "Installation de blender                             " "$AGI blender"
+# displayandexec "Installation de sweethome3d                         " "$AGI sweethome3d"
+# displayandexec "Installation de geogebra                            " "$AGI geogebra"
 
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
 
-echo "instalation des logicies avec une instalation special"
+echo "###### instalation des logicies avec une instalation special ######"
 #atom
 displayandexec "Installation de atom                                " "wget -q https://atom.io/download/deb && dpkg -i deb"
 
@@ -236,7 +237,7 @@ displayandexec "Installation de atom                                " "wget -q h
 displayandexec "Installation de metaspoilt                          " "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
 #webmin
-displayandexec "Installation de webmin                              " "wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/$webmin_version && dpkg -i $webmin_version2"
+displayandexec "Installation de webmin                              " "wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/webmin_$webmin_version.deb && dpkg -i webmin_$webmin_version_all.deb"
 
 #veracrypt
 displayandexec "Installation de veracrypt                           " "wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
@@ -245,12 +246,34 @@ displayandexec "Installation de veracrypt                           " "wget -q h
 displayandexec "Installation de golismero                           " "pip install golismero && ln -s /opt/golismero/golismero.py /usr/bin/golismero"
 
 #set
-git clone https://github.com/trustedsec/social-engineer-toolkit/ set/
-cd set
-python setup.py install
+displayandexec "Installation de set                                 " "git clone https://github.com/trustedsec/social-engineer-toolkit/ set/ && cd set && python setup.py install"
+#git clone https://github.com/trustedsec/social-engineer-toolkit/ set/
+#cd set
+#python setup.py install
 
-echo "désinstalation des logicels de merde"
-libreoffice
+
+#backdoor-factory
+git clone https://github.com/secretsquirrel/the-backdoor-factory
+cd the-backdoor-factory
+sudo ./install.sh
+
+#truecrack
+git clone https://github.com/lvaccaro/truecrack.git
+cd truecrack
+./configure
+make
+sudo make install
+
+#gddrescue
+apt-get install -y gddrescue
+
+#patator
+git clone https://github.com/lanjelot/patator.git
+cp patator/patator.py /opt/patator/patator.py
+ln -s /opt/patator/patator.py /usr/bin/patator
+
+echo "############## désinstalation des logicels de merde ##############"
+#libreoffice
 apt-get remove libreoffice* -y
 #Konqueror
 apt-get remove Konqueror -y
@@ -258,8 +281,8 @@ apt-get remove Konqueror -y
 apt-get remove iceweasel -y
 
 #OpenOffice
-wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/$openoffice_version_deb
-tar xzf $openoffice_version_deb
+wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version_Linux_x86-64_install-deb_fr.tar.gz
+tar xzf $openoffice_version
 cd fr/DEBS/
 dpkg -i *.deb
 cd desktop-integration/
@@ -364,9 +387,9 @@ echo ""
 #fi
 
 
-#echo "     ###############################"
-#echo "     #   Chnger le thème du GRUB   #"
-#echo "     ###############################"
+#echo "       ###############################"
+#echo "       #   Chnger le thème du GRUB   #"
+#echo "       ###############################"
 
 #wget https://dl.opendesktop.org/api/files/download/id/1460735684/174670-breeze-grub.zip
 #unzip 174670-breeze-grub.zip
