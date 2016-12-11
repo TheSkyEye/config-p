@@ -214,7 +214,7 @@ displayandexec "Installation de apt-show-versions                   " "$AGI apt-
 displayandexec "Installation de libio-pty-perl                      " "$AGI libio-pty-perl"
 displayandexec "Installation de apache2                             " "$AGI apache2"
 displayandexec "Installation de apachetop                           " "$AGI apachetop"
-displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
+#displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
 #displayandexec "Installation de wireshark                           " "$AGI wireshark"
 #displayandexec "Installation de sslh                                " "$AGI sslh"
 #displayandexec "Installation de wifite                              " "$AGI wifite"
