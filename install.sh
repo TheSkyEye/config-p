@@ -50,9 +50,10 @@ displayandexec() {
 
 # variable globale
 uname -a | grep debian &> /dev/null
-if [ $? == 0 ];
+if [ $? == 0 ]; then
 	version_linux='Debian'
-	else version_linux='other linux'
+else
+	version_linux='other linux'
 fi
 version_system=$(cat /etc/debian_version)
 webmin_version='1.810'
@@ -280,7 +281,7 @@ displayandexec "Installation de capstone                            " "pip insta
 displayandexec "Installation de metaspoilt                          " "cd /home/install/ && curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
 #webmin
-displayandexec "Installation de webmin                              " "cd /home/install/ && wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/webmin_$(webmin_version).deb && dpkg -i webmin_$(webmin_version)_all.deb"
+displayandexec "Installation de webmin                              " "cd /home/install/ && wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/webmin_$[webmin_version].deb && dpkg -i webmin_$[webmin_version]_all.deb"
 
 #veracrypt
 displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
@@ -322,7 +323,7 @@ apt-get remove iceweasel -y
 
 #OpenOffice
 wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$[openoffice_version]/binaries/fr/Apache_OpenOffice_$[openoffice_version_Linux]_x86-64_install-deb_fr.tar.gz
-tar xzf $openoffice_version
+tar xzf Apache_OpenOffice_$[openoffice_version]_x86-64_install-deb_fr.tar.gz
 cd fr/DEBS/
 dpkg -i *.deb
 cd desktop-integration/
@@ -418,7 +419,7 @@ echo ""
 
 
 read -p "Voulez-vous redémarer maintenant ?[O/n] " reponse
-if [reponse == "o" || reponse == "O" || reponse == ""]; then
+if [[reponse == "o" || reponse == "O" || reponse == ""]]; then
     reboot
 else
     exit 0
