@@ -282,6 +282,7 @@ apt-get install -y gddrescue
 
 #patator
 git clone https://github.com/lanjelot/patator.git
+mkdir /opt/patator/
 cp patator/patator.py /opt/patator/patator.py
 ln -s /opt/patator/patator.py /usr/bin/patator
 
