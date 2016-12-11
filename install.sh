@@ -49,6 +49,7 @@ displayandexec() {
 }
 
 # variable globale
+version_system=$(sed 's/\..*//' /etc/debian_version)
 webmin_version='1.810'
 veracrypt_version='1.19'
 openoffice_version='4.1.3'
@@ -68,6 +69,7 @@ echo "                   nom du script       : DEBIAN_POSTINSTALL            "
 echo "                   auteur              : TheSkyEye                     "
 echo "                   version             : 1.0"
 echo "                   lancement du script : bash install.sh               "
+echo "                   version du système  : "$version_system
 echo ""
 echo "       ================================================================"
 echo ""
@@ -212,9 +214,14 @@ displayandexec "Installation de beef                                " "$AGI beef
 displayandexec "Installation de python-elixir                       " "$AGI python-elixir"
 displayandexec "Installation de apt-show-versions                   " "$AGI apt-show-versions"
 displayandexec "Installation de libio-pty-perl                      " "$AGI libio-pty-perl"
+displayandexec "Installation de automake                            " "$AGI automake"
+displayandexec "Installation de autotools-dev                       " "$AGI autotools-dev"
+displayandexec "Installation de libltdl-dev                         " "$AGI libltdl-dev"
+displayandexec "Installation de libtool                             " "$AGI libtool"
+displayandexec "Installation de libcurl4-openssl-dev                " "$AGI libcurl4-openssl-dev"
 displayandexec "Installation de apache2                             " "$AGI apache2"
 displayandexec "Installation de apachetop                           " "$AGI apachetop"
-#displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
+displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
 #displayandexec "Installation de wireshark                           " "$AGI wireshark"
 #displayandexec "Installation de sslh                                " "$AGI sslh"
 #displayandexec "Installation de wifite                              " "$AGI wifite"
@@ -232,6 +239,12 @@ displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get
 echo "###### instalation des logicies avec une instalation special ######"
 #atom
 displayandexec "Installation de atom                                " "wget -q https://atom.io/download/deb && dpkg -i deb"
+
+#pefile
+displayandexec "Installation de pefile                              " "pip install pefile"
+
+#capstone
+displayandexec "Installation de capstone                            " "pip install capstone"
 
 #metaspoilt
 displayandexec "Installation de metaspoilt                          " "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
@@ -281,7 +294,7 @@ apt-get remove Konqueror -y
 apt-get remove iceweasel -y
 
 #OpenOffice
-wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version_Linux_x86-64_install-deb_fr.tar.gz
+wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/${openoffice_version}/binaries/fr/Apache_OpenOffice_${openoffice_version_Linux}_x86-64_install-deb_fr.tar.gz
 tar xzf $openoffice_version
 cd fr/DEBS/
 dpkg -i *.deb
@@ -377,6 +390,13 @@ echo "       ###################################################################
 echo ""
 
 
+echo "Voulez-vous redémarer maintenant ?[O/n]"
+read reponse
+if reponse == "o" || reponse == "O" || reponse == ""
+    reboot
+else
+    exit 0
+fi
 
 ## JEUX
 #apt-get install 0ad
