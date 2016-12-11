@@ -49,7 +49,7 @@ displayandexec() {
 }
 
 # variable globale
-version_system=$(sed 's/\..*//' /etc/debian_version)
+version_system=$(cat /etc/debian_version)
 webmin_version='1.810'
 veracrypt_version='1.19'
 openoffice_version='4.1.3'
@@ -221,7 +221,32 @@ displayandexec "Installation de libtool                             " "$AGI libt
 displayandexec "Installation de libcurl4-openssl-dev                " "$AGI libcurl4-openssl-dev"
 displayandexec "Installation de apache2                             " "$AGI apache2"
 displayandexec "Installation de apachetop                           " "$AGI apachetop"
-displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
+displayandexec "Installation de gcc-4.9-multilib                    " "$AGI gcc-4.9-multilib"
+displayandexec "Installation de gcc-multilib                        " "$AGI gcc-multilib"
+displayandexec "Installation de lib32asan1                          " "$AGI lib32asan1"
+displayandexec "Installation de lib32atomic1                        " "$AGI lib32atomic1"
+displayandexec "Installation de lib32cilkrts5                       " "$AGI lib32cilkrts5"
+displayandexec "Installation de lib32gcc-4.9-dev                    " "$AGI lib32gcc-4.9-dev"
+displayandexec "Installation de lib32gcc-4.9-dev                    " "$AGI lib32gcc-4.9-dev"
+displayandexec "Installation de lib32gcc1                           " "$AGI lib32gcc1"
+displayandexec "Installation de lib32gompl                          " "$AGI lib32gompl"
+displayandexec "Installation de lib32itml                           " "$AGI lib32itml"
+displayandexec "Installation de lib32quadmath0                      " "$AGI lib32quadmath0"
+displayandexec "Installation de lib32stdc++6                        " "$AGI lib32stdc++6"
+displayandexec "Installation de lib32ubsan0                         " "$AGI lib32ubsan0"
+displayandexec "Installation de libc6-dev-x32                       " "$AGI libc6-dev-x32"
+displayandexec "Installation de libc6-i386                          " "$AGI libc6-i386"
+displayandexec "Installation de libc6-x32                           " "$AGI libc6-x32"
+displayandexec "Installation de libx32asan1                         " "$AGI libx32asan1"
+displayandexec "Installation de libx32atomic1                       " "$AGI libx32atomic1"
+displayandexec "Installation de libx32cilkrts5                      " "$AGI libx32cilkrts5"
+displayandexec "Installation de libx32gcc-4.9-dev                   " "$AGI libx32gcc-4.9-dev"
+displayandexec "Installation de libx32gcc1                          " "$AGI libx32gcc1"
+displayandexec "Installation de libx32gompl                         " "$AGI libx32gompl"
+displayandexec "Installation de libx32itml                          " "$AGI libx32itml"
+displayandexec "Installation de libx32quadmath0                     " "$AGI libx32quadmath0"
+displayandexec "Installation de libx32ubsan0                        " "$AGI libx32ubsan0"
+#displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
 #displayandexec "Installation de wireshark                           " "$AGI wireshark"
 #displayandexec "Installation de sslh                                " "$AGI sslh"
 #displayandexec "Installation de wifite                              " "$AGI wifite"
@@ -231,7 +256,6 @@ displayandexec "Installation de phpmyadmin                          " "$AGI phpm
 # displayandexec "Installation de blender                             " "$AGI blender"
 # displayandexec "Installation de sweethome3d                         " "$AGI sweethome3d"
 # displayandexec "Installation de geogebra                            " "$AGI geogebra"
-
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
@@ -250,7 +274,7 @@ displayandexec "Installation de capstone                            " "pip insta
 displayandexec "Installation de metaspoilt                          " "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
 #webmin
-displayandexec "Installation de webmin                              " "wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/webmin_$webmin_version.deb && dpkg -i webmin_$webmin_version_all.deb"
+displayandexec "Installation de webmin                              " "wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/webmin_$(webmin_version).deb && dpkg -i webmin_$(webmin_version)_all.deb"
 
 #veracrypt
 displayandexec "Installation de veracrypt                           " "wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
@@ -295,7 +319,7 @@ apt-get remove Konqueror -y
 apt-get remove iceweasel -y
 
 #OpenOffice
-wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/${openoffice_version}/binaries/fr/Apache_OpenOffice_${openoffice_version_Linux}_x86-64_install-deb_fr.tar.gz
+wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$(openoffice_version)/binaries/fr/Apache_OpenOffice_$(openoffice_version_Linux)_x86-64_install-deb_fr.tar.gz
 tar xzf $openoffice_version
 cd fr/DEBS/
 dpkg -i *.deb
@@ -393,7 +417,7 @@ echo ""
 
 echo "Voulez-vous redémarer maintenant ?[O/n]"
 read reponse
-if reponse == "o" || reponse == "O" || reponse == ""
+if reponse == "o" || reponse == "O" || reponse == ""; then
     reboot
 else
     exit 0
