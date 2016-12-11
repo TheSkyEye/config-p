@@ -49,6 +49,11 @@ displayandexec() {
 }
 
 # variable globale
+uname -a | grep debian &> /dev/null
+if [ $? == 0 ];
+	version_linux='Debian'
+	else version_linux='other linux'
+fi
 version_system=$(cat /etc/debian_version)
 webmin_version='1.810'
 veracrypt_version='1.19'
@@ -69,7 +74,7 @@ echo "                   nom du script       : DEBIAN_POSTINSTALL            "
 echo "                   auteur              : TheSkyEye                     "
 echo "                   version             : 1.0"
 echo "                   lancement du script : bash install.sh               "
-echo "                   version du système  : "$version_system
+echo "                   version du système  : "$version_linux $version_system
 echo ""
 echo "       ================================================================"
 echo ""
@@ -211,6 +216,7 @@ displayandexec "Installation de volatility                          " "$AGI vola
 displayandexec "Installation de cutycapt                            " "$AGI cutycapt"
 displayandexec "Installation de libauthen-pam-perl                  " "$AGI libauthen-pam-perl"
 displayandexec "Installation de beef                                " "$AGI beef"
+displayandexec "Installation de gddrescue                           " "$AGI gddrescue"
 displayandexec "Installation de python-elixir                       " "$AGI python-elixir"
 displayandexec "Installation de apt-show-versions                   " "$AGI apt-show-versions"
 displayandexec "Installation de libio-pty-perl                      " "$AGI libio-pty-perl"
@@ -229,8 +235,8 @@ displayandexec "Installation de lib32cilkrts5                       " "$AGI lib3
 displayandexec "Installation de lib32gcc-4.9-dev                    " "$AGI lib32gcc-4.9-dev"
 displayandexec "Installation de lib32gcc-4.9-dev                    " "$AGI lib32gcc-4.9-dev"
 displayandexec "Installation de lib32gcc1                           " "$AGI lib32gcc1"
-displayandexec "Installation de lib32gompl                          " "$AGI lib32gompl"
-displayandexec "Installation de lib32itml                           " "$AGI lib32itml"
+displayandexec "Installation de lib32gomp1                          " "$AGI lib32gomp1"
+displayandexec "Installation de lib32itm1                           " "$AGI lib32itm1"
 displayandexec "Installation de lib32quadmath0                      " "$AGI lib32quadmath0"
 displayandexec "Installation de lib32stdc++6                        " "$AGI lib32stdc++6"
 displayandexec "Installation de lib32ubsan0                         " "$AGI lib32ubsan0"
@@ -242,8 +248,8 @@ displayandexec "Installation de libx32atomic1                       " "$AGI libx
 displayandexec "Installation de libx32cilkrts5                      " "$AGI libx32cilkrts5"
 displayandexec "Installation de libx32gcc-4.9-dev                   " "$AGI libx32gcc-4.9-dev"
 displayandexec "Installation de libx32gcc1                          " "$AGI libx32gcc1"
-displayandexec "Installation de libx32gompl                         " "$AGI libx32gompl"
-displayandexec "Installation de libx32itml                          " "$AGI libx32itml"
+displayandexec "Installation de libx32gomp1                         " "$AGI libx32gomp1"
+displayandexec "Installation de libx32itm1                          " "$AGI libx32itm1"
 displayandexec "Installation de libx32quadmath0                     " "$AGI libx32quadmath0"
 displayandexec "Installation de libx32ubsan0                        " "$AGI libx32ubsan0"
 #displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
@@ -262,7 +268,7 @@ displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get
 
 echo "###### instalation des logicies avec une instalation special ######"
 #atom
-displayandexec "Installation de atom                                " "wget -q https://atom.io/download/deb && dpkg -i deb"
+displayandexec "Installation de atom                                " "cd /home/install/ && wget -q https://atom.io/download/deb && dpkg -i deb"
 
 #pefile
 displayandexec "Installation de pefile                              " "pip install pefile"
@@ -271,40 +277,40 @@ displayandexec "Installation de pefile                              " "pip insta
 displayandexec "Installation de capstone                            " "pip install capstone"
 
 #metaspoilt
-displayandexec "Installation de metaspoilt                          " "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
+displayandexec "Installation de metaspoilt                          " "cd /home/install/ && curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
 #webmin
-displayandexec "Installation de webmin                              " "wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/webmin_$(webmin_version).deb && dpkg -i webmin_$(webmin_version)_all.deb"
+displayandexec "Installation de webmin                              " "cd /home/install/ && wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/webmin_$(webmin_version).deb && dpkg -i webmin_$(webmin_version)_all.deb"
 
 #veracrypt
-displayandexec "Installation de veracrypt                           " "wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
+displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
 
 #golismero
 displayandexec "Installation de golismero                           " "pip install golismero && ln -s /opt/golismero/golismero.py /usr/bin/golismero"
 
 #set
-displayandexec "Installation de set                                 " "git clone https://github.com/trustedsec/social-engineer-toolkit/ set/ && cd set && python setup.py install"
+displayandexec "Installation de set                                 " "cd /home/install/ && git clone https://github.com/trustedsec/social-engineer-toolkit/ set/ && cd set && python setup.py install"
 #git clone https://github.com/trustedsec/social-engineer-toolkit/ set/
 #cd set
 #python setup.py install
 
 
 #backdoor-factory
+cd /home/install/
 git clone https://github.com/secretsquirrel/the-backdoor-factory
 cd the-backdoor-factory
 sudo ./install.sh
 
 #truecrack
+cd /home/install/
 git clone https://github.com/lvaccaro/truecrack.git
 cd truecrack
 ./configure
 make
 sudo make install
 
-#gddrescue
-apt-get install -y gddrescue
-
 #patator
+cd /home/install/
 git clone https://github.com/lanjelot/patator.git
 mkdir /opt/patator/
 cp patator/patator.py /opt/patator/patator.py
@@ -319,7 +325,7 @@ apt-get remove Konqueror -y
 apt-get remove iceweasel -y
 
 #OpenOffice
-wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$(openoffice_version)/binaries/fr/Apache_OpenOffice_$(openoffice_version_Linux)_x86-64_install-deb_fr.tar.gz
+wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$[openoffice_version]/binaries/fr/Apache_OpenOffice_$[openoffice_version_Linux]_x86-64_install-deb_fr.tar.gz
 tar xzf $openoffice_version
 cd fr/DEBS/
 dpkg -i *.deb
@@ -382,7 +388,7 @@ echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> .bashrc"
-displayandexec "Réinitialisation du bashrc                          " "source ~/root/.bashrc"
+displayandexec "Réinitialisation du bashrc                          " "source /root/.bashrc"
 #source ~/root/.bashrc
 
 #openvas-setup
@@ -415,9 +421,8 @@ echo "       ###################################################################
 echo ""
 
 
-echo "Voulez-vous redémarer maintenant ?[O/n]"
-read reponse
-if reponse == "o" || reponse == "O" || reponse == ""; then
+read -p "Voulez-vous redémarer maintenant ?[O/n] " reponse
+if [reponse == "o" || reponse == "O" || reponse == ""]; then
     reboot
 else
     exit 0
