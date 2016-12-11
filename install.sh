@@ -310,11 +310,7 @@ make
 sudo make install
 
 #patator
-cd /home/install/
-git clone https://github.com/lanjelot/patator.git
-mkdir /opt/patator/
-cp patator/patator.py /opt/patator/patator.py
-ln -s /opt/patator/patator.py /usr/bin/patator
+displayandexec "Installation de golismero                           " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
 
 echo "############## désinstalation des logicels de merde ##############"
 #libreoffice
