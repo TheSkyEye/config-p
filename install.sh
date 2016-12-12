@@ -284,7 +284,7 @@ displayandexec "Installation de metaspoilt                          " "cd /home/
 #webmin
 displayandexec "Installation de webmin                              " "cd /home/install/ && wget -q https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
 
-https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb
+#https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb
 
 #veracrypt
 displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
