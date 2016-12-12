@@ -56,7 +56,7 @@ else
 	version_linux='other linux'
 fi
 version_system=$(cat /etc/debian_version)
-webmin_version='1.810'
+webmin_version='1.820'
 veracrypt_version='1.19'
 openoffice_version='4.1.3'
 AGI='apt-get install -y'
@@ -135,6 +135,7 @@ displayandexec "Installation de vlc                                 " "$AGI vlc"
 displayandexec "Installation de curl                                " "$AGI curl"
 displayandexec "Installation de lynx                                " "$AGI lynx"
 displayandexec "Installation de nikto                               " "$AGI nikto"
+displayandexec "Installation de hydra-gtk                           " "$AGI hydra-gtk"
 displayandexec "Installation de hping3                              " "$AGI hping3"
 displayandexec "Installation de yersinia                            " "$AGI yersinia"
 displayandexec "Installation de sslstrip                            " "$AGI sslstrip"
@@ -281,7 +282,9 @@ displayandexec "Installation de capstone                            " "pip insta
 displayandexec "Installation de metaspoilt                          " "cd /home/install/ && curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
 #webmin
-displayandexec "Installation de webmin                              " "cd /home/install/ && wget -q http://netcologne.dl.sourceforge.net/project/webadmin/webmin/webmin_$[webmin_version].deb && dpkg -i webmin_$[webmin_version]_all.deb"
+displayandexec "Installation de webmin                              " "cd /home/install/ && wget -q https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
+
+https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb
 
 #veracrypt
 displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
@@ -291,10 +294,6 @@ displayandexec "Installation de golismero                           " "pip insta
 
 #set
 displayandexec "Installation de set                                 " "cd /home/install/ && git clone https://github.com/trustedsec/social-engineer-toolkit/ set/ && cd set && python setup.py install"
-#git clone https://github.com/trustedsec/social-engineer-toolkit/ set/
-#cd set
-#python setup.py install
-
 
 #backdoor-factory
 cd /home/install/
@@ -322,8 +321,8 @@ apt-get remove Konqueror -y
 apt-get remove iceweasel -y
 
 #OpenOffice
-wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$[openoffice_version]/binaries/fr/Apache_OpenOffice_$[openoffice_version_Linux]_x86-64_install-deb_fr.tar.gz
-tar xzf Apache_OpenOffice_$[openoffice_version]_x86-64_install-deb_fr.tar.gz
+wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
+tar xzf Apache_OpenOffice_$openoffice_version\_Linux__x86-64_install-deb_fr.tar.gz
 cd fr/DEBS/
 dpkg -i *.deb
 cd desktop-integration/
@@ -384,7 +383,7 @@ echo "alias up='apt-get upgrade'" >> .bashrc
 echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
-displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> .bashrc"
+displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT=\"%Y/%m/%d %T   \"' >> .bashrc"
 displayandexec "Réinitialisation du bashrc                          " "source /root/.bashrc"
 #source ~/root/.bashrc
 
@@ -419,7 +418,7 @@ echo ""
 
 
 read -p "Voulez-vous redémarer maintenant ?[O/n] " reponse
-if [[reponse == "o" || reponse == "O" || reponse == ""]]; then
+if [[ $reponse = "o" || $reponse = "O" || $reponse = "" ]]; then
     reboot
 else
     exit 0
@@ -460,5 +459,4 @@ fi
 
 #if [ $? == 0 ]
 #	then echo -e "$noir[$vertfonceOK$noir]"
-#	else echo -e "$noir[$rougefonceKO$noir]"
-#	fi
+#
