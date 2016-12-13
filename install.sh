@@ -300,15 +300,15 @@ cd the-backdoor-factory
 sudo ./install.sh
 
 #truecrack
-cd /home/install/
-git clone https://github.com/lvaccaro/truecrack.git
-cd truecrack
-./configure
-make
-sudo make install
+#cd /home/install/
+#git clone https://github.com/lvaccaro/truecrack.git
+#cd truecrack
+#./configure
+#make
+#sudo make install
 
 #patator
-displayandexec "Installation de golismero                           " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
+displayandexec "Installation de patator                             " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
 
 echo "############## désinstalation des logicels de merde ##############"
 #libreoffice
@@ -319,12 +319,13 @@ apt-get remove Konqueror -y
 apt-get remove iceweasel -y
 
 #OpenOffice
-wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
-tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
-cd fr/DEBS/
-dpkg -i *.deb
-cd desktop-integration/
-dpkg -i openoffice4.1-debian-menu*.deb
+displayandexec "Installation de OpenOffice                          " "wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && cd fr/DEBS/ && dpkg -i *.deb && cd desktop-integration/ && dpkg -i openoffice4.1-debian-menu*.deb"
+#wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
+#tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
+#cd fr/DEBS/
+#dpkg -i *.deb
+#cd desktop-integration/
+#dpkg -i openoffice4.1-debian-menu*.deb
 
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
@@ -415,12 +416,18 @@ echo "       ###################################################################
 echo ""
 
 
-read -p "Voulez-vous redémarer maintenant ?[O/n] " reponse
-if [[ $reponse = "o" || $reponse = "O" || $reponse = "" ]]; then
+if [ $1 = "reboot" ]; then
     reboot
 else
     exit 0
 fi
+
+#read -p "Voulez-vous redémarer maintenant ?[O/n] " reponse
+#if [[ $reponse = "o" || $reponse = "O" || $reponse = "" ]]; then
+#    reboot
+#else
+#    exit 0
+#fi
 
 ## JEUX
 #apt-get install 0ad
