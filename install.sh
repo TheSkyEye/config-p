@@ -284,8 +284,6 @@ displayandexec "Installation de metaspoilt                          " "cd /home/
 #webmin
 displayandexec "Installation de webmin                              " "cd /home/install/ && wget -q https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
 
-#https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb
-
 #veracrypt
 displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
 
@@ -314,7 +312,7 @@ displayandexec "Installation de golismero                           " "cd /home/
 
 echo "############## désinstalation des logicels de merde ##############"
 #libreoffice
-apt-get remove libreoffice* -y
+displayandexec "désinstalation de libreoffice                       " "apt-get remove libreoffice* -y"
 #Konqueror
 apt-get remove Konqueror -y
 #iceweasel
@@ -322,7 +320,7 @@ apt-get remove iceweasel -y
 
 #OpenOffice
 wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
-tar xzf Apache_OpenOffice_$openoffice_version\_Linux__x86-64_install-deb_fr.tar.gz
+tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
 cd fr/DEBS/
 dpkg -i *.deb
 cd desktop-integration/
@@ -459,4 +457,5 @@ fi
 
 #if [ $? == 0 ]
 #	then echo -e "$noir[$vertfonceOK$noir]"
-#
+#	else echo -e "$noir[$rougefonceKO$noir]"
+#	fi
