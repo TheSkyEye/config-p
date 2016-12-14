@@ -23,7 +23,8 @@ cd /home/install
 
 # création d'un fichier de log
 now=$(date +"%d-%m-%Y")
-log_file=/home/log_script_install-$now.log
+log_file=/var/log/log_script_install-$now.log
+#/var/log/
 touch $log_file
 echo "####################################################################" > $log_file
 echo "#                          Debut du script                         #" >> $log_file
@@ -135,6 +136,8 @@ displayandexec "Installation de vlc                                 " "$AGI vlc"
 displayandexec "Installation de curl                                " "$AGI curl"
 displayandexec "Installation de lynx                                " "$AGI lynx"
 displayandexec "Installation de nikto                               " "$AGI nikto"
+displayandexec "Installation de scapy                               " "$AGI scapy"
+displayandexec "Installation de ngrep                               " "$AGI ngrep"
 displayandexec "Installation de hydra-gtk                           " "$AGI hydra-gtk"
 displayandexec "Installation de hping3                              " "$AGI hping3"
 displayandexec "Installation de yersinia                            " "$AGI yersinia"
@@ -212,6 +215,7 @@ displayandexec "Installation de rifiuti                             " "$AGI rifi
 displayandexec "Installation de rifiuti2                            " "$AGI rifiuti2"
 displayandexec "Installation de safecopy                            " "$AGI safecopy"
 displayandexec "Installation de scalpel                             " "$AGI scalpel"
+displayandexec "Installation de tcptrace                            " "$AGI tcptrace"
 displayandexec "Installation de scrounge-ntfs                       " "$AGI scrounge-ntfs"
 displayandexec "Installation de vinetto                             " "$AGI vinetto"
 displayandexec "Installation de volatility                          " "$AGI volatility"
@@ -264,6 +268,8 @@ displayandexec "Installation de libx32ubsan0                        " "$AGI libx
 # displayandexec "Installation de blender                             " "$AGI blender"
 # displayandexec "Installation de sweethome3d                         " "$AGI sweethome3d"
 # displayandexec "Installation de geogebra                            " "$AGI geogebra"
+#apt-get install tripwire
+#apt-get install tiger
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
@@ -298,14 +304,27 @@ cd /home/install/
 git clone https://github.com/secretsquirrel/the-backdoor-factory
 cd the-backdoor-factory
 sudo ./install.sh
+#tester un simple python backdoor.py
 
 #truecrack
+#apt-get install nvidia-cuda-toolkit
 #cd /home/install/
 #git clone https://github.com/lvaccaro/truecrack.git
 #cd truecrack
 #./configure
 #make
-#sudo make install
+#make install
+
+#ollydbg
+cd /home/install/
+dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y
+wget -q http://www.ollydbg.de/odbg110.zip
+mkdir ollydbg/
+unzip odbg110.zip
+mkdir /opt/ollydbg/
+cp /home/install/ollydbg/* /opt/ollydbg/
+echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
+
 
 #patator
 displayandexec "Installation de patator                             " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
@@ -383,7 +402,8 @@ echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT=\"%Y/%m/%d %T   \"' >> .bashrc"
-displayandexec "Réinitialisation du bashrc                          " "source /root/.bashrc"
+displayandexec "Réinitialisation du bashrc                          " "exec bash"
+#displayandexec "Réinitialisation du bashrc                          " "source /root/.bashrc"
 #source ~/root/.bashrc
 
 #openvas-setup
@@ -416,11 +436,21 @@ echo "       ###################################################################
 echo ""
 
 
-if [ $1 = "reboot" ]; then
+if [ $1 = "-r" ]; then
     reboot
 else
     exit 0
 fi
+
+if [ $1 = "-log" ]; then
+    nano $log_file
+else
+    exit 0
+fi
+
+#Faire la différence entre les paquets installé  de base et les nouveaux paquets
+#comm -3 <(sort /home/liste_paquet_installe.txt) <(sort /home/liste_paquet_installe_postscriptinstall.txt)
+#cat -n /home/liste_paquet_installe_postscriptinstall.txt
 
 #read -p "Voulez-vous redémarer maintenant ?[O/n] " reponse
 #if [[ $reponse = "o" || $reponse = "O" || $reponse = "" ]]; then
