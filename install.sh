@@ -61,8 +61,23 @@ webmin_version='1.820'
 veracrypt_version='1.19'
 openoffice_version='4.1.3'
 AGI='apt-get install -y'
+WGETCONF='--no-check-certificate -q'
 
 clear
+echo ""
+echo "________  __                   ______   __                  ________                     "
+echo "/        |/  |                 /      \ /  |                /        |                    "
+echo "$$$$$$$$/ $$ |____    ______  /$$$$$$  |$$ |   __  __    __ $$$$$$$$/  __    __   ______  "
+echo "   $$ |   $$      \  /      \ $$ \__$$/ $$ |  /  |/  |  /  |$$ |__    /  |  /  | /      \ "
+echo "   $$ |   $$$$$$$  |/$$$$$$  |$$      \ $$ |_/$$/ $$ |  $$ |$$    |   $$ |  $$ |/$$$$$$  |"
+echo "   $$ |   $$ |  $$ |$$    $$ | $$$$$$  |$$   $$<  $$ |  $$ |$$$$$/    $$ |  $$ |$$    $$ |"
+echo "   $$ |   $$ |  $$ |$$$$$$$$/ /  \__$$ |$$$$$$  \ $$ \__$$ |$$ |_____ $$ \__$$ |$$$$$$$$/ "
+echo "   $$ |   $$ |  $$ |$$       |$$    $$/ $$ | $$  |$$    $$ |$$       |$$    $$ |$$       |"
+echo "   $$/    $$/   $$/  $$$$$$$/  $$$$$$/  $$/   $$/  $$$$$$$ |$$$$$$$$/  $$$$$$$ | $$$$$$$/ "
+echo "                                                  /  \__$$ |          /  \__$$ |          "
+echo "                                                  $$    $$/           $$    $$/           "
+echo "                                                   $$$$$$/             $$$$$$/            "
+echo ""
 echo ""
 echo "       ################################################################"
 echo "       #            LANCEMENT DU SCRIPT DEBIAN_POSTINSTALL            #"
@@ -297,13 +312,14 @@ displayandexec "Installation de atom                                " "cd /home/
 displayandexec "Installation de metaspoilt                          " "cd /home/install/ && curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
 #webmin
-displayandexec "Installation de webmin                              " "cd /home/install/ && wget -q https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
+displayandexec "Installation de webmin                              " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
 
 #veracrypt
-displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget -q https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
+displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
 
 #golismero
 displayandexec "Installation de golismero                           " "pip install golismero && ln -s /opt/golismero/golismero.py /usr/bin/golismero"
+## problème de dépendances
 
 #set
 displayandexec "Installation de set                                 " "cd /home/install/ && git clone https://github.com/trustedsec/social-engineer-toolkit/ set/ && cd set && python setup.py install"
@@ -325,28 +341,31 @@ sudo ./install.sh
 #make install
 
 #ollydbg
-cd /home/install/
-dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y
-mkdir ollydbg/
-cd ollydbg/
-wget -q http://www.ollydbg.de/odbg110.zip
-unzip odbg110.zip
-mkdir /opt/ollydbg/
-cp /home/install/ollydbg/* /opt/ollydbg/
+displayandexec "Installation de ollydbg                            " "cd /home/install/ && dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y && mkdir ollydbg/ && cd ollydbg/ && wget -q http://www.ollydbg.de/odbg110.zip && unzip odbg110.zip && mkdir /opt/ollydbg/ && cp /home/install/ollydbg/* /opt/ollydbg/"
+#cd /home/install/
+#dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y
+#mkdir ollydbg/
+#cd ollydbg/
+#wget -q http://www.ollydbg.de/odbg110.zip
+#unzip odbg110.zip
+#mkdir /opt/ollydbg/
+#cp /home/install/ollydbg/* /opt/ollydbg/
 #echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
 
 #Tunna
 cd /opt && git clone https://github.com/SECFORCE/Tunna.git
 
 #recon-ng
-cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git
-ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng
+displayandexec "Installation de recon-ng                            " "cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git && ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng"
+#cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git
+#ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng
 
 #sparta
 cd /opt && git clone https://github.com/secforce/sparta.git
 chmod a+x /opt/sparta/sparta
 ln -s /opt/sparta/sparta /usr/bin/sparta
 # apt-get install python-qt4
+## problème
 
 #patator
 displayandexec "Installation de patator                             " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
@@ -355,13 +374,14 @@ echo "############## désinstalation des logicels de merde ##############"
 #libreoffice
 displayandexec "désinstalation de libreoffice                       " "apt-get remove libreoffice* -y"
 #Konqueror
-apt-get remove Konqueror -y
+displayandexec "désinstalation de Konqueror                         " "apt-get remove Konqueror* -y"
+#apt-get remove Konqueror -y
 #iceweasel
 displayandexec "désinstalation de iceweasel                         " "apt-get remove iceweasel* -y"
 #apt-get remove iceweasel -y
 
 #OpenOffice
-displayandexec "Installation de OpenOffice                          " "wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && cd fr/DEBS/ && dpkg -i *.deb && cd desktop-integration/ && dpkg -i openoffice4.1-debian-menu*.deb"
+displayandexec "Installation de OpenOffice                          " "wget $WGETCONF http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && cd fr/DEBS/ && dpkg -i *.deb && cd desktop-integration/ && dpkg -i openoffice4.1-debian-menu*.deb"
 #wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
 #tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
 #cd fr/DEBS/
@@ -405,7 +425,7 @@ if grep "^$utilisateur" /etc/passwd > /dev/null; then
 	echo "alias x='exit'" >> /home/utilisateur/.bashrc
 	echo "alias xx='sudo shutdown now'" >> /home/utilisateur/.bashrc
 	echo "alias xwx='sudo poweroff'" >> /home/utilisateur/.bashrc
-	echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
+	echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'" >> /home/utilisateur/.bashrc
 	echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> /home/utilisateur/.bashrc
 else
     echo "ko"
@@ -425,7 +445,7 @@ echo "alias up='apt-get upgrade'" >> .bashrc
 echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
-echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
+echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"  >> .bashrc
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT=\"%Y/%m/%d %T   \"' >> .bashrc"
 source /root/.bashrc
 displayandexec "Réinitialisation du bashrc                          " "stat /root/.bashrc && stat /home/utilisateur/.bashrc"
@@ -527,36 +547,3 @@ fi
 #	then echo -e "$noir[$vertfonceOK$noir]"
 #	else echo -e "$noir[$rougefonceKO$noir]"
 #	fi
-
-
-    [[[[[[[[[[[[[[[                              ]]]]]]]]]]]]]]]
-    [::::::::::::::                              ::::::::::::::]
-    [::::::::::::::                              ::::::::::::::]
-    [::::::[[[[[[[:                              :]]]]]]]::::::]
-    [:::::[                                              ]:::::]
-    [:::::[                                              ]:::::]
-    [:::::[                                              ]:::::]
-    [:::::[                                              ]:::::]
-    [:::::[                 ____________                 ]:::::]
-    [:::::[              __________________              ]:::::]
-    [:::::[                                              ]:::::]
-    [:::::[                                              ]:::::]
-    [:::::[                                              ]:::::]
-    [:::::[                                              ]:::::]
-    [::::::[[[[[[[:                              :]]]]]]]::::::]
-    [::::::::::::::                              ::::::::::::::]
-    [::::::::::::::                              ::::::::::::::]
-    [[[[[[[[[[[[[[[                              ]]]]]]]]]]]]]]]
-	
- ________  __                   ______   __                  ________                     
-/        |/  |                 /      \ /  |                /        |                    
-$$$$$$$$/ $$ |____    ______  /$$$$$$  |$$ |   __  __    __ $$$$$$$$/  __    __   ______  
-   $$ |   $$      \  /      \ $$ \__$$/ $$ |  /  |/  |  /  |$$ |__    /  |  /  | /      \ 
-   $$ |   $$$$$$$  |/$$$$$$  |$$      \ $$ |_/$$/ $$ |  $$ |$$    |   $$ |  $$ |/$$$$$$  |
-   $$ |   $$ |  $$ |$$    $$ | $$$$$$  |$$   $$<  $$ |  $$ |$$$$$/    $$ |  $$ |$$    $$ |
-   $$ |   $$ |  $$ |$$$$$$$$/ /  \__$$ |$$$$$$  \ $$ \__$$ |$$ |_____ $$ \__$$ |$$$$$$$$/ 
-   $$ |   $$ |  $$ |$$       |$$    $$/ $$ | $$  |$$    $$ |$$       |$$    $$ |$$       |
-   $$/    $$/   $$/  $$$$$$$/  $$$$$$/  $$/   $$/  $$$$$$$ |$$$$$$$$/  $$$$$$$ | $$$$$$$/ 
-                                                  /  \__$$ |          /  \__$$ |          
-                                                  $$    $$/           $$    $$/           
-                                                   $$$$$$/             $$$$$$/            
