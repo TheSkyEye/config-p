@@ -230,11 +230,18 @@ displayandexec "Installation de automake                            " "$AGI auto
 displayandexec "Installation de autotools-dev                       " "$AGI autotools-dev"
 displayandexec "Installation de libltdl-dev                         " "$AGI libltdl-dev"
 displayandexec "Installation de libtool                             " "$AGI libtool"
+displayandexec "Installation de python-lxml                         " "$AGI python-lxml"
+displayandexec "Installation de python-jsonrpclib                   " "$AGI python-jsonrpclib"
+displayandexec "Installation de python-xlsxwriter                   " "$AGI python-xlsxwriter"
+displayandexec "Installation de python-slowaes                      " "$AGI python-slowaes"
+displayandexec "Installation de python-mechanize                    " "$AGI python-mechanize"
+displayandexec "Installation de python-dnspython                    " "$AGI python-dnspython"
 displayandexec "Installation de libcurl4-openssl-dev                " "$AGI libcurl4-openssl-dev"
 displayandexec "Installation de apache2                             " "$AGI apache2"
 displayandexec "Installation de apachetop                           " "$AGI apachetop"
 displayandexec "Installation de gcc-4.9-multilib                    " "$AGI gcc-4.9-multilib"
 displayandexec "Installation de gcc-multilib                        " "$AGI gcc-multilib"
+displayandexec "Installation de libcanberra-gtk-module              " "$AGI gcc-multilib"
 displayandexec "Installation de lib32asan1                          " "$AGI lib32asan1"
 displayandexec "Installation de lib32atomic1                        " "$AGI lib32atomic1"
 displayandexec "Installation de lib32cilkrts5                       " "$AGI lib32cilkrts5"
@@ -275,14 +282,16 @@ displayandexec "Installation des dépendances manquantes             " "apt-get 
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
 
 echo "###### instalation des logicies avec une instalation special ######"
+#installation des applications avec pip
+displayandexec "Installation de pefile                              " "pip install pefile"
+displayandexec "Installation de dicttoxml                           " "pip install dicttoxml"
+displayandexec "Installation de pypdf2                              " "pip install pypdf2"
+displayandexec "Installation de olefile                             " "pip install olefile"
+displayandexec "Installation de future                              " "pip install future"
+displayandexec "Installation de capstone                            " "pip install capstone"
+
 #atom
 displayandexec "Installation de atom                                " "cd /home/install/ && wget -q https://atom.io/download/deb && dpkg -i deb"
-
-#pefile
-displayandexec "Installation de pefile                              " "pip install pefile"
-
-#capstone
-displayandexec "Installation de capstone                            " "pip install capstone"
 
 #metaspoilt
 displayandexec "Installation de metaspoilt                          " "cd /home/install/ && curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
@@ -318,13 +327,26 @@ sudo ./install.sh
 #ollydbg
 cd /home/install/
 dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y
-wget -q http://www.ollydbg.de/odbg110.zip
 mkdir ollydbg/
+cd ollydbg/
+wget -q http://www.ollydbg.de/odbg110.zip
 unzip odbg110.zip
 mkdir /opt/ollydbg/
 cp /home/install/ollydbg/* /opt/ollydbg/
-echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
+#echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
 
+#Tunna
+cd /opt && git clone https://github.com/SECFORCE/Tunna.git
+
+#recon-ng
+cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git
+ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng
+
+#sparta
+cd /opt && git clone https://github.com/secforce/sparta.git
+chmod a+x /opt/sparta/sparta
+ln -s /opt/sparta/sparta /usr/bin/sparta
+# apt-get install python-qt4
 
 #patator
 displayandexec "Installation de patator                             " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
@@ -335,7 +357,8 @@ displayandexec "désinstalation de libreoffice                       " "apt-get 
 #Konqueror
 apt-get remove Konqueror -y
 #iceweasel
-apt-get remove iceweasel -y
+displayandexec "désinstalation de iceweasel                         " "apt-get remove iceweasel* -y"
+#apt-get remove iceweasel -y
 
 #OpenOffice
 displayandexec "Installation de OpenOffice                          " "wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && cd fr/DEBS/ && dpkg -i *.deb && cd desktop-integration/ && dpkg -i openoffice4.1-debian-menu*.deb"
@@ -382,6 +405,7 @@ if grep "^$utilisateur" /etc/passwd > /dev/null; then
 	echo "alias x='exit'" >> /home/utilisateur/.bashrc
 	echo "alias xx='sudo shutdown now'" >> /home/utilisateur/.bashrc
 	echo "alias xwx='sudo poweroff'" >> /home/utilisateur/.bashrc
+	echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
 	echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> /home/utilisateur/.bashrc
 else
     echo "ko"
@@ -401,10 +425,12 @@ echo "alias up='apt-get upgrade'" >> .bashrc
 echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
+echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT=\"%Y/%m/%d %T   \"' >> .bashrc"
-displayandexec "Réinitialisation du bashrc                          " "exec bash"
+source /root/.bashrc
+displayandexec "Réinitialisation du bashrc                          " "stat /root/.bashrc && stat /home/utilisateur/.bashrc"
 #displayandexec "Réinitialisation du bashrc                          " "source /root/.bashrc"
-#source ~/root/.bashrc
+#source /root/.bashrc
 
 #openvas-setup
 displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update"
@@ -435,6 +461,11 @@ echo "       #                    L'installation est terminée                  
 echo "       ####################################################################"
 echo ""
 
+if [ $1 = "-s" ]; then
+    poweroff
+else
+    exit 0
+fi
 
 if [ $1 = "-r" ]; then
     reboot
@@ -474,8 +505,8 @@ fi
 
 #wget https://dl.opendesktop.org/api/files/download/id/1460735684/174670-breeze-grub.zip
 #unzip 174670-breeze-grub.zip
-#mkdir /boot/grub/themes
 #mv Breeze /boot/grub/themes/
+#mkdir /boot/grub/themes
 #echo 'GRUB_THEME="/boot/grub/themes/Breeze/theme.txt"' >> /etc/default/grub
 #grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -496,3 +527,36 @@ fi
 #	then echo -e "$noir[$vertfonceOK$noir]"
 #	else echo -e "$noir[$rougefonceKO$noir]"
 #	fi
+
+
+    [[[[[[[[[[[[[[[                              ]]]]]]]]]]]]]]]
+    [::::::::::::::                              ::::::::::::::]
+    [::::::::::::::                              ::::::::::::::]
+    [::::::[[[[[[[:                              :]]]]]]]::::::]
+    [:::::[                                              ]:::::]
+    [:::::[                                              ]:::::]
+    [:::::[                                              ]:::::]
+    [:::::[                                              ]:::::]
+    [:::::[                 ____________                 ]:::::]
+    [:::::[              __________________              ]:::::]
+    [:::::[                                              ]:::::]
+    [:::::[                                              ]:::::]
+    [:::::[                                              ]:::::]
+    [:::::[                                              ]:::::]
+    [::::::[[[[[[[:                              :]]]]]]]::::::]
+    [::::::::::::::                              ::::::::::::::]
+    [::::::::::::::                              ::::::::::::::]
+    [[[[[[[[[[[[[[[                              ]]]]]]]]]]]]]]]
+	
+ ________  __                   ______   __                  ________                     
+/        |/  |                 /      \ /  |                /        |                    
+$$$$$$$$/ $$ |____    ______  /$$$$$$  |$$ |   __  __    __ $$$$$$$$/  __    __   ______  
+   $$ |   $$      \  /      \ $$ \__$$/ $$ |  /  |/  |  /  |$$ |__    /  |  /  | /      \ 
+   $$ |   $$$$$$$  |/$$$$$$  |$$      \ $$ |_/$$/ $$ |  $$ |$$    |   $$ |  $$ |/$$$$$$  |
+   $$ |   $$ |  $$ |$$    $$ | $$$$$$  |$$   $$<  $$ |  $$ |$$$$$/    $$ |  $$ |$$    $$ |
+   $$ |   $$ |  $$ |$$$$$$$$/ /  \__$$ |$$$$$$  \ $$ \__$$ |$$ |_____ $$ \__$$ |$$$$$$$$/ 
+   $$ |   $$ |  $$ |$$       |$$    $$/ $$ | $$  |$$    $$ |$$       |$$    $$ |$$       |
+   $$/    $$/   $$/  $$$$$$$/  $$$$$$/  $$/   $$/  $$$$$$$ |$$$$$$$$/  $$$$$$$ | $$$$$$$/ 
+                                                  /  \__$$ |          /  \__$$ |          
+                                                  $$    $$/           $$    $$/           
+                                                   $$$$$$/             $$$$$$/            
