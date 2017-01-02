@@ -65,7 +65,7 @@ WGETCONF='--no-check-certificate -q'
 
 clear
 echo ""
-echo "________  __                   ______   __                  ________                     "
+echo " ________  __                   ______   __                  ________                     "
 echo "/        |/  |                 /      \ /  |                /        |                    "
 echo "$$$$$$$$/ $$ |____    ______  /$$$$$$  |$$ |   __  __    __ $$$$$$$$/  __    __   ______  "
 echo "   $$ |   $$      \  /      \ $$ \__$$/ $$ |  /  |/  |  /  |$$ |__    /  |  /  | /      \ "
@@ -352,6 +352,8 @@ displayandexec "Installation de ollydbg                            " "cd /home/i
 #cp /home/install/ollydbg/* /opt/ollydbg/
 #echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
 
+##touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg
+
 #Tunna
 cd /opt && git clone https://github.com/SECFORCE/Tunna.git
 
@@ -418,6 +420,7 @@ if grep "^$utilisateur" /etc/passwd > /dev/null; then
 	echo "alias l='ls -CF'" >> /home/utilisateur/.bashrc
 	echo "alias h='history'" >> /home/utilisateur/.bashrc
 	echo "alias ne='emacs -nw'" >> /home/utilisateur/.bashrc
+	echo "alias nn='nano'" >> /home/utilisateur/.bashrc
 	echo "alias cl='clear'" >> /home/utilisateur/.bashrc
 	echo "alias i='apt-get install'" >> /home/utilisateur/.bashrc
 	echo "alias u='apt-get update'" >> /home/utilisateur/.bashrc
@@ -425,19 +428,18 @@ if grep "^$utilisateur" /etc/passwd > /dev/null; then
 	echo "alias x='exit'" >> /home/utilisateur/.bashrc
 	echo "alias xx='sudo shutdown now'" >> /home/utilisateur/.bashrc
 	echo "alias xwx='sudo poweroff'" >> /home/utilisateur/.bashrc
-	echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'" >> /home/utilisateur/.bashrc
 	echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> /home/utilisateur/.bashrc
 else
     echo "ko"
 fi
 
 echo "" >> .bashrc
-echo "alias ifconfig='/sbin/ifconfig'" >> .bashrc
 echo "alias ll='ls -l'" >> .bashrc
 echo "alias la='ls -A'" >> .bashrc
 echo "alias l='ls -CF'" >> .bashrc
 echo "alias h='history'" >> .bashrc
 echo "alias ne='emacs -nw'" >> .bashrc
+echo "alias nn='nano'" >> .bashrc
 echo "alias cl='clear'" >> .bashrc
 echo "alias i='apt-get install'" >> .bashrc
 echo "alias u='apt-get update'" >> .bashrc
@@ -445,7 +447,6 @@ echo "alias up='apt-get upgrade'" >> .bashrc
 echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
-echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"  >> .bashrc
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT=\"%Y/%m/%d %T   \"' >> .bashrc"
 source /root/.bashrc
 displayandexec "Réinitialisation du bashrc                          " "stat /root/.bashrc && stat /home/utilisateur/.bashrc"
@@ -465,6 +466,7 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 	#lynis audit system
 #pip install --upgrade pip
 #msfupdate
+##touch /opt/sysupdate && echo "apt-get update && apt-get upgrade -y"
 
 
 rm -rf /home/install
