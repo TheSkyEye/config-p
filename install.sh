@@ -293,6 +293,9 @@ displayandexec "Installation de libx32ubsan0                        " "$AGI libx
 #apt-get install tripwire
 #apt-get install tiger
 
+# no return message of apt
+#export DEBIAN_FRONTEND=noninteractive
+
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
 
