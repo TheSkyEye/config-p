@@ -466,7 +466,7 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 	#lynis audit system
 #pip install --upgrade pip
 #msfupdate
-##touch /opt/sysupdate && echo "apt-get update && apt-get upgrade -y"
+##touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate && echo "#!/bin/bash\napt-get update && apt-get upgrade -y\nmsfupdate\nlynis update check\npip install --upgrade pip\n" >> /opt/sysupdate
 
 
 rm -rf /home/install
