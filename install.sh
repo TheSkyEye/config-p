@@ -354,9 +354,7 @@ displayandexec "Installation de ollydbg                            " "cd /home/i
 #unzip odbg110.zip
 #mkdir /opt/ollydbg/
 #cp /home/install/ollydbg/* /opt/ollydbg/
-#echo "alias ollydbg='wine /opt/ollydbg/OLLYDBG.EXE'"
-
-##touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg
+touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg
 
 #Tunna
 cd /opt && git clone https://github.com/SECFORCE/Tunna.git
