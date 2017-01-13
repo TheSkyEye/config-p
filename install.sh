@@ -523,6 +523,19 @@ case $option in
 esac
 done
 
+
+##!/bin/sh
+# 
+#echo -n "Etes-vous fatigué ? "
+#read on
+# 
+#case "$on" in
+#    oui | o | O | Oui | OUI ) echo "Allez faire du café !";;
+#    non | n | N | Non | NON ) echo "Programmez !";;
+#    * ) echo "Ah bon ?";;
+#esac
+#exit 0
+
 #if [ -x /bin/sh ] ; then
 #	echo "/bin/sh est exécutable. C'est bien."
 #else
