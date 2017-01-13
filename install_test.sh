@@ -353,6 +353,13 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 	#lynis audit system
 #pip install --upgrade pip
 #msfupdate
+
+find / -name Trash
+
+ls /var/cache/apt/archives/ | more
+apt-get clean
+ls /var/cache/apt/archives/ | more
+
 touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate
 touch /opt/gitupdate && chmod a+x /opt/gitupdate && ln -s /opt/gitupdate /usr/bin/gitupdate
 cat <<EOF > /opt/gitupdate
