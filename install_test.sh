@@ -339,7 +339,7 @@ exit 0' >> /opt/gitupdate
 echo '#!/bin/bash
 
 now=$(date +"%d-%m-%Y")
-mkdir /var/log/sysupdate
+[ -f /var/log/sysupdate ] || mkdir /var/log/sysupdate
 log_file=/var/log/sysupdate/update-$now.log
 touch $log_file
 
