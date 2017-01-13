@@ -11,11 +11,6 @@
 #application des mises à jour et modification du sources.list#
 ##############################################################
 
-# Test que le script est lance en root
-if [ $EUID -ne 0 ]; then
-  echo "Le script doit être lancé en root: # sudo $0" 1>&2
-  exit 1
-fi
 
 # création d'un dossier d'instalation
 cd
@@ -143,6 +138,7 @@ displayandexec "Installation de gcc-4.9-multilib                    " "$AGI gcc-
 displayandexec "Installation de gcc-multilib                        " "$AGI gcc-multilib"
 displayandexec "Installation de libcanberra-gtk-module              " "$AGI gcc-multilib"
 displayandexec "Installation de lib32asan1                          " "$AGI lib32asan1"
+displayandexec "Installation de python-pip                          " "$AGI python-pip"
 displayandexec "Installation de lib32atomic1                        " "$AGI lib32atomic1"
 displayandexec "Installation de lib32cilkrts5                       " "$AGI lib32cilkrts5"
 displayandexec "Installation de lib32gcc-4.9-dev                    " "$AGI lib32gcc-4.9-dev"
@@ -233,10 +229,9 @@ displayandexec "Installation de ollydbg                            " "cd /home/i
 #unzip odbg110.zip
 #mkdir /opt/ollydbg/
 #cp /home/install/ollydbg/* /opt/ollydbg/
+apt-get install -y wine mono-xsp
 touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg
 
-#Tunna
-cd /opt && git clone https://github.com/SECFORCE/Tunna.git
 
 #recon-ng
 displayandexec "Installation de recon-ng                            " "cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git && ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng"
@@ -249,28 +244,6 @@ chmod a+x /opt/sparta/sparta
 ln -s /opt/sparta/sparta /usr/bin/sparta
 # apt-get install python-qt4
 ## problème
-
-#patator
-displayandexec "Installation de patator                             " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
-
-echo "############## désinstalation des logicels inutils ##############"
-#libreoffice
-displayandexec "désinstalation de libreoffice                       " "apt-get remove libreoffice* -y"
-#Konqueror
-displayandexec "désinstalation de Konqueror                         " "apt-get remove Konqueror* -y"
-#apt-get remove Konqueror -y
-#iceweasel
-displayandexec "désinstalation de iceweasel                         " "apt-get remove iceweasel* -y"
-#apt-get remove iceweasel -y
-
-#OpenOffice
-displayandexec "Installation de OpenOffice                          " "wget $WGETCONF http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && cd fr/DEBS/ && dpkg -i *.deb && cd desktop-integration/ && dpkg -i openoffice4.1-debian-menu*.deb"
-#wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
-#tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
-#cd fr/DEBS/
-#dpkg -i *.deb
-#cd desktop-integration/
-#dpkg -i openoffice4.1-debian-menu*.deb
 
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
@@ -356,10 +329,6 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 
 find / -name Trash
 
-ls /var/cache/apt/archives/ | more
-apt-get clean
-ls /var/cache/apt/archives/ | more
-
 percent=$((((cat etatprocess | wc -l)*100)/$maxl))
 echo $percent
 
@@ -420,6 +389,7 @@ displayandexec "mise à jour des paquets de metaspoilt               " "msfupdat
 displayandexec "mise à jour des paquets de lynis                    " "lynis update check"
 displayandexec "mise à jour des paquets de pip                      " "pip install --upgrade pip"
 displayandexec "mise à jour des repos GIT                           " "bash /opt/gitupdate"
+displayandexec "Suppression du cache de apt-get                     " "apt-get clean"
 
 exit 0
 EOF
