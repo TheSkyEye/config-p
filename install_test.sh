@@ -280,6 +280,7 @@ displayandexec "Mise à jour des paquets                             " "apt-get 
 ##############################
 #stoper les services inutiles#
 ##############################
+cat /etc/ssh/sshd_config | grep Port
 sed -i -e "s/Port\ 22/Port\ 7894/g" /etc/ssh/sshd_config
 cat /etc/ssh/sshd_config | grep Port
 sleep 2
