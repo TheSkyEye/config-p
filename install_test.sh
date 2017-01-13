@@ -281,6 +281,11 @@ displayandexec "Mise à jour des paquets                             " "apt-get 
 #stoper les services inutiles#
 ##############################
 sed -i -e "s/Port\ 22/Port\ 7894/g" /etc/ssh/sshd_config
+cat /etc/ssh/sshd_config | grep Port
+sleep 2
+sed -i 's/^#?Port .*/Port 2222/' /etc/ssh/sshd_config
+cat /etc/ssh/sshd_config | grep Port
+sleep 2
 /etc/init.d/knockd stop
 /etc/init.d/nginx stop
 /etc/init.d/fail2ban stop
@@ -335,10 +340,10 @@ displayandexec "Réinitialisation du bashrc                          " "stat /ro
 #source /root/.bashrc
 
 #openvas-setup
-displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update"
+displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update && rkhunter --update"
 #lynis --check-update
 	#lynis update check
-displayandexec "Mise à jour de la base de donnée de nikto           " "nikto -update"
+displayandexec "Mise à jour de la base de donnée de nikto           " "nikto -update && nikto -update"
 displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshclam"
 #chkrootkit
 #clamscan
@@ -347,12 +352,15 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 	#lynis audit system
 #pip install --upgrade pip
 #msfupdate
-touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate && echo "#!/bin/bash
+touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate
+cat <<EOF > /opt/sysupdate
+#!/bin/bash
+
 apt-get update && apt-get upgrade -y
 msfupdate
 lynis update check
-pip install --upgrade pip" >> /opt/sysupdate
-
+pip install --upgrade pip
+EOF
 
 rm -rf /home/install
 
