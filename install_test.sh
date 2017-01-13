@@ -311,9 +311,6 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 #msfupdate
 
 
-percent=$((((cat etatprocess | wc -l)*100)/$maxl))
-echo $percent
-
 touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate
 touch /opt/gitupdate && chmod a+x /opt/gitupdate && ln -s /opt/gitupdate /usr/bin/gitupdate
 echo '#!/bin/bash
@@ -406,15 +403,15 @@ echo ""
 #    exit 0
 #fi
 
-while getopts :-s:-log:-r: option
+while getopts "s:log:r:" option
 do
 case $option in
-   -s)
+    s)
     poweroff
     ;;
-  -log)
+   log)
     cat $log_file | more;;
-  -r)
+   r)
     reboot
     ;;
   *) echo "Invalid option: -$OPTARG"
