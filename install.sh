@@ -57,7 +57,7 @@ else
 	version_linux='other linux'
 fi
 version_system=$(cat /etc/debian_version)
-webmin_version='1.820'
+webmin_version='1.831'
 veracrypt_version='1.19'
 openoffice_version='4.1.3'
 AGI='apt-get install -y'
@@ -292,6 +292,7 @@ displayandexec "Installation de libx32ubsan0                        " "$AGI libx
 # displayandexec "Installation de geogebra                            " "$AGI geogebra"
 #apt-get install tripwire
 #apt-get install tiger
+#apt-get install libav-tools
 
 # no return message of apt
 #export DEBIAN_FRONTEND=noninteractive
@@ -375,7 +376,7 @@ ln -s /opt/sparta/sparta /usr/bin/sparta
 #patator
 displayandexec "Installation de patator                             " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
 
-echo "############## désinstalation des logicels de merde ##############"
+echo "############## désinstalation des logicels inutils ##############"
 #libreoffice
 displayandexec "désinstalation de libreoffice                       " "apt-get remove libreoffice* -y"
 #Konqueror
@@ -469,7 +470,11 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 	#lynis audit system
 #pip install --upgrade pip
 #msfupdate
-##touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate && echo "#!/bin/bash\napt-get update && apt-get upgrade -y\nmsfupdate\nlynis update check\npip install --upgrade pip\n" >> /opt/sysupdate
+#touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate && echo "#!/bin/bash
+#apt-get update && apt-get upgrade -y
+#msfupdate
+#lynis update check
+#pip install --upgrade pip" >> /opt/sysupdate
 
 
 rm -rf /home/install
@@ -499,7 +504,7 @@ else
 fi
 
 if [ $1 = "-log" ]; then
-    nano $log_file
+    cat $log_file | more
 else
     exit 0
 fi
