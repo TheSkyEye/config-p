@@ -185,7 +185,7 @@ apt-get install -y macchanger
 #apt-get install libav-tools
 
 # no return message of apt
-#export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
