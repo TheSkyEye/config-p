@@ -367,6 +367,12 @@ displayandexec "mise à jour des paquets de pip                      " "pip inst
 displayandexec "mise à jour des repos GIT                           " "bash /opt/gitupdate"
 displayandexec "Suppression du cache de apt-get                     " "apt-get clean"
 
+if [ $1 = "-log" ]; then
+    cat $log_file | more
+else
+    exit 0
+fi
+
 exit 0' >> /opt/sysupdate
 
 displayandexec "installation du script de mise à jour sysupdate     " "[ -x /opt/sysupdate ]"
