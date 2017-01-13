@@ -360,6 +360,9 @@ ls /var/cache/apt/archives/ | more
 apt-get clean
 ls /var/cache/apt/archives/ | more
 
+percent=$((((cat etatprocess | wc -l)*100)/$maxl))
+echo $percent
+
 touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate
 touch /opt/gitupdate && chmod a+x /opt/gitupdate && ln -s /opt/gitupdate /usr/bin/gitupdate
 cat <<EOF > /opt/gitupdate
