@@ -489,23 +489,47 @@ echo "       #                    L'installation est terminée                  
 echo "       ####################################################################"
 echo ""
 
-if [ $1 = "-s" ]; then
+#if [ $1 = "-s" ]; then
+#    poweroff
+#else
+#    exit 0
+#fi
+
+#if [ $1 = "-r" ]; then
+#    reboot
+#else
+#    exit 0
+#fi
+
+#if [ $1 = "-log" ]; then
+#    cat $log_file | more
+#else
+#    exit 0
+#fi
+
+while getopts -s:-log:-r: option
+do
+case $option in
+   -s)
     poweroff
-else
-    exit 0
-fi
-
-if [ $1 = "-r" ]; then
+    ;;
+  -log)
+    cat $log_file | more;;
+  -r)
     reboot
-else
-    exit 0
-fi
+    ;;
+  *) echo "Invalid option: -$OPTARG"
+    ;;
+esac
+done
 
-if [ $1 = "-log" ]; then
-    cat $log_file | more
-else
-    exit 0
-fi
+#if [ -x /bin/sh ] ; then
+#	echo "/bin/sh est exécutable. C'est bien."
+#else
+#	echo "/bin/sh n'est pas exécutable."
+#	echo "Votre système n'est pas normal."
+#fi
+#OU [ -x /bin/sh ] || echo "/bin/sh n'est pas exécutable."
 
 #Faire la différence entre les paquets installé  de base et les nouveaux paquets
 #comm -3 <(sort /home/liste_paquet_installe.txt) <(sort /home/liste_paquet_installe_postscriptinstall.txt)
@@ -555,3 +579,5 @@ fi
 #	then echo -e "$noir[$vertfonceOK$noir]"
 #	else echo -e "$noir[$rougefonceKO$noir]"
 #	fi
+
+exit 0
