@@ -238,16 +238,13 @@ displayandexec "Mise à jour des paquets                             " "apt-get 
 cat /etc/ssh/sshd_config | grep Port
 sed -i -e "s/Port\ 22/Port\ 7894/g" /etc/ssh/sshd_config
 cat /etc/ssh/sshd_config | grep Port
-sleep 2
-sed -i 's/^#?Port .*/Port 2222/' /etc/ssh/sshd_config
-cat /etc/ssh/sshd_config | grep Port
-sleep 2
 /etc/init.d/knockd stop
 /etc/init.d/nginx stop
 /etc/init.d/fail2ban stop
 /etc/init.d/clamav-freshclam stop
 /etc/init.d/apache2 stop
 /etc/init.d/sshd restart
+/etc/init.d/ssh restart
 
 #########################
 #configuration du bashrc#
@@ -405,7 +402,7 @@ echo ""
 #    exit 0
 #fi
 
-while getopts -s:-log:-r: option
+while getopts :-s:-log:-r: option
 do
 case $option in
    -s)
