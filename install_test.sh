@@ -170,6 +170,10 @@ displayandexec "Installation de libx32ubsan0                        " "$AGI libx
 #displayandexec "Installation de wifite                              " "$AGI wifite"
 #displayandexec "Installation de kismet                              " "$AGI kismet"
 #displayandexec "Installation de macchanger                          " "$AGI macchanger"
+
+# no return message of apt
+export DEBIAN_FRONTEND=noninteractive
+
 apt-get install -y phpmyadmin
 apt-get install -y wireshark
 apt-get install -y sslh
