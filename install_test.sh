@@ -353,13 +353,64 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 #pip install --upgrade pip
 #msfupdate
 touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate
+touch /opt/gitupdate && chmod a+x /opt/gitupdate && ln -s /opt/gitupdate /usr/bin/gitupdate
+cat <<EOF > /opt/gitupdate
+#!/bin/bash
+
+# store the current dir
+CUR_DIR=$(pwd)
+
+# Find all git repositories and update it to the master latest revision
+for i in $(find . -name ".git" | cut -c 3-); do
+    echo "";
+    echo "\033[33m"+$i+"\033[0m";
+
+    # We have to go to the .git parent directory to call the pull command
+    cd "$i";
+    cd ..;
+
+    # finally pull
+    git pull origin master;
+
+    # lets get back to the CUR_DIR
+    cd $CUR_DIR
+done
+
+exit 0
+EOF
+
 cat <<EOF > /opt/sysupdate
 #!/bin/bash
 
-apt-get update && apt-get upgrade -y
-msfupdate
-lynis update check
-pip install --upgrade pip
+now=$(date +"%d-%m-%Y")
+mkdir /var/log/sysupdate
+log_file=/var/log/sysupdate/update-$now.log
+touch $log_file
+
+# Premier parametre: MESSAGE
+# Autres parametres: COMMAND
+displayandexec() {
+  local message=$1
+  echo -n "[En cours] $message"
+  shift
+  echo ">>> $*" >> $log_file 2>&1
+  sh -c "$*" >> $log_file 2>&1
+  local ret=$?
+  if [ $ret -ne 0 ]; then
+    echo -e "\r\e[0;30m $message                \e[0;31m[ERROR]\e[0m "
+  else
+    echo -e "\r\e[0;30m $message                \e[0;32m[OK]\e[0m "
+  fi
+  return $ret
+}
+
+displayandexec "mise à jour des paquets debian                       " "apt-get update && apt-get upgrade -y"
+displayandexec "mise à jour des paquets de metaspoilt                 " "msfupdate"
+displayandexec "mise à jour des paquets de lynis                     " "lynis"
+displayandexec "mise à jour des paquets de pip                       " "pip install --upgrade pip"
+displayandexec "mise à jour des repos GIT                            " "bash /opt/gitupdate"
+
+exit 0
 EOF
 
 rm -rf /home/install
