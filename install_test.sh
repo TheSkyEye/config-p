@@ -406,7 +406,7 @@ displayandexec() {
 
 displayandexec "mise à jour des paquets debian                       " "apt-get update && apt-get upgrade -y"
 displayandexec "mise à jour des paquets de metaspoilt                 " "msfupdate"
-displayandexec "mise à jour des paquets de lynis                     " "lynis"
+displayandexec "mise à jour des paquets de lynis                     " "lynis update check"
 displayandexec "mise à jour des paquets de pip                       " "pip install --upgrade pip"
 displayandexec "mise à jour des repos GIT                            " "bash /opt/gitupdate"
 
