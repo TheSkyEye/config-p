@@ -24,7 +24,6 @@ cd /home/install
 # création d'un fichier de log
 now=$(date +"%d-%m-%Y")
 log_file=/var/log/log_script_install-$now.log
-#/var/log/
 touch $log_file
 echo "####################################################################" > $log_file
 echo "#                          Debut du script                         #" >> $log_file
@@ -67,16 +66,16 @@ clear
 echo ""
 echo " ________  __                   ______   __                  ________                     "
 echo "/        |/  |                 /      \ /  |                /        |                    "
-echo "$$$$$$$$/ $$ |____    ______  /$$$$$$  |$$ |   __  __    __ $$$$$$$$/  __    __   ______  "
-echo "   $$ |   $$      \  /      \ $$ \__$$/ $$ |  /  |/  |  /  |$$ |__    /  |  /  | /      \ "
-echo "   $$ |   $$$$$$$  |/$$$$$$  |$$      \ $$ |_/$$/ $$ |  $$ |$$    |   $$ |  $$ |/$$$$$$  |"
-echo "   $$ |   $$ |  $$ |$$    $$ | $$$$$$  |$$   $$<  $$ |  $$ |$$$$$/    $$ |  $$ |$$    $$ |"
-echo "   $$ |   $$ |  $$ |$$$$$$$$/ /  \__$$ |$$$$$$  \ $$ \__$$ |$$ |_____ $$ \__$$ |$$$$$$$$/ "
-echo "   $$ |   $$ |  $$ |$$       |$$    $$/ $$ | $$  |$$    $$ |$$       |$$    $$ |$$       |"
-echo "   $$/    $$/   $$/  $$$$$$$/  $$$$$$/  $$/   $$/  $$$$$$$ |$$$$$$$$/  $$$$$$$ | $$$$$$$/ "
-echo "                                                  /  \__$$ |          /  \__$$ |          "
-echo "                                                  $$    $$/           $$    $$/           "
-echo "                                                   $$$$$$/             $$$$$$/            "
+echo "%%%%%%%%/ %% |____    ______  /%%%%%%  |%% |   __  __    __ %%%%%%%%/  __    __   ______  "
+echo "   %% |   %%      \  /      \ %% \__%%/ %% |  /  |/  |  /  |%% |__    /  |  /  | /      \ "
+echo "   %% |   %%%%%%%  |/%%%%%%  |%%      \ %% |_/%%/ %% |  %% |%%    |   %% |  %% |/%%%%%%  |"
+echo "   %% |   %% |  %% |%%    %% | %%%%%%  |%%   %%<  %% |  %% |%%%%%/    %% |  %% |%%    %% |"
+echo "   %% |   %% |  %% |%%%%%%%%/ /  \__%% |%%%%%%  \ %% \__%% |%% |_____ %% \__%% |%%%%%%%%/ "
+echo "   %% |   %% |  %% |%%       |%%    %%/ %% | %%  |%%    %% |%%       |%%    %% |%%       |"
+echo "   %%/    %%/   %%/  %%%%%%%/  %%%%%%/  %%/   %%/  %%%%%%% |%%%%%%%%/  %%%%%%% | %%%%%%%/ "
+echo "                                                  /  \__%% |          /  \__%% |          "
+echo "                                                  %%    %%/           %%    %%/           "
+echo "                                                   %%%%%%/             %%%%%%/            "
 echo ""
 echo ""
 echo "       ################################################################"
@@ -329,10 +328,10 @@ displayandexec "Installation de golismero                           " "pip insta
 displayandexec "Installation de set                                 " "cd /home/install/ && git clone https://github.com/trustedsec/social-engineer-toolkit/ set/ && cd set && python setup.py install"
 
 #backdoor-factory
-cd /home/install/
-git clone https://github.com/secretsquirrel/the-backdoor-factory
-cd the-backdoor-factory
-sudo ./install.sh
+#cd /home/install/
+#git clone https://github.com/secretsquirrel/the-backdoor-factory
+#cd the-backdoor-factory
+#sudo ./install.sh
 #tester un simple python backdoor.py
 
 #truecrack
@@ -345,29 +344,18 @@ sudo ./install.sh
 #make install
 
 #ollydbg
-displayandexec "Installation de ollydbg                            " "cd /home/install/ && dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y && mkdir ollydbg/ && cd ollydbg/ && wget -q http://www.ollydbg.de/odbg110.zip && unzip odbg110.zip && mkdir /opt/ollydbg/ && cp /home/install/ollydbg/* /opt/ollydbg/"
-#cd /home/install/
-#dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y
-#mkdir ollydbg/
-#cd ollydbg/
-#wget -q http://www.ollydbg.de/odbg110.zip
-#unzip odbg110.zip
-#mkdir /opt/ollydbg/
-#cp /home/install/ollydbg/* /opt/ollydbg/
-touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg
+displayandexec "Installation de ollydbg                            " "cd /home/install/ && dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y && mkdir ollydbg/ && cd ollydbg/ && wget -q http://www.ollydbg.de/odbg110.zip && unzip odbg110.zip && mkdir /opt/ollydbg/ && cp /home/install/ollydbg/* /opt/ollydbg/ && touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg"
 
 #Tunna
 cd /opt && git clone https://github.com/SECFORCE/Tunna.git
 
 #recon-ng
 displayandexec "Installation de recon-ng                            " "cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git && ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng"
-#cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git
-#ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng
 
 #sparta
-cd /opt && git clone https://github.com/secforce/sparta.git
-chmod a+x /opt/sparta/sparta
-ln -s /opt/sparta/sparta /usr/bin/sparta
+#cd /opt && git clone https://github.com/secforce/sparta.git
+#chmod a+x /opt/sparta/sparta
+#ln -s /opt/sparta/sparta /usr/bin/sparta
 # apt-get install python-qt4
 ## problème
 
@@ -379,24 +367,16 @@ echo "############## désinstalation des logicels inutils ##############"
 displayandexec "désinstalation de libreoffice                       " "apt-get remove libreoffice* -y"
 #Konqueror
 displayandexec "désinstalation de Konqueror                         " "apt-get remove Konqueror* -y"
-#apt-get remove Konqueror -y
 #iceweasel
 displayandexec "désinstalation de iceweasel                         " "apt-get remove iceweasel* -y"
-#apt-get remove iceweasel -y
 
 #OpenOffice
 displayandexec "Installation de OpenOffice                          " "wget $WGETCONF http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && cd fr/DEBS/ && dpkg -i *.deb && cd desktop-integration/ && dpkg -i openoffice4.1-debian-menu*.deb"
-#wget -q  http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
-#tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz
-#cd fr/DEBS/
-#dpkg -i *.deb
-#cd desktop-integration/
-#dpkg -i openoffice4.1-debian-menu*.deb
-
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
 displayandexec "Mise à jour des paquets                             " "apt-get update && apt-get upgrade -y"
+displayandexec "Suppression du cache de apt-get                     " "apt-get clean"
 
 ##############################
 #stoper les services inutiles#
@@ -408,6 +388,7 @@ sed -i -e "s/Port\ 22/Port\ 7894/g" /etc/ssh/sshd_config
 /etc/init.d/clamav-freshclam stop
 /etc/init.d/apache2 stop
 /etc/init.d/sshd restart
+/etc/init.d/ssh restart
 
 #########################
 #configuration du bashrc#
@@ -452,13 +433,8 @@ echo "alias xwx='sudo poweroff'" >> .bashrc
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT=\"%Y/%m/%d %T   \"' >> .bashrc"
 source /root/.bashrc
 displayandexec "Réinitialisation du bashrc                          " "stat /root/.bashrc && stat /home/utilisateur/.bashrc"
-#displayandexec "Réinitialisation du bashrc                          " "source /root/.bashrc"
-#source /root/.bashrc
 
-#openvas-setup
 displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update"
-#lynis --check-update
-	#lynis update check
 displayandexec "Mise à jour de la base de donnée de nikto           " "nikto -update"
 displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshclam"
 #chkrootkit
@@ -466,14 +442,74 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 #tiger -q
 #lynis -c -q
 	#lynis audit system
-#pip install --upgrade pip
-#msfupdate
-#touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate && echo "#!/bin/bash
-#apt-get update && apt-get upgrade -y
-#msfupdate
-#lynis update check
-#pip install --upgrade pip" >> /opt/sysupdate
+#lynis --check-update
+	#lynis update check
 
+touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate
+touch /opt/gitupdate && chmod a+x /opt/gitupdate && ln -s /opt/gitupdate /usr/bin/gitupdate
+echo '#!/bin/bash
+
+# store the current dir
+CUR_DIR=$(pwd)
+
+# Find all git repositories and update it to the master latest revision
+for i in $(find / -name ".git" | cut -c 2-); do
+    echo "";
+    echo "\033[33m"+$i+"\033[0m";
+
+    # We have to go to the .git parent directory to call the pull command
+    cd /"$i";
+    cd ..;
+
+    # finally pull
+    git pull origin master;
+
+    # lets get back to the CUR_DIR
+    cd $CUR_DIR
+done
+
+exit 0' >> /opt/gitupdate
+
+echo '#!/bin/bash
+
+now=$(date +"%d-%m-%Y")
+[ -d /var/log/sysupdate ] || mkdir /var/log/sysupdate
+log_file=/var/log/sysupdate/update-$now.log
+touch $log_file
+
+# Premier parametre: MESSAGE
+# Autres parametres: COMMAND
+displayandexec() {
+  local message=$1
+  echo -n "[En cours] $message"
+  shift
+  echo ">>> $*" >> $log_file 2>&1
+  sh -c "$*" >> $log_file 2>&1
+  local ret=$?
+  if [ $ret -ne 0 ]; then
+    echo -e "\r\e[0;30m $message                \e[0;31m[ERROR]\e[0m "
+  else
+    echo -e "\r\e[0;30m $message                \e[0;32m[OK]\e[0m "
+  fi
+  return $ret
+}
+
+displayandexec "mise à jour des paquets debian                      " "apt-get update && apt-get upgrade -y"
+displayandexec "mise à jour des paquets de metaspoilt               " "msfupdate"
+displayandexec "mise à jour des paquets de lynis                    " "lynis update check"
+displayandexec "mise à jour des paquets de pip                      " "pip install --upgrade pip"
+displayandexec "mise à jour des repos GIT                           " "bash /opt/gitupdate"
+displayandexec "Suppression du cache de apt-get                     " "apt-get clean"
+
+if [ $1 = "-log" ]; then
+    cat $log_file | more
+else
+    exit 0
+fi
+
+exit 0' >> /opt/sysupdate
+
+displayandexec "installation du script de mise à jour sysupdate     " "[ -x /opt/sysupdate ]"
 
 rm -rf /home/install
 
