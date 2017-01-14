@@ -161,12 +161,6 @@ displayandexec "Installation de libx32gomp1                         " "$AGI libx
 displayandexec "Installation de libx32itm1                          " "$AGI libx32itm1"
 displayandexec "Installation de libx32quadmath0                     " "$AGI libx32quadmath0"
 displayandexec "Installation de libx32ubsan0                        " "$AGI libx32ubsan0"
-displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
-displayandexec "Installation de wireshark                           " "$AGI wireshark"
-displayandexec "Installation de sslh                                " "$AGI sslh"
-displayandexec "Installation de wifite                              " "$AGI wifite"
-displayandexec "Installation de kismet                              " "$AGI kismet"
-displayandexec "Installation de macchanger                          " "$AGI macchanger"
 
 # no return message of apt
 #export DEBIAN_FRONTEND=noninteractive
@@ -215,6 +209,13 @@ echo "kismet	kismet/install-setuid	boolean	true" | debconf-set-selections
 # Solution : installer les paquets manuellement avec les bonnes config. Ensuite installer debconf-utils et faire
 # debconf-get-selections | grep nom_du_paquet
 # récupérer les infos obtenus et les injecter dans debconf-set-selections comme suit echo "INFO" | debconf-set-selections
+
+displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
+displayandexec "Installation de wireshark                           " "$AGI wireshark"
+displayandexec "Installation de sslh                                " "$AGI sslh"
+displayandexec "Installation de wifite                              " "$AGI wifite"
+displayandexec "Installation de kismet                              " "$AGI kismet"
+displayandexec "Installation de macchanger                          " "$AGI macchanger"
 
 #apt-get install -y phpmyadmin
 #apt-get install -y wireshark
