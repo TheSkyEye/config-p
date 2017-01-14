@@ -1,4 +1,3 @@
-
 #!/bin/bash
 ##
 ## install.sh for Installation logiciel
@@ -107,7 +106,7 @@ displayandexec "Mise à jour du system                               " "apt-get 
 #Configuration des paquets avec debconf#
 ########################################
 #sslh
-echo "sslh	sslh/inetd_or_standalone	select	from inetd" | debconf-set-selections
+#echo "sslh	sslh/inetd_or_standalone	select	from inetd" | debconf-set-selections
 #wireshark
 echo "wireshark-common	wireshark-common/install-setuid	boolean	false" | debconf-set-selections
 #macchanger
