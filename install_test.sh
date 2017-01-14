@@ -103,6 +103,51 @@ echo ""
 
 displayandexec "Mise à jour du system                               " "apt-get update && apt-get upgrade -y"
 
+########################################
+#Configuration des paquets avec debconf#
+########################################
+#sslh
+echo "sslh	sslh/inetd_or_standalone	select	from inetd" | debconf-set-selections
+#wireshark
+echo "wireshark-common	wireshark-common/install-setuid	boolean	false" | debconf-set-selections
+#macchanger
+echo "macchanger	macchanger/automatically_run	boolean	false" | debconf-set-selections
+#phpmyadmin
+echo "phpmyadmin	phpmyadmin/app-password-confirm	password" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/setup-password	password" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/mysql/app-pass	password" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/mysql/admin-pass	password" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/password-confirm	password" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/internal/skip-preseed	boolean	true" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/remote/port	string" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/dbconfig-install	boolean	false" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/dbconfig-reinstall	boolean	false" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/passwords-do-not-match	error" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/internal/reconfiguring	boolean	false" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/mysql/admin-user	string	root" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/db/dbname	string" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/upgrade-error	select	abort" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/purge	boolean	false" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/install-error	select	abort" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/reconfigure-webserver	multiselect" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/db/app-user	string" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/dbconfig-upgrade	boolean	true" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/missing-db-package-error	select	abort" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/setup-username	string	admin" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/dbconfig-remove	boolean" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/mysql/method	select	unix socket" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/remote/newhost	string" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/database-type	select	mysql" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/upgrade-backup	boolean	true" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/remove-error	select	abort" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/remote/host	select" | debconf-set-selections
+#kismet
+echo "kismet	kismet/install-users	string	root" | debconf-set-selections
+echo "kismet	kismet/install-setuid	boolean	true" | debconf-set-selections
+# Solution : installer les paquets manuellement avec les bonnes config. Ensuite installer debconf-utils et faire
+# debconf-get-selections | grep nom_du_paquet
+# récupérer les infos obtenus et les injecter dans debconf-set-selections comme suit echo "INFO" | debconf-set-selections
+
 ############################
 #installation des logiciels#
 ############################
@@ -161,63 +206,24 @@ displayandexec "Installation de libx32gomp1                         " "$AGI libx
 displayandexec "Installation de libx32itm1                          " "$AGI libx32itm1"
 displayandexec "Installation de libx32quadmath0                     " "$AGI libx32quadmath0"
 displayandexec "Installation de libx32ubsan0                        " "$AGI libx32ubsan0"
-#displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
-#displayandexec "Installation de wireshark                           " "$AGI wireshark"
-#displayandexec "Installation de sslh                                " "$AGI sslh"
-#displayandexec "Installation de wifite                              " "$AGI wifite"
-#displayandexec "Installation de kismet                              " "$AGI kismet"
-#displayandexec "Installation de macchanger                          " "$AGI macchanger"
+displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
+displayandexec "Installation de wireshark                           " "$AGI wireshark"
+displayandexec "Installation de sslh                                " "$AGI sslh"
+displayandexec "Installation de wifite                              " "$AGI wifite"
+displayandexec "Installation de kismet                              " "$AGI kismet"
+displayandexec "Installation de macchanger                          " "$AGI macchanger"
 
 # no return message of apt
 #export DEBIAN_FRONTEND=noninteractive
 
-#Configuration des paquets avec debconf
-#sslh
-echo "sslh	sslh/inetd_or_standalone	select	from inetd" | debconf-set-selections
-#wireshark
-echo "wireshark-common	wireshark-common/install-setuid	boolean	false" | debconf-set-selections
-#macchanger
-echo "macchanger	macchanger/automatically_run	boolean	false" | debconf-set-selections
-#phpmyadmin
-echo "phpmyadmin	phpmyadmin/app-password-confirm	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/setup-password	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/mysql/app-pass	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/mysql/admin-pass	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/password-confirm	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/internal/skip-preseed	boolean	true" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/remote/port	string" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/dbconfig-install	boolean	false" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/dbconfig-reinstall	boolean	false" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/passwords-do-not-match	error" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/internal/reconfiguring	boolean	false" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/mysql/admin-user	string	root" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/db/dbname	string" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/upgrade-error	select	abort" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/purge	boolean	false" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/install-error	select	abort" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/reconfigure-webserver	multiselect" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/db/app-user	string" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/dbconfig-upgrade	boolean	true" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/missing-db-package-error	select	abort" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/setup-username	string	admin" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/dbconfig-remove	boolean" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/mysql/method	select	unix socket" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/remote/newhost	string" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/database-type	select	mysql" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/upgrade-backup	boolean	true" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/remove-error	select	abort" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/remote/host	select" | debconf-set-selections
-#kismet
-echo "kismet	kismet/install-users	string	root" | debconf-set-selections
-echo "kismet	kismet/install-setuid	boolean	true" | debconf-set-selections
 
 
-apt-get install -y phpmyadmin
-apt-get install -y wireshark
-apt-get install -y sslh
-apt-get install -y wifite
-apt-get install -y kismet
-apt-get install -y macchanger
+#apt-get install -y phpmyadmin
+#apt-get install -y wireshark
+#apt-get install -y sslh
+#apt-get install -y wifite
+#apt-get install -y kismet
+#apt-get install -y macchanger
 
 # displayandexec "Installation de blender                             " "$AGI blender"
 # displayandexec "Installation de sweethome3d                         " "$AGI sweethome3d"
