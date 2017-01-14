@@ -142,6 +142,7 @@ displayandexec "Installation de lib32gcc-4.9-dev                    " "$AGI lib3
 displayandexec "Installation de rkhunter                            " "$AGI rkhunter"
 displayandexec "Installation de lynis                               " "$AGI lynis"
 displayandexec "Installation de clamav                              " "$AGI clamav"
+displayandexec "Installation de debconf-utils                       " "$AGI debconf-utils"
 displayandexec "Installation de lib32gcc-4.9-dev                    " "$AGI lib32gcc-4.9-dev"
 displayandexec "Installation de lib32gcc1                           " "$AGI lib32gcc1"
 displayandexec "Installation de lib32gomp1                          " "$AGI lib32gomp1"
