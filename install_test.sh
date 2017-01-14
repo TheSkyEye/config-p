@@ -172,7 +172,14 @@ displayandexec "Installation de libx32ubsan0                        " "$AGI libx
 #displayandexec "Installation de macchanger                          " "$AGI macchanger"
 
 # no return message of apt
-export DEBIAN_FRONTEND=noninteractive
+#export DEBIAN_FRONTEND=noninteractive
+
+echo "sslh	sslh/inetd_or_standalone	select	from inetd" | debconf-set-selections
+echo "wireshark-common	wireshark-common/install-setuid	boolean	false" | debconf-set-selections
+echo "macchanger	macchanger/automatically_run	boolean	false" | debconf-set-selections
+echo "phpmyadmin	phpmyadmin/dbconfig-install	boolean	false" | debconf-set-selections 
+echo "phpmyadmin	phpmyadmin/dbconfig-upgrade	boolean	false" | debconf-set-selections 
+
 
 apt-get install -y phpmyadmin
 apt-get install -y wireshark
@@ -188,8 +195,6 @@ apt-get install -y macchanger
 #apt-get install tiger
 #apt-get install libav-tools
 
-# no return message of apt
-export DEBIAN_FRONTEND=noninteractive
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
