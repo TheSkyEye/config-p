@@ -170,33 +170,58 @@ displayandexec "Installation de libx32ubsan0                        " "$AGI libx
 #Configuration des paquets avec debconf#
 ########################################
 #sslh
+echo a
 echo "sslh	sslh/inetd_or_standalone	select	from inetd" | debconf-set-selections
 #wireshark
+echo b
 echo "wireshark-common	wireshark-common/install-setuid	boolean	false" | debconf-set-selections
 #macchanger
+echo c
 echo "macchanger	macchanger/automatically_run	boolean	false" | debconf-set-selections
 #phpmyadmin
+echo d
 echo "phpmyadmin	phpmyadmin/app-password-confirm	password" | debconf-set-selections
+echo f
 echo "phpmyadmin	phpmyadmin/setup-password	password" | debconf-set-selections
+echo g
 echo "phpmyadmin	phpmyadmin/mysql/app-pass	password" | debconf-set-selections
+echo h
 echo "phpmyadmin	phpmyadmin/mysql/admin-pass	password" | debconf-set-selections
+echo i
 echo "phpmyadmin	phpmyadmin/password-confirm	password" | debconf-set-selections
+echo j
 echo "phpmyadmin	phpmyadmin/internal/skip-preseed	boolean	true" | debconf-set-selections
+echo k
 echo "phpmyadmin	phpmyadmin/remote/port	string" | debconf-set-selections
+echo l
 echo "phpmyadmin	phpmyadmin/dbconfig-install	boolean	false" | debconf-set-selections
+echo m
 echo "phpmyadmin	phpmyadmin/dbconfig-reinstall	boolean	false" | debconf-set-selections
+echo n
 echo "phpmyadmin	phpmyadmin/passwords-do-not-match	error" | debconf-set-selections
+echo o
 echo "phpmyadmin	phpmyadmin/internal/reconfiguring	boolean	false" | debconf-set-selections
+echo p
 echo "phpmyadmin	phpmyadmin/mysql/admin-user	string	root" | debconf-set-selections
+echo q
 echo "phpmyadmin	phpmyadmin/db/dbname	string" | debconf-set-selections
+echo r
 echo "phpmyadmin	phpmyadmin/upgrade-error	select	abort" | debconf-set-selections
+echo s
 echo "phpmyadmin	phpmyadmin/purge	boolean	false" | debconf-set-selections
+echo t
 echo "phpmyadmin	phpmyadmin/install-error	select	abort" | debconf-set-selections
+echo u
 echo "phpmyadmin	phpmyadmin/reconfigure-webserver	multiselect" | debconf-set-selections
+echo v
 echo "phpmyadmin	phpmyadmin/db/app-user	string" | debconf-set-selections
+echo w
 echo "phpmyadmin	phpmyadmin/dbconfig-upgrade	boolean	true" | debconf-set-selections
+echo x
 echo "phpmyadmin	phpmyadmin/missing-db-package-error	select	abort" | debconf-set-selections
+echo y
 echo "phpmyadmin	phpmyadmin/setup-username	string	admin" | debconf-set-selections
+echo z
 echo "phpmyadmin	phpmyadmin/dbconfig-remove	boolean" | debconf-set-selections
 echo "phpmyadmin	phpmyadmin/mysql/method	select	unix socket" | debconf-set-selections
 echo "phpmyadmin	phpmyadmin/remote/newhost	string" | debconf-set-selections
@@ -230,7 +255,7 @@ displayandexec "Installation de macchanger                          " "$AGI macc
 # displayandexec "Installation de geogebra                            " "$AGI geogebra"
 #apt-get install tripwire
 #apt-get install tiger
-#apt-get install libav-tools
+apt-get install -y libav-tools
 
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
@@ -451,19 +476,27 @@ echo ""
 #    exit 0
 #fi
 
-while getopts "s:log:r:" option
-do
-case $option in
-    s)
-    poweroff
-    ;;
-   log)
-    cat $log_file | more;;
-   r)
-    reboot
-    ;;
-  *) echo "Invalid option: -$OPTARG"
-    ;;
+touch /home/convert.sh
+chmod a+x /home/convert.sh
+echo 'ls -1 |grep mkv | awk -F. '{print $1}' | while read entree	
+	do
+   		avconf -i ${entree}.mkv -vn -ar 44100 -ac 2 -f wav ${entree}.wav
+   	done
+ls -1 |grep mp4 | awk -F. '{print $1}' | while read entree
+	do
+		avconf -i ${entree}.mp4 -vn -ar 44100 -ac 2 -f wav ${entree}.wav
+	done' >> /home/convert.sh
+
+for param in "$@"; do
+case $param in
+	"-s")
+		poweroff;;
+	"-log")
+		cat $log_file | more;;
+	"-r")
+		reboot;;
+	*)
+		echo "Invalid option";;
 esac
 done
 
