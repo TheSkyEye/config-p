@@ -198,7 +198,7 @@ echo "phpmyadmin	phpmyadmin/dbconfig-install	boolean	false" | debconf-set-select
 echo m
 echo "phpmyadmin	phpmyadmin/dbconfig-reinstall	boolean	false" | debconf-set-selections
 echo n
-echo "phpmyadmin	phpmyadmin/passwords-do-not-match	error" | debconf-set-selections
+#echo "phpmyadmin	phpmyadmin/passwords-do-not-match	error" | debconf-set-selections
 echo o
 echo "phpmyadmin	phpmyadmin/internal/reconfiguring	boolean	false" | debconf-set-selections
 echo p
