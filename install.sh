@@ -135,7 +135,9 @@ displayandexec "Installation de scribus                             " "$AGI scri
 displayandexec "Installation de gitk                                " "$AGI gitk"
 displayandexec "Installation de fail2ban                            " "$AGI fail2ban"
 displayandexec "Installation de filezilla                           " "$AGI filezilla"
-displayandexec "Installation de wine                                " "$AGI wine"
+displayandexec "Installation de wine                                " "$AGI zip"
+displayandexec "Installation de mplayer                             " "$AGI mplayer"
+displayandexec "Installation de zip                                 " "$AGI wine"
 displayandexec "Installation de yasat                               " "$AGI yasat"
 displayandexec "Installation de psutils                             " "$AGI psutils"
 displayandexec "Installation de pdfmod                              " "$AGI pdfmod"
@@ -150,6 +152,7 @@ displayandexec "Installation de vlc                                 " "$AGI vlc"
 displayandexec "Installation de curl                                " "$AGI curl"
 displayandexec "Installation de lynx                                " "$AGI lynx"
 displayandexec "Installation de nikto                               " "$AGI nikto"
+displayandexec "Installation de libav-tools                         " "$AGI libav-tools"
 displayandexec "Installation de scapy                               " "$AGI scapy"
 displayandexec "Installation de ngrep                               " "$AGI ngrep"
 displayandexec "Installation de hydra-gtk                           " "$AGI hydra-gtk"
@@ -403,7 +406,7 @@ if grep "^$utilisateur" /etc/passwd > /dev/null; then
 	echo "alias l='ls -CF'" >> /home/utilisateur/.bashrc
 	echo "alias h='history'" >> /home/utilisateur/.bashrc
 	echo "alias ne='emacs -nw'" >> /home/utilisateur/.bashrc
-	echo "alias nn='nano'" >> /home/utilisateur/.bashrc
+	echo "alias nn='nano -c'" >> /home/utilisateur/.bashrc
 	echo "alias cl='clear'" >> /home/utilisateur/.bashrc
 	echo "alias i='apt-get install'" >> /home/utilisateur/.bashrc
 	echo "alias u='apt-get update'" >> /home/utilisateur/.bashrc
@@ -411,6 +414,7 @@ if grep "^$utilisateur" /etc/passwd > /dev/null; then
 	echo "alias x='exit'" >> /home/utilisateur/.bashrc
 	echo "alias xx='sudo shutdown now'" >> /home/utilisateur/.bashrc
 	echo "alias xwx='sudo poweroff'" >> /home/utilisateur/.bashrc
+	echo "alias funradio='mplayer -nocache http://streaming.radio.funradio.fr/fun-1-48-192'" >> .bashrc
 	echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> /home/utilisateur/.bashrc
 else
     echo "ko"
@@ -422,7 +426,7 @@ echo "alias la='ls -A'" >> .bashrc
 echo "alias l='ls -CF'" >> .bashrc
 echo "alias h='history'" >> .bashrc
 echo "alias ne='emacs -nw'" >> .bashrc
-echo "alias nn='nano'" >> .bashrc
+echo "alias nn='nano -c'" >> .bashrc
 echo "alias cl='clear'" >> .bashrc
 echo "alias i='apt-get install'" >> .bashrc
 echo "alias u='apt-get update'" >> .bashrc
@@ -430,6 +434,7 @@ echo "alias up='apt-get upgrade'" >> .bashrc
 echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
+echo "alias funradio='mplayer -nocache http://streaming.radio.funradio.fr/fun-1-48-192'" >> .bashrc
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT=\"%Y/%m/%d %T   \"' >> .bashrc"
 source /root/.bashrc
 displayandexec "Réinitialisation du bashrc                          " "stat /root/.bashrc && stat /home/utilisateur/.bashrc"
