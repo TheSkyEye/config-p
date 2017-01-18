@@ -10,6 +10,11 @@
 #application des mises à jour et modification du sources.list#
 ##############################################################
 
+# Test que le script est lance en root
+if [ $EUID -ne 0 ]; then
+  echo "Le script doit être lancé en root: # sudo $0" 1>&2
+  exit 1
+fi
 
 # création d'un dossier d'instalation
 cd
@@ -19,7 +24,6 @@ cd /home/install
 # création d'un fichier de log
 now=$(date +"%d-%m-%Y")
 log_file=/var/log/log_script_install-$now.log
-#/var/log/
 touch $log_file
 echo "####################################################################" > $log_file
 echo "#                          Debut du script                         #" >> $log_file
@@ -102,7 +106,6 @@ echo ""
 
 displayandexec "Mise à jour du system                               " "apt-get update && apt-get upgrade -y"
 
-
 ############################
 #installation des logiciels#
 ############################
@@ -113,6 +116,126 @@ echo "       ################################################################"
 echo ""
 
 displayandexec "Installation de ssh                                 " "$AGI ssh"
+displayandexec "Installation de emacs                               " "$AGI emacs"
+displayandexec "Installation de virtualbox                          " "$AGI virtualbox"
+displayandexec "Installation de chromium                            " "$AGI chromium-l10n"
+displayandexec "Installation de knockd                              " "$AGI knockd"
+displayandexec "Installation de audacity                            " "$AGI audacity"
+displayandexec "Installation de calibre                             " "$AGI calibre"
+displayandexec "Installation de clamav                              " "$AGI clamav"
+displayandexec "Installation de clamtk                              " "$AGI clamtk"
+displayandexec "Installation de qemu                                " "$AGI qemu"
+displayandexec "Installation de keepassx                            " "$AGI keepassx"
+displayandexec "Installation de htop                                " "$AGI htop"
+displayandexec "Installation de valgrind                            " "$AGI valgrind"
+displayandexec "Installation de python-pip                          " "$AGI python-pip"
+displayandexec "Installation de handbrake                           " "$AGI handbrake"
+displayandexec "Installation de uget                                " "$AGI uget"
+displayandexec "Installation de scribus                             " "$AGI scribus"
+displayandexec "Installation de gitk                                " "$AGI gitk"
+displayandexec "Installation de fail2ban                            " "$AGI fail2ban"
+displayandexec "Installation de filezilla                           " "$AGI filezilla"
+displayandexec "Installation de wine                                " "$AGI zip"
+displayandexec "Installation de mplayer                             " "$AGI mplayer"
+displayandexec "Installation de zip                                 " "$AGI wine"
+displayandexec "Installation de yasat                               " "$AGI yasat"
+displayandexec "Installation de psutils                             " "$AGI psutils"
+displayandexec "Installation de pdfmod                              " "$AGI pdfmod"
+displayandexec "Installation de aircrack-ng                         " "$AGI aircrack-ng"
+displayandexec "Installation de nginx                               " "$AGI nginx"
+displayandexec "Installation de ettercap-graphical                  " "$AGI ettercap-graphical"
+displayandexec "Installation de nodejs                              " "$AGI nodejs"
+displayandexec "Installation de npm                                 " "$AGI npm"
+displayandexec "Installation de gparted                             " "$AGI gparted"
+displayandexec "Installation de chkrootkit                          " "$AGI chkrootkit"
+displayandexec "Installation de vlc                                 " "$AGI vlc"
+displayandexec "Installation de curl                                " "$AGI curl"
+displayandexec "Installation de lynx                                " "$AGI lynx"
+displayandexec "Installation de nikto                               " "$AGI nikto"
+displayandexec "Installation de libav-tools                         " "$AGI libav-tools"
+displayandexec "Installation de scapy                               " "$AGI scapy"
+displayandexec "Installation de ngrep                               " "$AGI ngrep"
+displayandexec "Installation de hydra-gtk                           " "$AGI hydra-gtk"
+displayandexec "Installation de hping3                              " "$AGI hping3"
+displayandexec "Installation de yersinia                            " "$AGI yersinia"
+displayandexec "Installation de sslstrip                            " "$AGI sslstrip"
+displayandexec "Installation de arping                              " "$AGI arping"
+displayandexec "Installation de dnstracer                           " "$AGI dnstracer"
+displayandexec "Installation de ike-scan                            " "$AGI ike-scan"
+displayandexec "Installation de netdiscover                         " "$AGI netdiscover"
+displayandexec "Installation de p0f                                 " "$AGI p0f"
+displayandexec "Installation de pscan                               " "$AGI pscan"
+displayandexec "Installation de arduino                             " "$AGI arduino"
+displayandexec "Installation de arpwatch                            " "$AGI arpwatch"
+displayandexec "Installation de masscan                             " "$AGI masscan"
+displayandexec "Installation de sslscan                             " "$AGI sslscan"
+displayandexec "Installation de lynis                               " "$AGI lynis"
+displayandexec "Installation de siege                               " "$AGI siege"
+displayandexec "Installation de httrack                             " "$AGI httrack"
+displayandexec "Installation de cadaver                             " "$AGI cadaver"
+displayandexec "Installation de tcpdump                             " "$AGI tcpdump"
+displayandexec "Installation de icmpush                             " "$AGI icmpush"
+displayandexec "Installation de tcpreplay                           " "$AGI tcpreplay"
+displayandexec "Installation de xprobe                              " "$AGI xprobe"
+displayandexec "Installation de logcheck                            " "$AGI logcheck"
+displayandexec "Installation de flawfinder                          " "$AGI flawfinder"
+displayandexec "Installation de skipfish                            " "$AGI skipfish"
+displayandexec "Installation de w3af                                " "$AGI w3af"
+displayandexec "Installation de nbtscan                             " "$AGI nbtscan"
+displayandexec "Installation de knocker                             " "$AGI knocker"
+displayandexec "Installation de wapiti                              " "$AGI wapiti"
+displayandexec "Installation de logwatch                            " "$AGI logwatch"
+displayandexec "Installation de rkhunter                            " "$AGI rkhunter"
+displayandexec "Installation de whatweb                             " "$AGI whatweb"
+displayandexec "Installation de crunch                              " "$AGI crunch"
+displayandexec "Installation de splint                              " "$AGI splint"
+displayandexec "Installation de fcrackzip                           " "$AGI fcrackzip"
+displayandexec "Installation de cmospwd                             " "$AGI cmospwd"
+displayandexec "Installation de john                                " "$AGI john"
+displayandexec "Installation de medusa                              " "$AGI medusa"
+displayandexec "Installation de ophcrack                            " "$AGI ophcrack"
+displayandexec "Installation de samdump2                            " "$AGI samdump2"
+displayandexec "Installation de sipcrack                            " "$AGI sipcrack"
+displayandexec "Installation de sucrack                             " "$AGI sucrack"
+displayandexec "Installation de btscanner                           " "$AGI btscanner"
+displayandexec "Installation de clang                               " "$AGI clang"
+displayandexec "Installation de flasm                               " "$AGI flasm"
+displayandexec "Installation de radare2                             " "$AGI radare2"
+displayandexec "Installation de dsniff                              " "$AGI dsniff"
+displayandexec "Installation de darkstat                            " "$AGI darkstat"
+displayandexec "Installation de mitmproxy                           " "$AGI mitmproxy"
+displayandexec "Installation de driftnet                            " "$AGI driftnet"
+displayandexec "Installation de sslsniff                            " "$AGI sslsniff"
+displayandexec "Installation de tcpflow                             " "$AGI tcpflow"
+displayandexec "Installation de tcpreplay                           " "$AGI tcpreplay"
+displayandexec "Installation de iodine                              " "$AGI iodine"
+displayandexec "Installation de miredo                              " "$AGI miredo"
+displayandexec "Installation de proxychains                         " "$AGI proxychains"
+displayandexec "Installation de proxytunnel                         " "$AGI proxytunnel"
+displayandexec "Installation de ptunnel                             " "$AGI ptunnel"
+displayandexec "Installation de stunnel4                            " "$AGI stunnel4"
+displayandexec "Installation de udptunnel                           " "$AGI udptunnel"
+displayandexec "Installation de autopsy                             " "$AGI autopsy"
+displayandexec "Installation de binwalk                             " "$AGI binwalk"
+displayandexec "Installation de dc3dd                               " "$AGI dc3dd"
+displayandexec "Installation de dcfldd                              " "$AGI dcfldd"
+displayandexec "Installation de dff                                 " "$AGI dff"
+displayandexec "Installation de extundelete                         " "$AGI extundelete"
+displayandexec "Installation de foremost                            " "$AGI foremost"
+displayandexec "Installation de guymager                            " "$AGI guymager"
+displayandexec "Installation de magicrescue                         " "$AGI magicrescue"
+displayandexec "Installation de pasco                               " "$AGI pasco"
+displayandexec "Installation de pev                                 " "$AGI pev"
+displayandexec "Installation de readpst                             " "$AGI readpst"
+displayandexec "Installation de recoverjpeg                         " "$AGI recoverjpeg"
+displayandexec "Installation de rifiuti                             " "$AGI rifiuti"
+displayandexec "Installation de rifiuti2                            " "$AGI rifiuti2"
+displayandexec "Installation de safecopy                            " "$AGI safecopy"
+displayandexec "Installation de scalpel                             " "$AGI scalpel"
+displayandexec "Installation de tcptrace                            " "$AGI tcptrace"
+displayandexec "Installation de scrounge-ntfs                       " "$AGI scrounge-ntfs"
+displayandexec "Installation de vinetto                             " "$AGI vinetto"
+displayandexec "Installation de volatility                          " "$AGI volatility"
 displayandexec "Installation de cutycapt                            " "$AGI cutycapt"
 displayandexec "Installation de libauthen-pam-perl                  " "$AGI libauthen-pam-perl"
 displayandexec "Installation de beef                                " "$AGI beef"
@@ -123,6 +246,7 @@ displayandexec "Installation de libio-pty-perl                      " "$AGI libi
 displayandexec "Installation de automake                            " "$AGI automake"
 displayandexec "Installation de autotools-dev                       " "$AGI autotools-dev"
 displayandexec "Installation de libltdl-dev                         " "$AGI libltdl-dev"
+displayandexec "Installation de python-dev                          " "$AGI python-dev"
 displayandexec "Installation de libtool                             " "$AGI libtool"
 displayandexec "Installation de python-lxml                         " "$AGI python-lxml"
 displayandexec "Installation de python-jsonrpclib                   " "$AGI python-jsonrpclib"
@@ -131,18 +255,15 @@ displayandexec "Installation de python-slowaes                      " "$AGI pyth
 displayandexec "Installation de python-mechanize                    " "$AGI python-mechanize"
 displayandexec "Installation de python-dnspython                    " "$AGI python-dnspython"
 displayandexec "Installation de libcurl4-openssl-dev                " "$AGI libcurl4-openssl-dev"
+displayandexec "Installation de apache2                             " "$AGI apache2"
+displayandexec "Installation de apachetop                           " "$AGI apachetop"
 displayandexec "Installation de gcc-4.9-multilib                    " "$AGI gcc-4.9-multilib"
 displayandexec "Installation de gcc-multilib                        " "$AGI gcc-multilib"
 displayandexec "Installation de libcanberra-gtk-module              " "$AGI gcc-multilib"
 displayandexec "Installation de lib32asan1                          " "$AGI lib32asan1"
-displayandexec "Installation de python-pip                          " "$AGI python-pip"
 displayandexec "Installation de lib32atomic1                        " "$AGI lib32atomic1"
 displayandexec "Installation de lib32cilkrts5                       " "$AGI lib32cilkrts5"
 displayandexec "Installation de lib32gcc-4.9-dev                    " "$AGI lib32gcc-4.9-dev"
-displayandexec "Installation de rkhunter                            " "$AGI rkhunter"
-displayandexec "Installation de lynis                               " "$AGI lynis"
-displayandexec "Installation de clamav                              " "$AGI clamav"
-displayandexec "Installation de debconf-utils                       " "$AGI debconf-utils"
 displayandexec "Installation de lib32gcc-4.9-dev                    " "$AGI lib32gcc-4.9-dev"
 displayandexec "Installation de lib32gcc1                           " "$AGI lib32gcc1"
 displayandexec "Installation de lib32gomp1                          " "$AGI lib32gomp1"
@@ -163,9 +284,6 @@ displayandexec "Installation de libx32itm1                          " "$AGI libx
 displayandexec "Installation de libx32quadmath0                     " "$AGI libx32quadmath0"
 displayandexec "Installation de libx32ubsan0                        " "$AGI libx32ubsan0"
 
-# no return message of apt
-#export DEBIAN_FRONTEND=noninteractive
-
 ########################################
 #Configuration des paquets avec debconf#
 ########################################
@@ -179,49 +297,26 @@ echo "wireshark-common	wireshark-common/install-setuid	boolean	false" | debconf-
 echo c
 echo "macchanger	macchanger/automatically_run	boolean	false" | debconf-set-selections
 #phpmyadmin
-echo d
 echo "phpmyadmin	phpmyadmin/app-password-confirm	password" | debconf-set-selections
-echo f
 echo "phpmyadmin	phpmyadmin/setup-password	password" | debconf-set-selections
-echo g
 echo "phpmyadmin	phpmyadmin/mysql/app-pass	password" | debconf-set-selections
-echo h
 echo "phpmyadmin	phpmyadmin/mysql/admin-pass	password" | debconf-set-selections
-echo i
 echo "phpmyadmin	phpmyadmin/password-confirm	password" | debconf-set-selections
-echo j
 echo "phpmyadmin	phpmyadmin/internal/skip-preseed	boolean	true" | debconf-set-selections
-echo k
 echo "phpmyadmin	phpmyadmin/remote/port	string" | debconf-set-selections
-echo l
 echo "phpmyadmin	phpmyadmin/dbconfig-install	boolean	false" | debconf-set-selections
-echo m
 echo "phpmyadmin	phpmyadmin/dbconfig-reinstall	boolean	false" | debconf-set-selections
-echo n
-#echo "phpmyadmin	phpmyadmin/passwords-do-not-match	error" | debconf-set-selections
-echo o
 echo "phpmyadmin	phpmyadmin/internal/reconfiguring	boolean	false" | debconf-set-selections
-echo p
 echo "phpmyadmin	phpmyadmin/mysql/admin-user	string	root" | debconf-set-selections
-echo q
 echo "phpmyadmin	phpmyadmin/db/dbname	string" | debconf-set-selections
-echo r
 echo "phpmyadmin	phpmyadmin/upgrade-error	select	abort" | debconf-set-selections
-echo s
 echo "phpmyadmin	phpmyadmin/purge	boolean	false" | debconf-set-selections
-echo t
 echo "phpmyadmin	phpmyadmin/install-error	select	abort" | debconf-set-selections
-echo u
 echo "phpmyadmin	phpmyadmin/reconfigure-webserver	multiselect" | debconf-set-selections
-echo v
 echo "phpmyadmin	phpmyadmin/db/app-user	string" | debconf-set-selections
-echo w
 echo "phpmyadmin	phpmyadmin/dbconfig-upgrade	boolean	true" | debconf-set-selections
-echo x
 echo "phpmyadmin	phpmyadmin/missing-db-package-error	select	abort" | debconf-set-selections
-echo y
 echo "phpmyadmin	phpmyadmin/setup-username	string	admin" | debconf-set-selections
-echo z
 echo "phpmyadmin	phpmyadmin/dbconfig-remove	boolean" | debconf-set-selections
 echo "phpmyadmin	phpmyadmin/mysql/method	select	unix socket" | debconf-set-selections
 echo "phpmyadmin	phpmyadmin/remote/newhost	string" | debconf-set-selections
@@ -243,20 +338,13 @@ displayandexec "Installation de wifite                              " "$AGI wifi
 displayandexec "Installation de kismet                              " "$AGI kismet"
 displayandexec "Installation de macchanger                          " "$AGI macchanger"
 
-#apt-get install -y phpmyadmin
-#apt-get install -y wireshark
-#apt-get install -y sslh
-#apt-get install -y wifite
-#apt-get install -y kismet
-#apt-get install -y macchanger
 
 # displayandexec "Installation de blender                             " "$AGI blender"
 # displayandexec "Installation de sweethome3d                         " "$AGI sweethome3d"
 # displayandexec "Installation de geogebra                            " "$AGI geogebra"
 #apt-get install tripwire
 #apt-get install tiger
-apt-get install -y libav-tools
-
+#apt-get install libav-tools
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
@@ -270,15 +358,30 @@ displayandexec "Installation de olefile                             " "pip insta
 displayandexec "Installation de future                              " "pip install future"
 displayandexec "Installation de capstone                            " "pip install capstone"
 
+#atom
+displayandexec "Installation de atom                                " "cd /home/install/ && wget -q https://atom.io/download/deb && dpkg -i deb"
+
+#metaspoilt
+displayandexec "Installation de metaspoilt                          " "cd /home/install/ && curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
+
+#webmin
+displayandexec "Installation de webmin                              " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
+
+#veracrypt
+displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
+
 #golismero
 displayandexec "Installation de golismero                           " "pip install golismero && ln -s /opt/golismero/golismero.py /usr/bin/golismero"
 ## problème de dépendances
 
+#set
+displayandexec "Installation de set                                 " "cd /home/install/ && git clone https://github.com/trustedsec/social-engineer-toolkit/ set/ && cd set && python setup.py install"
+
 #backdoor-factory
-cd /home/install/
-git clone https://github.com/secretsquirrel/the-backdoor-factory
-cd the-backdoor-factory
-sudo ./install.sh
+#cd /home/install/
+#git clone https://github.com/secretsquirrel/the-backdoor-factory
+#cd the-backdoor-factory
+#sudo ./install.sh
 #tester un simple python backdoor.py
 
 #truecrack
@@ -290,25 +393,45 @@ sudo ./install.sh
 #make
 #make install
 
+#ollydbg
+displayandexec "Installation de ollydbg                            " "cd /home/install/ && dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y && mkdir ollydbg/ && cd ollydbg/ && wget -q http://www.ollydbg.de/odbg110.zip && unzip odbg110.zip && mkdir /opt/ollydbg/ && cp /home/install/ollydbg/* /opt/ollydbg/ && touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg"
+
+#Tunna
+cd /opt && git clone https://github.com/SECFORCE/Tunna.git
+
+#recon-ng
+displayandexec "Installation de recon-ng                            " "cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git && ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng"
 
 #sparta
-cd /opt && git clone https://github.com/secforce/sparta.git
-chmod a+x /opt/sparta/sparta
-ln -s /opt/sparta/sparta /usr/bin/sparta
+#cd /opt && git clone https://github.com/secforce/sparta.git
+#chmod a+x /opt/sparta/sparta
+#ln -s /opt/sparta/sparta /usr/bin/sparta
 # apt-get install python-qt4
 ## problème
 
+#patator
+displayandexec "Installation de patator                             " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
+
+echo "############## désinstalation des logicels inutils ##############"
+#libreoffice
+displayandexec "désinstalation de libreoffice                       " "apt-get remove libreoffice* -y"
+#Konqueror
+displayandexec "désinstalation de Konqueror                         " "apt-get remove Konqueror* -y"
+#iceweasel
+displayandexec "désinstalation de iceweasel                         " "apt-get remove iceweasel* -y"
+
+#OpenOffice
+displayandexec "Installation de OpenOffice                          " "wget $WGETCONF http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && cd fr/DEBS/ && dpkg -i *.deb && cd desktop-integration/ && dpkg -i openoffice4.1-debian-menu*.deb"
 
 displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
 displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
 displayandexec "Mise à jour des paquets                             " "apt-get update && apt-get upgrade -y"
+displayandexec "Suppression du cache de apt-get                     " "apt-get clean"
 
 ##############################
 #stoper les services inutiles#
 ##############################
-cat /etc/ssh/sshd_config | grep Port
 sed -i -e "s/Port\ 22/Port\ 7894/g" /etc/ssh/sshd_config
-cat /etc/ssh/sshd_config | grep Port
 /etc/init.d/knockd stop
 /etc/init.d/nginx stop
 /etc/init.d/fail2ban stop
@@ -330,7 +453,7 @@ if grep "^$utilisateur" /etc/passwd > /dev/null; then
 	echo "alias l='ls -CF'" >> /home/utilisateur/.bashrc
 	echo "alias h='history'" >> /home/utilisateur/.bashrc
 	echo "alias ne='emacs -nw'" >> /home/utilisateur/.bashrc
-	echo "alias nn='nano'" >> /home/utilisateur/.bashrc
+	echo "alias nn='nano -c'" >> /home/utilisateur/.bashrc
 	echo "alias cl='clear'" >> /home/utilisateur/.bashrc
 	echo "alias i='apt-get install'" >> /home/utilisateur/.bashrc
 	echo "alias u='apt-get update'" >> /home/utilisateur/.bashrc
@@ -338,6 +461,7 @@ if grep "^$utilisateur" /etc/passwd > /dev/null; then
 	echo "alias x='exit'" >> /home/utilisateur/.bashrc
 	echo "alias xx='sudo shutdown now'" >> /home/utilisateur/.bashrc
 	echo "alias xwx='sudo poweroff'" >> /home/utilisateur/.bashrc
+	echo "alias funradio='mplayer -nocache http://streaming.radio.funradio.fr/fun-1-48-192'" >> .bashrc
 	echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> /home/utilisateur/.bashrc
 else
     echo "ko"
@@ -349,7 +473,7 @@ echo "alias la='ls -A'" >> .bashrc
 echo "alias l='ls -CF'" >> .bashrc
 echo "alias h='history'" >> .bashrc
 echo "alias ne='emacs -nw'" >> .bashrc
-echo "alias nn='nano'" >> .bashrc
+echo "alias nn='nano -c'" >> .bashrc
 echo "alias cl='clear'" >> .bashrc
 echo "alias i='apt-get install'" >> .bashrc
 echo "alias u='apt-get update'" >> .bashrc
@@ -357,26 +481,21 @@ echo "alias up='apt-get upgrade'" >> .bashrc
 echo "alias x='exit'" >> .bashrc
 echo "alias xx='sudo shutdown now'" >> .bashrc
 echo "alias xwx='sudo poweroff'" >> .bashrc
+echo "alias funradio='mplayer -nocache http://streaming.radio.funradio.fr/fun-1-48-192'" >> .bashrc
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT=\"%Y/%m/%d %T   \"' >> .bashrc"
 source /root/.bashrc
 displayandexec "Réinitialisation du bashrc                          " "stat /root/.bashrc && stat /home/utilisateur/.bashrc"
-#displayandexec "Réinitialisation du bashrc                          " "source /root/.bashrc"
-#source /root/.bashrc
 
-#openvas-setup
-displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update && rkhunter --update"
-#lynis --check-update
-	#lynis update check
-displayandexec "Mise à jour de la base de donnée de nikto           " "nikto -update && nikto -update"
+displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update"
+displayandexec "Mise à jour de la base de donnée de nikto           " "nikto -update"
 displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshclam"
 #chkrootkit
 #clamscan
 #tiger -q
 #lynis -c -q
 	#lynis audit system
-#pip install --upgrade pip
-#msfupdate
-
+#lynis --check-update
+	#lynis update check
 
 touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate
 touch /opt/gitupdate && chmod a+x /opt/gitupdate && ln -s /opt/gitupdate /usr/bin/gitupdate
@@ -458,6 +577,22 @@ echo "       #                    L'installation est terminée                  
 echo "       ####################################################################"
 echo ""
 
+
+for param in "$@"; do
+case $param in
+	"-s")
+		poweroff;;
+	"-log")
+		cat $log_file | more;;
+	"-r")
+		reboot;;
+	*)
+		echo "Invalid option";;
+esac
+done
+
+exit 0
+
 #if [ $1 = "-s" ]; then
 #    poweroff
 #else
@@ -476,28 +611,93 @@ echo ""
 #    exit 0
 #fi
 
-touch /home/convert.sh
-chmod a+x /home/convert.sh
-echo 'ls -1 |grep mkv | awk -F. '{print $1}' | while read entree	
-	do
-   		avconf -i ${entree}.mkv -vn -ar 44100 -ac 2 -f wav ${entree}.wav
-   	done
-ls -1 |grep mp4 | awk -F. '{print $1}' | while read entree
-	do
-		avconf -i ${entree}.mp4 -vn -ar 44100 -ac 2 -f wav ${entree}.wav
-	done' >> /home/convert.sh
+# no return message of apt
+#export DEBIAN_FRONTEND=noninteractive
 
-for param in "$@"; do
-case $param in
-	"-s")
-		poweroff;;
-	"-log")
-		cat $log_file | more;;
-	"-r")
-		reboot;;
-	*)
-		echo "Invalid option";;
-esac
-done
+##!/bin/sh
+# 
+#echo -n "Etes-vous fatigué ? "
+#read on
+# 
+#case "$on" in
+#    oui | o | O | Oui | OUI ) echo "Allez faire du café !";;
+#    non | n | N | Non | NON ) echo "Programmez !";;
+#    * ) echo "Ah bon ?";;
+#esac
+#exit 0
 
-exit 0
+#if [ -x /bin/sh ] ; then
+#	echo "/bin/sh est exécutable. C'est bien."
+#else
+#	echo "/bin/sh n'est pas exécutable."
+#	echo "Votre système n'est pas normal."
+#fi
+#OU [ -x /bin/sh ] || echo "/bin/sh n'est pas exécutable."
+
+#Faire la différence entre les paquets installé  de base et les nouveaux paquets
+#comm -3 <(sort /home/liste_paquet_installe.txt) <(sort /home/liste_paquet_installe_postscriptinstall.txt)
+#cat -n /home/liste_paquet_installe_postscriptinstall.txt
+
+#read -p "Voulez-vous redémarer maintenant ?[O/n] " reponse
+#if [[ $reponse = "o" || $reponse = "O" || $reponse = "" ]]; then
+#    reboot
+#else
+#    exit 0
+#fi
+
+## JEUX
+#apt-get install 0ad
+
+#if [ $? -ne 0 ]; then
+#  logguer "Processus ${PS} not started"
+#  start
+#fi
+
+
+#echo "       ###############################"
+#echo "       #   Chnger le thème du GRUB   #"
+#echo "       ###############################"
+
+#wget https://dl.opendesktop.org/api/files/download/id/1460735684/174670-breeze-grub.zip
+#unzip 174670-breeze-grub.zip
+#mv Breeze /boot/grub/themes/
+#mkdir /boot/grub/themes
+#echo 'GRUB_THEME="/boot/grub/themes/Breeze/theme.txt"' >> /etc/default/grub
+#grub-mkconfig -o /boot/grub/grub.cfg
+
+
+
+#FONCTIONNE
+#apt-get install -y mediainfo > /dev/null
+#if [ $? == 0 ]
+#	then echo -e "$noir[$vertfonceOK$noir]"
+#	else echo -e "$noir[$rougefonceKO$noir]"
+#	fi
+##if [ $? == 0 ]
+##	then echo "     [OK]"
+##	else echo "     [KO]"
+##	fi
+
+#if [ $? == 0 ]
+#	then echo -e "$noir[$vertfonceOK$noir]"
+#	else echo -e "$noir[$rougefonceKO$noir]"
+#	fi
+
+#fmpeg -i fichiervideo.avi -vn -ar 44100 -ac 2 -f wav fichierson.wav
+#avconf -i fichiervideo.avi -vn -ar 44100 -ac 2 -f wav fichierson.wav
+#avconv -i video.mp4 image%d.png
+#ls -1 |grep mkv | awk -F. '{print $1}' | while read entree
+# do
+#   avconf -i ${entree}.mkv -vn -ar 44100 -ac 2 -f wav ${entree}.wav
+# done
+#ls -1 |grep mp4 | awk -F. '{print $1}' | while read entree
+# do
+#   avconf -i ${entree}.mp4 -vn -ar 44100 -ac 2 -f wav ${entree}.wav
+# done
+#
+# 
+#ls -1 |grep wmv | awk -F. '{print $1}' | while read entree
+# do
+#   avconv -y -i ${entree}.wmv -s 1280x720  -threads auto -vcodec mpeg4 -an -qscale 1 -mbd rd -flags +mv4+aic -trellis 2 -cmp 2 -subcmp 2 -g 300 -pass 1 -f rawvideo /dev/null
+#   avconv -y -i ${entree}.wmv -s 1280x720 -threads auto -vcodec mpeg4 -qscale 1 -mbd rd -flags +mv4+aic -trellis 2 -cmp 2 -subcmp 2 -g 300 -pass 2 ${entree}.mp4
+# done
