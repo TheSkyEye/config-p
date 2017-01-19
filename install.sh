@@ -55,6 +55,7 @@ if [ $? == 0 ]; then
 else
 	version_linux='other linux'
 fi
+version='1.0'
 version_system=$(cat /etc/debian_version)
 webmin_version='1.831'
 veracrypt_version='1.19'
@@ -69,7 +70,7 @@ echo "/        |/  |                 /      \ /  |                /        |    
 echo "%%%%%%%%/ %% |____    ______  /%%%%%%  |%% |   __  __    __ %%%%%%%%/  __    __   ______  "
 echo "   %% |   %%      \  /      \ %% \__%%/ %% |  /  |/  |  /  |%% |__    /  |  /  | /      \ "
 echo "   %% |   %%%%%%%  |/%%%%%%  |%%      \ %% |_/%%/ %% |  %% |%%    |   %% |  %% |/%%%%%%  |"
-echo "   %% |   %% |  %% |%%    %% | %%%%%%  |%%   %%<  %% |  %% |%%%%%/    %% |  %% |%%    %% |"
+echo "   %% |   %% |  %% |%%    %% | %%%%%%  |%%   %%|  %% |  %% |%%%%%/    %% |  %% |%%    %% |"
 echo "   %% |   %% |  %% |%%%%%%%%/ /  \__%% |%%%%%%  \ %% \__%% |%% |_____ %% \__%% |%%%%%%%%/ "
 echo "   %% |   %% |  %% |%%       |%%    %%/ %% | %%  |%%    %% |%%       |%%    %% |%%       |"
 echo "   %%/    %%/   %%/  %%%%%%%/  %%%%%%/  %%/   %%/  %%%%%%% |%%%%%%%%/  %%%%%%% | %%%%%%%/ "
@@ -88,7 +89,7 @@ echo "       ================================================================"
 echo ""
 echo "                   nom du script       : DEBIAN_POSTINSTALL            "
 echo "                   auteur              : TheSkyEye                     "
-echo "                   version             : 1.0"
+echo "                   version             : "$version
 echo "                   lancement du script : bash install.sh               "
 echo "                   version du système  : "$version_linux $version_system
 echo ""
@@ -288,13 +289,10 @@ displayandexec "Installation de libx32ubsan0                        " "$AGI libx
 #Configuration des paquets avec debconf#
 ########################################
 #sslh
-echo a
 echo "sslh	sslh/inetd_or_standalone	select	from inetd" | debconf-set-selections
 #wireshark
-echo b
 echo "wireshark-common	wireshark-common/install-setuid	boolean	false" | debconf-set-selections
 #macchanger
-echo c
 echo "macchanger	macchanger/automatically_run	boolean	false" | debconf-set-selections
 #phpmyadmin
 echo "phpmyadmin	phpmyadmin/app-password-confirm	password" | debconf-set-selections
@@ -365,10 +363,10 @@ displayandexec "Installation de atom                                " "cd /home/
 displayandexec "Installation de metaspoilt                          " "cd /home/install/ && curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
 #webmin
-displayandexec "Installation de webmin                              " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
+#displayandexec "Installation de webmin                              " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
 
 #veracrypt
-displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
+#displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
 
 #golismero
 displayandexec "Installation de golismero                           " "pip install golismero && ln -s /opt/golismero/golismero.py /usr/bin/golismero"
@@ -394,11 +392,9 @@ displayandexec "Installation de set                                 " "cd /home/
 #make install
 
 #ollydbg
-displayandexec "Installation de ollydbg                            " "cd /home/install/ && dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y && mkdir ollydbg/ && cd ollydbg/ && wget -q http://www.ollydbg.de/odbg110.zip && unzip odbg110.zip && mkdir /opt/ollydbg/ && cp /home/install/ollydbg/* /opt/ollydbg/ && touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg"
-
+displayandexec "Installation de ollydbg                             " "cd /home/install/ && dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y && mkdir ollydbg/ && cd ollydbg/ && wget -q http://www.ollydbg.de/odbg110.zip && unzip odbg110.zip && mkdir /opt/ollydbg/ && cp /home/install/ollydbg/* /opt/ollydbg/ && touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg"
 #Tunna
-cd /opt && git clone https://github.com/SECFORCE/Tunna.git
-
+displayandexec "Installation de Tunna                               " "cd /opt && git clone https://github.com/SECFORCE/Tunna.git"
 #recon-ng
 displayandexec "Installation de recon-ng                            " "cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git && ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng"
 
@@ -487,10 +483,14 @@ source /root/.bashrc
 displayandexec "Réinitialisation du bashrc                          " "stat /root/.bashrc && stat /home/utilisateur/.bashrc"
 
 displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update"
+rkhunter --update
+rkhunter --versioncheck
+rkhunter --update
 displayandexec "Mise à jour de la base de donnée de nikto           " "nikto -update"
 displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshclam"
 #chkrootkit
 #clamscan
+#rkhunter --check
 #tiger -q
 #lynis -c -q
 	#lynis audit system
@@ -569,6 +569,8 @@ echo ""
 
 for param in "$@"; do
 case $param in
+	"-v")
+		echo $version;;
 	"-s")
 		poweroff;;
 	"-log")
