@@ -25,6 +25,8 @@ cd /home/install
 now=$(date +"%d-%m-%Y")
 log_file=/var/log/log_script_install-$now.log
 touch $log_file
+install_file=/var/log/install_file
+touch $install_file
 echo "####################################################################" > $log_file
 echo "#                          Debut du script                         #" >> $log_file
 echo "####################################################################" >> $log_file
@@ -35,15 +37,15 @@ echo "--------------------------------------------------------------------" >> $
 # Autres parametres: COMMAND
 displayandexec() {
   local message=$1
-  echo -n "[En cours] $message"
+  echo -n "[En cours] $message" && echo -n "[En cours] $message" >> $install_file
   shift
   echo ">>> $*" >> $log_file 2>&1
   sh -c "$*" >> $log_file 2>&1
   local ret=$?
   if [ $ret -ne 0 ]; then
-    echo -e "\r\e[0;30m $message                \e[0;31m[ERROR]\e[0m "
+    echo -e "\r\e[0;30m $message                \e[0;31m[ERROR]\e[0m " && echo -e "\r\e[0;30m $message                \e[0;31m[ERROR]\e[0m " >> $install_file
   else
-    echo -e "\r\e[0;30m $message                \e[0;32m[OK]\e[0m "
+    echo -e "\r\e[0;30m $message                \e[0;32m[OK]\e[0m " && echo -e "\r\e[0;30m $message                \e[0;32m[OK]\e[0m " >> $install_file
   fi
   return $ret
 }
@@ -116,116 +118,17 @@ echo "       ################################################################"
 echo ""
 
 displayandexec "Installation de ssh                                 " "$AGI ssh"
-displayandexec "Installation de emacs                               " "$AGI emacs"
-displayandexec "Installation de virtualbox                          " "$AGI virtualbox"
-displayandexec "Installation de chromium                            " "$AGI chromium-l10n"
-displayandexec "Installation de knockd                              " "$AGI knockd"
-displayandexec "Installation de audacity                            " "$AGI audacity"
-displayandexec "Installation de calibre                             " "$AGI calibre"
-displayandexec "Installation de clamav                              " "$AGI clamav"
-displayandexec "Installation de clamtk                              " "$AGI clamtk"
-displayandexec "Installation de qemu                                " "$AGI qemu"
-displayandexec "Installation de keepassx                            " "$AGI keepassx"
-displayandexec "Installation de htop                                " "$AGI htop"
-displayandexec "Installation de valgrind                            " "$AGI valgrind"
-displayandexec "Installation de python-pip                          " "$AGI python-pip"
-displayandexec "Installation de handbrake                           " "$AGI handbrake"
-displayandexec "Installation de uget                                " "$AGI uget"
-displayandexec "Installation de scribus                             " "$AGI scribus"
-displayandexec "Installation de gitk                                " "$AGI gitk"
-displayandexec "Installation de fail2ban                            " "$AGI fail2ban"
-displayandexec "Installation de filezilla                           " "$AGI filezilla"
 displayandexec "Installation de wine                                " "$AGI zip"
 displayandexec "Installation de mplayer                             " "$AGI mplayer"
 displayandexec "Installation de zip                                 " "$AGI wine"
 displayandexec "Installation de yasat                               " "$AGI yasat"
 displayandexec "Installation de psutils                             " "$AGI psutils"
 displayandexec "Installation de pdfmod                              " "$AGI pdfmod"
-displayandexec "Installation de aircrack-ng                         " "$AGI aircrack-ng"
-displayandexec "Installation de nginx                               " "$AGI nginx"
-displayandexec "Installation de ettercap-graphical                  " "$AGI ettercap-graphical"
 displayandexec "Installation de nodejs                              " "$AGI nodejs"
 displayandexec "Installation de npm                                 " "$AGI npm"
 displayandexec "Installation de gparted                             " "$AGI gparted"
 displayandexec "Installation de chkrootkit                          " "$AGI chkrootkit"
 displayandexec "Installation de vlc                                 " "$AGI vlc"
-displayandexec "Installation de curl                                " "$AGI curl"
-displayandexec "Installation de lynx                                " "$AGI lynx"
-displayandexec "Installation de nikto                               " "$AGI nikto"
-displayandexec "Installation de libav-tools                         " "$AGI libav-tools"
-displayandexec "Installation de scapy                               " "$AGI scapy"
-displayandexec "Installation de ngrep                               " "$AGI ngrep"
-displayandexec "Installation de hydra-gtk                           " "$AGI hydra-gtk"
-displayandexec "Installation de hping3                              " "$AGI hping3"
-displayandexec "Installation de yersinia                            " "$AGI yersinia"
-displayandexec "Installation de sslstrip                            " "$AGI sslstrip"
-displayandexec "Installation de arping                              " "$AGI arping"
-displayandexec "Installation de dnstracer                           " "$AGI dnstracer"
-displayandexec "Installation de ike-scan                            " "$AGI ike-scan"
-displayandexec "Installation de netdiscover                         " "$AGI netdiscover"
-displayandexec "Installation de p0f                                 " "$AGI p0f"
-displayandexec "Installation de pscan                               " "$AGI pscan"
-displayandexec "Installation de arduino                             " "$AGI arduino"
-displayandexec "Installation de arpwatch                            " "$AGI arpwatch"
-displayandexec "Installation de masscan                             " "$AGI masscan"
-displayandexec "Installation de sslscan                             " "$AGI sslscan"
-displayandexec "Installation de lynis                               " "$AGI lynis"
-displayandexec "Installation de siege                               " "$AGI siege"
-displayandexec "Installation de httrack                             " "$AGI httrack"
-displayandexec "Installation de cadaver                             " "$AGI cadaver"
-displayandexec "Installation de tcpdump                             " "$AGI tcpdump"
-displayandexec "Installation de icmpush                             " "$AGI icmpush"
-displayandexec "Installation de tcpreplay                           " "$AGI tcpreplay"
-displayandexec "Installation de xprobe                              " "$AGI xprobe"
-displayandexec "Installation de logcheck                            " "$AGI logcheck"
-displayandexec "Installation de flawfinder                          " "$AGI flawfinder"
-displayandexec "Installation de skipfish                            " "$AGI skipfish"
-displayandexec "Installation de w3af                                " "$AGI w3af"
-displayandexec "Installation de nbtscan                             " "$AGI nbtscan"
-displayandexec "Installation de knocker                             " "$AGI knocker"
-displayandexec "Installation de wapiti                              " "$AGI wapiti"
-displayandexec "Installation de logwatch                            " "$AGI logwatch"
-displayandexec "Installation de rkhunter                            " "$AGI rkhunter"
-displayandexec "Installation de whatweb                             " "$AGI whatweb"
-displayandexec "Installation de crunch                              " "$AGI crunch"
-displayandexec "Installation de splint                              " "$AGI splint"
-displayandexec "Installation de fcrackzip                           " "$AGI fcrackzip"
-displayandexec "Installation de cmospwd                             " "$AGI cmospwd"
-displayandexec "Installation de john                                " "$AGI john"
-displayandexec "Installation de medusa                              " "$AGI medusa"
-displayandexec "Installation de ophcrack                            " "$AGI ophcrack"
-displayandexec "Installation de samdump2                            " "$AGI samdump2"
-displayandexec "Installation de sipcrack                            " "$AGI sipcrack"
-displayandexec "Installation de sucrack                             " "$AGI sucrack"
-displayandexec "Installation de btscanner                           " "$AGI btscanner"
-displayandexec "Installation de clang                               " "$AGI clang"
-displayandexec "Installation de flasm                               " "$AGI flasm"
-displayandexec "Installation de radare2                             " "$AGI radare2"
-displayandexec "Installation de dsniff                              " "$AGI dsniff"
-displayandexec "Installation de darkstat                            " "$AGI darkstat"
-displayandexec "Installation de mitmproxy                           " "$AGI mitmproxy"
-displayandexec "Installation de driftnet                            " "$AGI driftnet"
-displayandexec "Installation de sslsniff                            " "$AGI sslsniff"
-displayandexec "Installation de tcpflow                             " "$AGI tcpflow"
-displayandexec "Installation de tcpreplay                           " "$AGI tcpreplay"
-displayandexec "Installation de iodine                              " "$AGI iodine"
-displayandexec "Installation de miredo                              " "$AGI miredo"
-displayandexec "Installation de proxychains                         " "$AGI proxychains"
-displayandexec "Installation de proxytunnel                         " "$AGI proxytunnel"
-displayandexec "Installation de ptunnel                             " "$AGI ptunnel"
-displayandexec "Installation de stunnel4                            " "$AGI stunnel4"
-displayandexec "Installation de udptunnel                           " "$AGI udptunnel"
-displayandexec "Installation de autopsy                             " "$AGI autopsy"
-displayandexec "Installation de binwalk                             " "$AGI binwalk"
-displayandexec "Installation de dc3dd                               " "$AGI dc3dd"
-displayandexec "Installation de dcfldd                              " "$AGI dcfldd"
-displayandexec "Installation de dff                                 " "$AGI dff"
-displayandexec "Installation de extundelete                         " "$AGI extundelete"
-displayandexec "Installation de foremost                            " "$AGI foremost"
-displayandexec "Installation de guymager                            " "$AGI guymager"
-displayandexec "Installation de magicrescue                         " "$AGI magicrescue"
-displayandexec "Installation de pasco                               " "$AGI pasco"
-displayandexec "Installation de pev                                 " "$AGI pev"
 displayandexec "Installation de readpst                             " "$AGI readpst"
 displayandexec "Installation de recoverjpeg                         " "$AGI recoverjpeg"
 displayandexec "Installation de rifiuti                             " "$AGI rifiuti"
@@ -238,8 +141,6 @@ displayandexec "Installation de vinetto                             " "$AGI vine
 displayandexec "Installation de volatility                          " "$AGI volatility"
 displayandexec "Installation de cutycapt                            " "$AGI cutycapt"
 displayandexec "Installation de libauthen-pam-perl                  " "$AGI libauthen-pam-perl"
-displayandexec "Installation de beef                                " "$AGI beef"
-displayandexec "Installation de gddrescue                           " "$AGI gddrescue"
 displayandexec "Installation de python-elixir                       " "$AGI python-elixir"
 displayandexec "Installation de apt-show-versions                   " "$AGI apt-show-versions"
 displayandexec "Installation de libio-pty-perl                      " "$AGI libio-pty-perl"
@@ -255,8 +156,6 @@ displayandexec "Installation de python-slowaes                      " "$AGI pyth
 displayandexec "Installation de python-mechanize                    " "$AGI python-mechanize"
 displayandexec "Installation de python-dnspython                    " "$AGI python-dnspython"
 displayandexec "Installation de libcurl4-openssl-dev                " "$AGI libcurl4-openssl-dev"
-displayandexec "Installation de apache2                             " "$AGI apache2"
-displayandexec "Installation de apachetop                           " "$AGI apachetop"
 displayandexec "Installation de gcc-4.9-multilib                    " "$AGI gcc-4.9-multilib"
 displayandexec "Installation de gcc-multilib                        " "$AGI gcc-multilib"
 displayandexec "Installation de libcanberra-gtk-module              " "$AGI gcc-multilib"
@@ -365,10 +264,10 @@ displayandexec "Installation de atom                                " "cd /home/
 displayandexec "Installation de metaspoilt                          " "cd /home/install/ && curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
 #webmin
-displayandexec "Installation de webmin                              " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
+#displayandexec "Installation de webmin                              " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
 
 #veracrypt
-displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
+#displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
 
 #golismero
 displayandexec "Installation de golismero                           " "pip install golismero && ln -s /opt/golismero/golismero.py /usr/bin/golismero"
