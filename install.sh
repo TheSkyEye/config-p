@@ -25,6 +25,8 @@ cd /home/install
 now=$(date +"%d-%m-%Y")
 log_file=/var/log/log_script_install-$now.log
 touch $log_file
+install_file=/var/log/install_file-$now.log
+touch $install_file
 echo "####################################################################" > $log_file
 echo "#                          Debut du script                         #" >> $log_file
 echo "####################################################################" >> $log_file
@@ -35,15 +37,15 @@ echo "--------------------------------------------------------------------" >> $
 # Autres parametres: COMMAND
 displayandexec() {
   local message=$1
-  echo -n "[En cours] $message"
+  echo -n "[En cours] $message" && echo -n "[En cours] $message" >> $install_file
   shift
   echo ">>> $*" >> $log_file 2>&1
   sh -c "$*" >> $log_file 2>&1
   local ret=$?
   if [ $ret -ne 0 ]; then
-    echo -e "\r\e[0;30m $message                \e[0;31m[ERROR]\e[0m "
+    echo -e "\r\e[0;30m $message                \e[0;31m[ERROR]\e[0m " && echo -e "\r\e[0;30m $message                \e[0;31m[ERROR]\e[0m " >> $install_file
   else
-    echo -e "\r\e[0;30m $message                \e[0;32m[OK]\e[0m "
+    echo -e "\r\e[0;30m $message                \e[0;32m[OK]\e[0m " && echo -e "\r\e[0;30m $message                \e[0;32m[OK]\e[0m " >> $install_file
   fi
   return $ret
 }
@@ -575,6 +577,8 @@ case $param in
 		poweroff;;
 	"-log")
 		cat $log_file | more;;
+	"-erreur")
+		cat $install_file | grep -i error;;
 	"-r")
 		reboot;;
 	*)
