@@ -23,9 +23,10 @@ cd /home/install
 
 # création d'un fichier de log
 now=$(date +"%d-%m-%Y")
-log_file=/var/log/log_script_install-$now.log
+mkdir /var/log/postinstall
+log_file=/var/log/postinstall/log_script_install-$now.log
 touch $log_file
-install_file=/var/log/install_file
+install_file=/var/log/postinstall/install_file-$now.log
 touch $install_file
 echo "####################################################################" > $log_file
 echo "#                          Debut du script                         #" >> $log_file
@@ -97,16 +98,7 @@ echo ""
 echo "       ================================================================"
 echo ""
 
-# suppression du CDROM dans sources.list
-displayandexec "suppression du CDROM dans sources.list              " "sed -i '/cdrom/d' /etc/apt/sources.list"
 
-echo ""
-echo "       ################################################################"
-echo "       #                      MISE A JOUR DU SYSTEM                   #"
-echo "       ################################################################"
-echo ""
-
-displayandexec "Mise à jour du system                               " "apt-get update && apt-get upgrade -y"
 
 ############################
 #installation des logiciels#
@@ -183,70 +175,7 @@ displayandexec "Installation de libx32itm1                          " "$AGI libx
 displayandexec "Installation de libx32quadmath0                     " "$AGI libx32quadmath0"
 displayandexec "Installation de libx32ubsan0                        " "$AGI libx32ubsan0"
 
-########################################
-#Configuration des paquets avec debconf#
-########################################
-#sslh
-echo a
-echo "sslh	sslh/inetd_or_standalone	select	from inetd" | debconf-set-selections
-#wireshark
-echo b
-echo "wireshark-common	wireshark-common/install-setuid	boolean	false" | debconf-set-selections
-#macchanger
-echo c
-echo "macchanger	macchanger/automatically_run	boolean	false" | debconf-set-selections
-#phpmyadmin
-echo "phpmyadmin	phpmyadmin/app-password-confirm	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/setup-password	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/mysql/app-pass	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/mysql/admin-pass	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/password-confirm	password" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/internal/skip-preseed	boolean	true" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/remote/port	string" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/dbconfig-install	boolean	false" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/dbconfig-reinstall	boolean	false" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/internal/reconfiguring	boolean	false" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/mysql/admin-user	string	root" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/db/dbname	string" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/upgrade-error	select	abort" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/purge	boolean	false" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/install-error	select	abort" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/reconfigure-webserver	multiselect" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/db/app-user	string" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/dbconfig-upgrade	boolean	true" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/missing-db-package-error	select	abort" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/setup-username	string	admin" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/dbconfig-remove	boolean" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/mysql/method	select	unix socket" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/remote/newhost	string" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/database-type	select	mysql" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/upgrade-backup	boolean	true" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/remove-error	select	abort" | debconf-set-selections
-echo "phpmyadmin	phpmyadmin/remote/host	select" | debconf-set-selections
-#kismet
-echo "kismet	kismet/install-users	string	root" | debconf-set-selections
-echo "kismet	kismet/install-setuid	boolean	true" | debconf-set-selections
-# Solution : installer les paquets manuellement avec les bonnes config. Ensuite installer debconf-utils et faire
-# debconf-get-selections | grep nom_du_paquet
-# récupérer les infos obtenus et les injecter dans debconf-set-selections comme suit echo "INFO" | debconf-set-selections
 
-displayandexec "Installation de phpmyadmin                          " "$AGI phpmyadmin"
-displayandexec "Installation de wireshark                           " "$AGI wireshark"
-displayandexec "Installation de sslh                                " "$AGI sslh"
-displayandexec "Installation de wifite                              " "$AGI wifite"
-displayandexec "Installation de kismet                              " "$AGI kismet"
-displayandexec "Installation de macchanger                          " "$AGI macchanger"
-
-
-# displayandexec "Installation de blender                             " "$AGI blender"
-# displayandexec "Installation de sweethome3d                         " "$AGI sweethome3d"
-# displayandexec "Installation de geogebra                            " "$AGI geogebra"
-#apt-get install tripwire
-#apt-get install tiger
-#apt-get install libav-tools
-
-displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
-displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
 
 echo "###### instalation des logicies avec une instalation special ######"
 #installation des applications avec pip
@@ -257,59 +186,279 @@ displayandexec "Installation de olefile                             " "pip insta
 displayandexec "Installation de future                              " "pip install future"
 displayandexec "Installation de capstone                            " "pip install capstone"
 
-#atom
-displayandexec "Installation de atom                                " "cd /home/install/ && wget -q https://atom.io/download/deb && dpkg -i deb"
 
-#metaspoilt
-displayandexec "Installation de metaspoilt                          " "cd /home/install/ && curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall"
 
-#webmin
-#displayandexec "Installation de webmin                              " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/webadmin/files/webmin/$webmin_version/webmin_$webmin_version\_all.deb && dpkg -i webmin_$webmin_version\_all.deb"
 
-#veracrypt
-#displayandexec "Installation de veracrypt                           " "cd /home/install/ && wget $WGETCONF https://sourceforge.net/projects/veracrypt/files/VeraCrypt%20$veracrypt_version/veracrypt-$veracrypt_version-setup.tar.bz2 && tar xjf veracrypt-$veracrypt_version-setup.tar.bz2 && ./veracrypt-$veracrypt_version-setup-gui-x64"
 
-#golismero
-displayandexec "Installation de golismero                           " "pip install golismero && ln -s /opt/golismero/golismero.py /usr/bin/golismero"
-## problème de dépendances
 
-#set
-displayandexec "Installation de set                                 " "cd /home/install/ && git clone https://github.com/trustedsec/social-engineer-toolkit/ set/ && cd set && python setup.py install"
 
-#backdoor-factory
-#cd /home/install/
-#git clone https://github.com/secretsquirrel/the-backdoor-factory
-#cd the-backdoor-factory
-#sudo ./install.sh
-#tester un simple python backdoor.py
+cd /home/install
+#RouterSploit
+echo "RouterSploit"
+apt-get install -y libncurses5-dev
+git clone https://github.com/reverse-shell/routersploit.git
+cd routersploit
+pip install -r requirements.txt
+./rsf.py
 
-#truecrack
-#apt-get install nvidia-cuda-toolkit
-#cd /home/install/
-#git clone https://github.com/lvaccaro/truecrack.git
-#cd truecrack
-#./configure
-#make
-#make install
+#Sn1per
+echo "Sn1per"
+cd /home/install
+git clone https://github.com/1N3/Sn1per.git
+cd Sn1per/
+bash install.sh
 
-#ollydbg
-displayandexec "Installation de ollydbg                            " "cd /home/install/ && dpkg --add-architecture i386 && apt-get update && apt-get upgrade -y && apt-get install wine32 -y && mkdir ollydbg/ && cd ollydbg/ && wget -q http://www.ollydbg.de/odbg110.zip && unzip odbg110.zip && mkdir /opt/ollydbg/ && cp /home/install/ollydbg/* /opt/ollydbg/ && touch /usr/bin/ollydbg && echo "wine /opt/ollydbg/OLLYDBG.EXE" >> /usr/bin/ollydbg && chmod a+x /usr/bin/ollydbg"
+#sslstrip
+echo "sslstrip"
+cd /home/install
+git clone https://github.com/moxie0/sslstrip.git
+cd sslstrip/
+python setup.py install
 
-#Tunna
-cd /opt && git clone https://github.com/SECFORCE/Tunna.git
+#sslsniff
+echo "sslsniff"
+cd /home/install
+git clone https://github.com/moxie0/sslsniff.git
+cd sslsniff/
+./configure
+make
+make install
 
-#recon-ng
-displayandexec "Installation de recon-ng                            " "cd /opt && git clone https://LaNMaSteR53@bitbucket.org/LaNMaSteR53/recon-ng.git && ln -s /opt/recon-ng/recon-ng /usr/bin/recon-ng"
+#BruteX
+echo "BruteX"
+cd /home/install
+git clone https://github.com/1N3/BruteX.git
+cd BruteX/
+bash install.sh
 
-#sparta
-#cd /opt && git clone https://github.com/secforce/sparta.git
-#chmod a+x /opt/sparta/sparta
-#ln -s /opt/sparta/sparta /usr/bin/sparta
-# apt-get install python-qt4
-## problème
+#Goohak
+echo "Goohak"
+cd /home/install
+git clone https://github.com/1N3/Goohak.git
+cd Goohak/
+bash Goohak
 
-#patator
-displayandexec "Installation de patator                             " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
+#cymothoa
+echo "cymothoa"
+cd /home/install
+git clone https://github.com/jorik041/cymothoa.git
+cd cymothoa/
+
+#WiFi-Pumpkin
+echo "WiFi-Pumpkin"
+cd /home/install
+git clone https://github.com/P0cL4bs/WiFi-Pumpkin.git
+cd WiFi-Pumpkin
+bash installer.sh --install
+
+#Facebrute
+echo "Facebrute"
+cd /home/install
+git clone https://github.com/P0cL4bs/Facebrute.git
+cd Facebrute/
+#touch /usr/bin/Facebrute && echo "python /opt/Facebrute/Facebrute.py" >> /usr/bin/Facebrute && chmod a+x /usr/bin/Facebrute
+touch /usr/bin/Facebrute && echo "python /home/install/Facebrute/Facebrute.py" >> /usr/bin/Facebrute && chmod a+x /usr/bin/Facebrute
+
+#cipherTest
+echo "cipherTest"
+cd /home/install
+git clone https://github.com/OpenSecurityResearch/ciphertest.git
+cd ciphertest/
+bash cipherTest.sh
+
+#NoobSecToolkit
+echo "NoobSecToolkit"
+cd /home/install
+git clone https://github.com/krintoxi/NoobSec-Toolkit.git 
+cd NoobSecToolkit/NoobSec-Toolkit/ 
+python NSToolkit.py
+
+#Neet
+echo "Neet"
+cd /home/install
+git clone https://github.com/JonnyHightower/neet.git
+cd neet/
+bash install.sh
+
+#SCANNER-INURLBR
+echo "SCANNER-INURLBR"
+cd /home/install
+git clone https://github.com/googleinurl/SCANNER-INURLBR.git
+cd SCANNER-INURLBR/
+chmod +x inurlbr.php
+./inurlbr.php
+
+#net-creds
+echo "net-creds"
+cd /home/install
+git clone https://github.com/DanMcInerney/net-creds.git
+cd net-creds/
+pip install -r requirements.txt
+#touch /usr/bin/net-creds && echo "python /opt/net-creds/net-creds.py" >> /usr/bin/net-creds && chmod a+x /usr/bin/net-creds
+touch /usr/bin/net-creds && echo "python /home/install/net-creds/net-creds.py" >> /usr/bin/net-creds && chmod a+x /usr/bin/net-creds
+
+#bannerscan
+echo "bannerscan"
+cd /home/install
+git clone https://github.com/az0ne/bannerscan.git
+cd bannerscan/
+touch /usr/bin/bannerscan && echo "python /home/install/bannerscan/bannerscan.py" >> /usr/bin/bannerscan && chmod a+x /usr/bin/bannerscan
+#touch /usr/bin/bannerscan && echo "python /opt/bannerscan/bannerscan.py" >> /usr/bin/bannerscan && chmod a+x /usr/bin/bannerscan
+
+#Spade
+echo "Spade"
+cd /home/install
+apt-get install lib32stdc++6 lib32ncurses5 lib32z1.
+git clone https://github.com/suraj-root/spade.git
+cd spade/
+./spade.py
+
+#infernal-twin
+echo "infernal-twin"
+cd /home/install
+git clone https://github.com/entropy1337/infernal-twin
+cd infernal-twin/
+python InfernalWireless.py
+
+#isthisipbad
+echo "isthisipbad"
+cd /home/install
+git clone https://github.com/jgamblin/isthisipbad.git
+cd isthisipbad/
+python isthisipbad.py
+
+#LaZagne
+cd /home/install
+git clone https://github.com/AlessandroZ/LaZagne.git
+cd LaZagne/Linux
+python laZagne.py
+
+#Pupy
+cd /home/install
+git clone https://github.com/n1nj4sec/pupy.git pupy
+cd pupy
+git submodule init
+git submodule update
+pip install -r requirements.txt
+
+
+#pi-hole
+cd /home/install
+curl -sSL https://install.pi-hole.net | bash
+
+#DiskAnalyser
+cd /home/install
+git clone https://github.com/zare3/DiskAnalyser.git
+cd DiskAnalyser/
+make
+make install
+
+#pyminifier
+cd /home/install
+git clone https://github.com/liftoff/pyminifier.git
+cd pyminifier/
+python setup.py install
+
+#NoSQLMap
+cd /home/install
+git clone https://github.com/tcstool/NoSQLMap.git
+cd NoSQLMap/
+python setup.py install
+
+#BDFProxy
+cd /home/install
+git clone https://github.com/secretsquirrel/BDFProxy.git
+cd BDFProxy/
+bash install.sh
+
+#EmPyre
+cd /home/install
+git clone https://github.com/adaptivethreat/EmPyre.git
+cd EmPyre/setup/
+bash install.sh
+
+#tcpovericmp
+cd /home/install
+git clone https://github.com/Maksadbek/tcpovericmp.git
+cd tcpovericmp/example
+./icmpmessenger
+
+
+#Veil-Evasion
+cd /home/install
+git clone https://github.com/Veil-Framework/Veil-Evasion.git
+cd Veil-Evasion/
+cd setup
+setup.sh -c
+
+#veil
+cd /home/install
+git clone https://github.com/Veil-Framework/Veil.git
+cd Veil/
+bash install.sh
+
+#backdoor-apk
+cd /home/install
+git clone https://github.com/dana-at-cp/backdoor-apk.git
+
+#IPGeoLocation
+cd /home/install
+git clone https://github.com/maldevel/IPGeoLocation.git
+apt-get install -y python3-pip
+pip3 install -r requirements.txt
+
+#PenTestKit
+cd /home/install
+git clone https://github.com/maldevel/PenTestKit.git
+pip install -r requirements.txt
+touch /usr/bin/secure-headers-checker && echo "python /home/install/PenTestKit/secure-headers-checker.py" >> /usr/bin/secure-headers-checker && chmod a+x /usr/bin/secure-headers-checker
+#touch /usr/bin/secure-headers-checker && echo "python /opt/PenTestKit/secure-headers-checker.py" >> /usr/bin/secure-headers-checker && chmod a+x /usr/bin/secure-headers-checker
+
+#Windows-Exploit-Suggester
+cd /home/install
+pip install xlrd
+git clone https://github.com/GDSSecurity/Windows-Exploit-Suggester.git
+touch /usr/bin/windows-exploit-suggester && echo "python /home/install/Windows-Exploit-Suggester/windows-exploit-suggester.py" >> /usr/bin/windows-exploit-suggester && chmod a+x /usr/windows-exploit-suggester
+#touch /usr/bin/windows-exploit-suggester && echo "python /opt/Windows-Exploit-Suggester/windows-exploit-suggester.py" >> /usr/bin/windows-exploit-suggester && chmod a+x /usr/windows-exploit-suggester
+
+#tcpflow
+cd /home/install
+apt-get install -y git gcc g++ automake autoconf libpcap-dev libboost-dev libssl-dev zlib1g-dev libcairo2-dev
+git clone https://github.com/simsong/tcpflow.git
+cd tcpflow/
+./configure
+make
+make install
+
+#Cisco SNMP Enumeration
+cd /home/install
+git clone https://github.com/nccgroup/cisco-SNMP-enumeration.git
+cd cisco-SNMP-enumeration/
+bash cisco-SNMP-enumeration
+
+#phpvulhunter
+cd /home/install
+apt-get install -y nginx
+cd /var/www/html
+git clone https://github.com/OneSourceCat/phpvulhunter.git
+chromium http://127.0.0.1/phpvulhunter/main.php
+
+#bruteforce_py
+cd /home/install
+git clone https://github.com/rischanlab/bruteforce_py.git
+touch /usr/bin/bruteforce_tools && echo "cd /home/install/bruteforce_py/ && ls" >> /usr/bin/bruteforce_tools && chmod a+x /usr/bruteforce_tools
+#touch /usr/bin/bruteforce_tools && echo "cd /opt/bruteforce_py/ && ls" >> /usr/bin/bruteforce_tools && chmod a+x /usr/bruteforce_tools
+
+#Install and configure firewall
+#apt-get install -y ufw
+#echo -e "\nConfiguring firewall...\n"
+#ufw default deny incoming
+#ufw default allow outgoing
+#ufw allow ssh
+
+#sed -i.bak 's/ENABLED=no/ENABLED=yes/g' /etc/ufw/ufw.conf
+#chmod 0644 /etc/ufw/ufw.conf
+
 
 echo "############## désinstalation des logicels inutils ##############"
 #libreoffice
@@ -319,12 +468,6 @@ displayandexec "désinstalation de Konqueror                         " "apt-get 
 #iceweasel
 displayandexec "désinstalation de iceweasel                         " "apt-get remove iceweasel* -y"
 
-#OpenOffice
-displayandexec "Installation de OpenOffice                          " "wget $WGETCONF http://sourceforge.net/projects/openofficeorg.mirror/files/$openoffice_version/binaries/fr/Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && tar xzf Apache_OpenOffice_$openoffice_version\_Linux_x86-64_install-deb_fr.tar.gz && cd fr/DEBS/ && dpkg -i *.deb && cd desktop-integration/ && dpkg -i openoffice4.1-debian-menu*.deb"
-
-displayandexec "Installation des dépendances manquantes             " "apt-get install -f"
-displayandexec "Désinstalation des paquets qui ne sont plus utilisés" "apt-get autoremove -y"
-displayandexec "Mise à jour des paquets                             " "apt-get update && apt-get upgrade -y"
 displayandexec "Suppression du cache de apt-get                     " "apt-get clean"
 
 ##############################
@@ -337,6 +480,7 @@ sed -i -e "s/Port\ 22/Port\ 7894/g" /etc/ssh/sshd_config
 /etc/init.d/clamav-freshclam stop
 /etc/init.d/apache2 stop
 /etc/init.d/sshd restart
+/etc/init.d/sshd stop
 /etc/init.d/ssh restart
 
 #########################
@@ -346,47 +490,61 @@ cd
 
 if grep "^$utilisateur" /etc/passwd > /dev/null; then
     echo "" >> /home/utilisateur/.bashrc
-	echo "alias ifconfig='/sbin/ifconfig'" >> /home/utilisateur/.bashrc
-	echo "alias ll='ls -l'" >> /home/utilisateur/.bashrc
-	echo "alias la='ls -A'" >> /home/utilisateur/.bashrc
-	echo "alias l='ls -CF'" >> /home/utilisateur/.bashrc
-	echo "alias h='history'" >> /home/utilisateur/.bashrc
-	echo "alias ne='emacs -nw'" >> /home/utilisateur/.bashrc
-	echo "alias nn='nano -c'" >> /home/utilisateur/.bashrc
-	echo "alias cl='clear'" >> /home/utilisateur/.bashrc
-	echo "alias i='apt-get install'" >> /home/utilisateur/.bashrc
-	echo "alias u='apt-get update'" >> /home/utilisateur/.bashrc
-	echo "alias up='apt-get upgrade'" >> /home/utilisateur/.bashrc
-	echo "alias x='exit'" >> /home/utilisateur/.bashrc
-	echo "alias xx='sudo shutdown now'" >> /home/utilisateur/.bashrc
-	echo "alias xwx='sudo poweroff'" >> /home/utilisateur/.bashrc
-	echo "alias funradio='mplayer -nocache http://streaming.radio.funradio.fr/fun-1-48-192'" >> .bashrc
+echo "ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' ne peut etre extrait par ex()" ;;
+    esac
+  else
+    echo "'$1' fichier invalide"
+  fi
+}" >> /home/utilisateur/.bashrc
 	echo 'HISTTIMEFORMAT="%Y/%m/%d %T   "' >> /home/utilisateur/.bashrc
 else
     echo "ko"
 fi
 
 echo "" >> .bashrc
-echo "alias ll='ls -l'" >> .bashrc
-echo "alias la='ls -A'" >> .bashrc
-echo "alias l='ls -CF'" >> .bashrc
-echo "alias h='history'" >> .bashrc
-echo "alias ne='emacs -nw'" >> .bashrc
-echo "alias nn='nano -c'" >> .bashrc
-echo "alias cl='clear'" >> .bashrc
-echo "alias i='apt-get install'" >> .bashrc
-echo "alias u='apt-get update'" >> .bashrc
-echo "alias up='apt-get upgrade'" >> .bashrc
-echo "alias x='exit'" >> .bashrc
-echo "alias xx='sudo shutdown now'" >> .bashrc
-echo "alias xwx='sudo poweroff'" >> .bashrc
-echo "alias funradio='mplayer -nocache http://streaming.radio.funradio.fr/fun-1-48-192'" >> .bashrc
+echo "ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' ne peut etre extrait par ex()" ;;
+    esac
+  else
+    echo "'$1' fichier invalide"
+  fi
+}" >> .bashrc
 displayandexec "Configuration du bashrc                             " "echo 'HISTTIMEFORMAT=\"%Y/%m/%d %T   \"' >> .bashrc"
 source /root/.bashrc
 displayandexec "Réinitialisation du bashrc                          " "stat /root/.bashrc && stat /home/utilisateur/.bashrc"
 
 displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update"
-displayandexec "Mise à jour de la base de donnée de nikto           " "nikto -update"
+displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --versioncheck"
+displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update"
 displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshclam"
 #chkrootkit
 #clamscan
@@ -396,71 +554,6 @@ displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshcl
 #lynis --check-update
 	#lynis update check
 
-touch /opt/sysupdate && chmod a+x /opt/sysupdate && ln -s /opt/sysupdate /usr/bin/sysupdate
-touch /opt/gitupdate && chmod a+x /opt/gitupdate && ln -s /opt/gitupdate /usr/bin/gitupdate
-echo '#!/bin/bash
-
-# store the current dir
-CUR_DIR=$(pwd)
-
-# Find all git repositories and update it to the master latest revision
-for i in $(find / -name ".git" | cut -c 2-); do
-    echo "";
-    echo "\033[33m"+$i+"\033[0m";
-
-    # We have to go to the .git parent directory to call the pull command
-    cd /"$i";
-    cd ..;
-
-    # finally pull
-    git pull origin master;
-
-    # lets get back to the CUR_DIR
-    cd $CUR_DIR
-done
-
-exit 0' >> /opt/gitupdate
-
-echo '#!/bin/bash
-
-now=$(date +"%d-%m-%Y")
-[ -d /var/log/sysupdate ] || mkdir /var/log/sysupdate
-log_file=/var/log/sysupdate/update-$now.log
-touch $log_file
-
-# Premier parametre: MESSAGE
-# Autres parametres: COMMAND
-displayandexec() {
-  local message=$1
-  echo -n "[En cours] $message"
-  shift
-  echo ">>> $*" >> $log_file 2>&1
-  sh -c "$*" >> $log_file 2>&1
-  local ret=$?
-  if [ $ret -ne 0 ]; then
-    echo -e "\r\e[0;30m $message                \e[0;31m[ERROR]\e[0m "
-  else
-    echo -e "\r\e[0;30m $message                \e[0;32m[OK]\e[0m "
-  fi
-  return $ret
-}
-
-displayandexec "mise à jour des paquets debian                      " "apt-get update && apt-get upgrade -y"
-displayandexec "mise à jour des paquets de metaspoilt               " "msfupdate"
-displayandexec "mise à jour des paquets de lynis                    " "lynis update check"
-displayandexec "mise à jour des paquets de pip                      " "pip install --upgrade pip"
-displayandexec "mise à jour des repos GIT                           " "bash /opt/gitupdate"
-displayandexec "Suppression du cache de apt-get                     " "apt-get clean"
-
-if [ $1 = "-log" ]; then
-    cat $log_file | more
-else
-    exit 0
-fi
-
-exit 0' >> /opt/sysupdate
-
-displayandexec "installation du script de mise à jour sysupdate     " "[ -x /opt/sysupdate ]"
 
 rm -rf /home/install
 
@@ -479,10 +572,14 @@ echo ""
 
 for param in "$@"; do
 case $param in
+	"-v")
+		echo $version;;
 	"-s")
 		poweroff;;
 	"-log")
 		cat $log_file | more;;
+	"-erreur")
+		cat $install_file | grep -i error;;
 	"-r")
 		reboot;;
 	*)
@@ -491,112 +588,3 @@ esac
 done
 
 exit 0
-
-#if [ $1 = "-s" ]; then
-#    poweroff
-#else
-#    exit 0
-#fi
-
-#if [ $1 = "-r" ]; then
-#    reboot
-#else
-#    exit 0
-#fi
-
-#if [ $1 = "-log" ]; then
-#    cat $log_file | more
-#else
-#    exit 0
-#fi
-
-# no return message of apt
-#export DEBIAN_FRONTEND=noninteractive
-
-##!/bin/sh
-# 
-#echo -n "Etes-vous fatigué ? "
-#read on
-# 
-#case "$on" in
-#    oui | o | O | Oui | OUI ) echo "Allez faire du café !";;
-#    non | n | N | Non | NON ) echo "Programmez !";;
-#    * ) echo "Ah bon ?";;
-#esac
-#exit 0
-
-#if [ -x /bin/sh ] ; then
-#	echo "/bin/sh est exécutable. C'est bien."
-#else
-#	echo "/bin/sh n'est pas exécutable."
-#	echo "Votre système n'est pas normal."
-#fi
-#OU [ -x /bin/sh ] || echo "/bin/sh n'est pas exécutable."
-
-#Faire la différence entre les paquets installé  de base et les nouveaux paquets
-#comm -3 <(sort /home/liste_paquet_installe.txt) <(sort /home/liste_paquet_installe_postscriptinstall.txt)
-#cat -n /home/liste_paquet_installe_postscriptinstall.txt
-
-#read -p "Voulez-vous redémarer maintenant ?[O/n] " reponse
-#if [[ $reponse = "o" || $reponse = "O" || $reponse = "" ]]; then
-#    reboot
-#else
-#    exit 0
-#fi
-
-## JEUX
-#apt-get install 0ad
-
-#if [ $? -ne 0 ]; then
-#  logguer "Processus ${PS} not started"
-#  start
-#fi
-
-
-#echo "       ###############################"
-#echo "       #   Chnger le thème du GRUB   #"
-#echo "       ###############################"
-
-#wget https://dl.opendesktop.org/api/files/download/id/1460735684/174670-breeze-grub.zip
-#unzip 174670-breeze-grub.zip
-#mv Breeze /boot/grub/themes/
-#mkdir /boot/grub/themes
-#echo 'GRUB_THEME="/boot/grub/themes/Breeze/theme.txt"' >> /etc/default/grub
-#grub-mkconfig -o /boot/grub/grub.cfg
-
-
-
-#FONCTIONNE
-#apt-get install -y mediainfo > /dev/null
-#if [ $? == 0 ]
-#	then echo -e "$noir[$vertfonceOK$noir]"
-#	else echo -e "$noir[$rougefonceKO$noir]"
-#	fi
-##if [ $? == 0 ]
-##	then echo "     [OK]"
-##	else echo "     [KO]"
-##	fi
-
-#if [ $? == 0 ]
-#	then echo -e "$noir[$vertfonceOK$noir]"
-#	else echo -e "$noir[$rougefonceKO$noir]"
-#	fi
-
-#fmpeg -i fichiervideo.avi -vn -ar 44100 -ac 2 -f wav fichierson.wav
-#avconf -i fichiervideo.avi -vn -ar 44100 -ac 2 -f wav fichierson.wav
-#avconv -i video.mp4 image%d.png
-#ls -1 |grep mkv | awk -F. '{print $1}' | while read entree
-# do
-#   avconf -i ${entree}.mkv -vn -ar 44100 -ac 2 -f wav ${entree}.wav
-# done
-#ls -1 |grep mp4 | awk -F. '{print $1}' | while read entree
-# do
-#   avconf -i ${entree}.mp4 -vn -ar 44100 -ac 2 -f wav ${entree}.wav
-# done
-#
-# 
-#ls -1 |grep wmv | awk -F. '{print $1}' | while read entree
-# do
-#   avconv -y -i ${entree}.wmv -s 1280x720  -threads auto -vcodec mpeg4 -an -qscale 1 -mbd rd -flags +mv4+aic -trellis 2 -cmp 2 -subcmp 2 -g 300 -pass 1 -f rawvideo /dev/null
-#   avconv -y -i ${entree}.wmv -s 1280x720 -threads auto -vcodec mpeg4 -qscale 1 -mbd rd -flags +mv4+aic -trellis 2 -cmp 2 -subcmp 2 -g 300 -pass 2 ${entree}.mp4
-# done
