@@ -23,9 +23,10 @@ cd /home/install
 
 # création d'un fichier de log
 now=$(date +"%d-%m-%Y")
-log_file=/var/log/log_script_install-$now.log
+mkdir /var/log/postinstall
+log_file=/var/log/postinstall/log_script_install-$now.log
 touch $log_file
-install_file=/var/log/install_file-$now.log
+install_file=/var/log/postinstall/install_file-$now.log
 touch $install_file
 echo "####################################################################" > $log_file
 echo "#                          Debut du script                         #" >> $log_file
@@ -262,7 +263,7 @@ displayandexec "Installation de apache2                             " "$AGI apac
 displayandexec "Installation de apachetop                           " "$AGI apachetop"
 displayandexec "Installation de gcc-4.9-multilib                    " "$AGI gcc-4.9-multilib"
 displayandexec "Installation de gcc-multilib                        " "$AGI gcc-multilib"
-displayandexec "Installation de libcanberra-gtk-module              " "$AGI gcc-multilib"
+displayandexec "Installation de libcanberra-gtk-module              " "$AGI libcanberra-gtk-module"
 displayandexec "Installation de lib32asan1                          " "$AGI lib32asan1"
 displayandexec "Installation de lib32atomic1                        " "$AGI lib32atomic1"
 displayandexec "Installation de lib32cilkrts5                       " "$AGI lib32cilkrts5"
@@ -410,7 +411,7 @@ displayandexec "Installation de recon-ng                            " "cd /opt &
 #patator
 displayandexec "Installation de patator                             " "cd /home/install/ && git clone https://github.com/lanjelot/patator.git && mkdir /opt/patator/ && cp patator/patator.py /opt/patator/patator.py && ln -s /opt/patator/patator.py /usr/bin/patator"
 
-echo "############## désinstalation des logicels inutils ##############"
+echo "############### désinstalation des logicels inutils ###############"
 #libreoffice
 displayandexec "désinstalation de libreoffice                       " "apt-get remove libreoffice* -y"
 #Konqueror
@@ -435,7 +436,7 @@ sed -i -e "s/Port\ 22/Port\ 7894/g" /etc/ssh/sshd_config
 /etc/init.d/fail2ban stop
 /etc/init.d/clamav-freshclam stop
 /etc/init.d/apache2 stop
-/etc/init.d/sshd restart
+/etc/init.d/sslh stop
 /etc/init.d/ssh restart
 
 #########################
@@ -484,10 +485,8 @@ displayandexec "Configuration du bashrc                             " "echo 'HIS
 source /root/.bashrc
 displayandexec "Réinitialisation du bashrc                          " "stat /root/.bashrc && stat /home/utilisateur/.bashrc"
 
-displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --update"
-rkhunter --update
-rkhunter --versioncheck
-rkhunter --update
+rkhunter --versioncheck && rkhunter --update
+displayandexec "Mise à jour de la base de donnée de rkhunter        " "rkhunter --versioncheck && rkhunter --update"
 displayandexec "Mise à jour de la base de donnée de nikto           " "nikto -update"
 displayandexec "Mise à jour de la base de donnée de ClamAV          " "freshclam"
 #chkrootkit
