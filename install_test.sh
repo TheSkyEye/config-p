@@ -470,6 +470,19 @@ displayandexec "désinstalation de iceweasel                         " "apt-get 
 
 displayandexec "Suppression du cache de apt-get                     " "apt-get clean"
 
+################################
+#  INSTALL DU THEME ACVAMARIN  #
+################################
+
+wget https://sourceforge.net/projects/crunchyiconthem/files/acvamarin_1.0_all.deb
+dpkg -i acvamarin_1.0_all.deb
+#wget https://sourceforge.net/projects/crunchyiconthem/files/acvamarin_1.0_all.tar.gz
+#apt-get install -y gnome-tweak-tool
+#tar xzf acvamarin_1.0_all.tar.gz
+#mv acvamarin_1.0_all/usr/share/icons/* /usr/share/icons
+
+#https://www.gnome-look.org/content/show.php/Acvamarin?content=161068
+
 ##############################
 #stoper les services inutiles#
 ##############################
