@@ -64,6 +64,7 @@ veracrypt_version='1.19'
 openoffice_version='4.1.3'
 AGI='apt-get install -y'
 WGETCONF='--no-check-certificate -q'
+trap '{ echo "Interrupt by user with Ctrl-C. Time to quit." ; exit 1; }' INT
 
 clear
 echo ""
